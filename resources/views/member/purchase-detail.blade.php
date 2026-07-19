@@ -122,7 +122,7 @@
                                         <label class="grid gap-2 text-sm font-bold text-slate-700">Komentar
                                             <textarea class="field-input min-h-28" name="comment" placeholder="Ceritakan kualitas produk, packing, dan pengalaman pembelian."></textarea>
                                         </label>
-                                        <button class="btn-primary w-max" type="submit">
+                                        <button class="btn-primary w-full sm:w-max" type="submit">
                                             <x-icon name="star" class="h-4 w-4" />
                                             Kirim Review
                                         </button>

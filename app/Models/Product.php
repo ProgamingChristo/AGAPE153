@@ -38,7 +38,6 @@ class Product extends Model
     protected function casts(): array
     {
         return [
-            'price' => 'decimal:2',
             'is_featured' => 'boolean',
             'is_active' => 'boolean',
             'export_ready' => 'boolean',
@@ -112,11 +111,13 @@ class Product extends Model
 
     public function formattedPrice(): string
     {
-        if ($this->price === null) {
+        $rawPrice = $this->getRawOriginal('price');
+
+        if ($rawPrice === null || $rawPrice === '' || ! is_numeric($rawPrice)) {
             return 'Hubungi kami';
         }
 
-        return 'Rp'.number_format((float) $this->price, 0, ',', '.').'/'.$this->unit;
+        return 'Rp'.number_format((float) $rawPrice, 0, ',', '.').'/'.$this->unit;
     }
 
     public function videoEmbedUrl(): ?string

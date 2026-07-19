@@ -182,7 +182,7 @@
                 <div class="mt-3 grid gap-2 text-sm text-slate-300">
                     <a href="mailto:{{ $siteContact['email'] }}">{{ $siteContact['email'] }}</a>
                     <a href="https://wa.me/{{ preg_replace('/\D+/', '', $siteContact['whatsapp']) }}" target="_blank" rel="noopener">{{ $siteContact['phone'] }}</a>
-                    <a class="btn-primary mt-2 w-max px-3 py-2 text-xs" href="{{ route('home') }}#contact">
+                    <a class="btn-primary mt-2 w-full px-3 py-2 text-xs sm:w-max" href="{{ route('home') }}#contact">
                         <x-icon name="message" class="h-4 w-4" />
                         Contact Form
                     </a>

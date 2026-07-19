@@ -86,7 +86,7 @@
 
                         <div class="mt-6 overflow-hidden rounded-2xl border border-slate-200">
                             @foreach ($order->items as $item)
-                                <div class="flex justify-between gap-4 border-b border-slate-100 p-4 text-sm">
+                                <div class="flex flex-wrap justify-between gap-4 border-b border-slate-100 p-4 text-sm">
                                     <span class="font-bold text-slate-800">{{ $item->product_name }} x {{ $item->quantity }}</span>
                                     <strong class="text-slate-950">Rp{{ number_format($item->line_total, 0, ',', '.') }}</strong>
                                 </div>

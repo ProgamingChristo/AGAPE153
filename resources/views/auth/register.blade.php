@@ -61,7 +61,7 @@
                                 <input class="h-[56px] rounded-xl border border-slate-300 px-4 font-semibold outline-none transition placeholder:text-slate-300 focus:border-teal-500 focus:ring-4 focus:ring-teal-100" name="company_name" value="{{ old('company_name') }}" placeholder="Nama perusahaan">
                                 <input class="h-[56px] rounded-xl border border-slate-300 px-4 font-semibold outline-none transition placeholder:text-slate-300 focus:border-teal-500 focus:ring-4 focus:ring-teal-100" type="password" name="password" placeholder="Password" required>
                                 <input class="h-[56px] rounded-xl border border-slate-300 px-4 font-semibold outline-none transition placeholder:text-slate-300 focus:border-teal-500 focus:ring-4 focus:ring-teal-100" type="password" name="password_confirmation" placeholder="Konfirmasi password" required>
-                                <button class="inline-flex h-[56px] items-center justify-center gap-2 rounded-xl bg-teal-700 px-5 font-black text-white shadow-[0_14px_30px_rgba(15,118,110,0.22)] transition hover:-translate-y-0.5 hover:bg-slate-950" type="submit">
+                                <button class="inline-flex h-[56px] w-full items-center justify-center gap-2 rounded-xl bg-teal-700 px-5 font-black text-white shadow-[0_14px_30px_rgba(15,118,110,0.22)] transition hover:-translate-y-0.5 hover:bg-slate-950" type="submit">
                                     <x-icon name="phone" class="h-5 w-5" />
                                     Kirim OTP WhatsApp
                                 </button>
@@ -79,7 +79,7 @@
                                 <input class="h-[56px] rounded-xl border border-slate-300 px-4 font-semibold outline-none transition placeholder:text-slate-300 focus:border-teal-500 focus:ring-4 focus:ring-teal-100" name="company_name" value="{{ old('company_name') }}" placeholder="Nama perusahaan">
                                 <input class="h-[56px] rounded-xl border border-slate-300 px-4 font-semibold outline-none transition placeholder:text-slate-300 focus:border-teal-500 focus:ring-4 focus:ring-teal-100" type="password" name="password" placeholder="Password" required>
                                 <input class="h-[56px] rounded-xl border border-slate-300 px-4 font-semibold outline-none transition placeholder:text-slate-300 focus:border-teal-500 focus:ring-4 focus:ring-teal-100" type="password" name="password_confirmation" placeholder="Konfirmasi password" required>
-                                <button class="inline-flex h-[56px] items-center justify-center gap-2 rounded-xl bg-slate-950 px-5 font-black text-white shadow-[0_14px_30px_rgba(15,23,42,0.18)] transition hover:-translate-y-0.5 hover:bg-teal-700" type="submit">
+                                <button class="inline-flex h-[56px] w-full items-center justify-center gap-2 rounded-xl bg-slate-950 px-5 font-black text-white shadow-[0_14px_30px_rgba(15,23,42,0.18)] transition hover:-translate-y-0.5 hover:bg-teal-700" type="submit">
                                     <x-icon name="mail" class="h-5 w-5" />
                                     Daftar Email
                                 </button>

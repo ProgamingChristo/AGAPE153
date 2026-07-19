@@ -130,7 +130,7 @@
                     <h2 class="mt-2 text-2xl font-black text-slate-950">Structured buyer specifications.</h2>
                     <p class="mt-2 max-w-2xl text-sm leading-6 text-slate-600">Tambahkan detail yang akan tampil di halaman produk, misalnya Packaging, Moisture, Shelf life, Process, atau Certification.</p>
                 </div>
-                <button class="btn-secondary shrink-0 px-4 py-2 text-sm" type="button" data-add-product-detail>
+                <button class="btn-secondary w-full shrink-0 px-4 py-2 text-sm sm:w-auto" type="button" data-add-product-detail>
                     <x-icon name="plus" class="h-4 w-4" />
                     Add Detail
                 </button>
@@ -145,7 +145,7 @@
                         <label class="grid gap-2 text-xs font-black uppercase tracking-[0.12em] text-slate-500">Value
                             <input class="rounded-xl border border-slate-200 px-4 py-3 text-sm font-normal normal-case tracking-normal text-slate-900" name="detail_values[]" value="{{ $detail['value'] ?? '' }}" placeholder="Food grade jute bag / vacuum pack">
                         </label>
-                        <button class="self-end rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-red-700 transition hover:-translate-y-0.5 hover:bg-red-100" type="button" title="Remove detail" aria-label="Remove detail" data-remove-product-detail>
+                        <button class="self-end rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-red-700 transition hover:-translate-y-0.5 hover:bg-red-100 md:w-auto" type="button" title="Remove detail" aria-label="Remove detail" data-remove-product-detail>
                             <x-icon name="trash" class="h-4 w-4" />
                         </button>
                     </div>
@@ -160,7 +160,7 @@
                     <label class="grid gap-2 text-xs font-black uppercase tracking-[0.12em] text-slate-500">Value
                         <input class="rounded-xl border border-slate-200 px-4 py-3 text-sm font-normal normal-case tracking-normal text-slate-900" name="detail_values[]" placeholder="Max 12%">
                     </label>
-                    <button class="self-end rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-red-700 transition hover:-translate-y-0.5 hover:bg-red-100" type="button" title="Remove detail" aria-label="Remove detail" data-remove-product-detail>
+                    <button class="self-end rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-red-700 transition hover:-translate-y-0.5 hover:bg-red-100 md:w-auto" type="button" title="Remove detail" aria-label="Remove detail" data-remove-product-detail>
                         <x-icon name="trash" class="h-4 w-4" />
                     </button>
                 </div>
@@ -180,9 +180,9 @@
                 Export ready
             </label>
         </div>
-        <div class="flex gap-3">
-            <button class="btn-primary" type="submit">Save Product</button>
-            <a class="btn-secondary" href="{{ route('admin.products.index') }}">Cancel</a>
+        <div class="flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+            <button class="btn-primary sm:w-auto" type="submit">Save Product</button>
+            <a class="btn-secondary sm:w-auto" href="{{ route('admin.products.index') }}">Cancel</a>
         </div>
     </form>
 

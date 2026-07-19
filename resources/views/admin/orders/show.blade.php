@@ -97,7 +97,7 @@
                                     @csrf
                                     @method('PATCH')
                                     <textarea class="min-h-24 rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm outline-none focus:border-teal-500" name="admin_reply" placeholder="Balas komentar customer..." required>{{ old('admin_reply', $item->review->admin_reply) }}</textarea>
-                                    <button class="btn-primary w-max px-4 py-2 text-sm" type="submit">Save Reply</button>
+                                    <button class="btn-primary w-full px-4 py-2 text-sm sm:w-max" type="submit">Save Reply</button>
                                 </form>
                             @else
                                 <div class="mt-3 rounded-xl bg-white p-4 text-sm font-semibold text-slate-500">Customer belum memberi rating produk ini.</div>

@@ -169,7 +169,7 @@
                             @csrf
                             @method('PATCH')
                             <textarea class="min-h-24 rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm outline-none focus:border-teal-500" name="admin_reply" placeholder="Balas ulasan customer..." required>{{ old('admin_reply', $review->admin_reply) }}</textarea>
-                            <button class="btn-primary w-max px-4 py-2 text-sm" type="submit">
+                            <button class="btn-primary w-full px-4 py-2 text-sm sm:w-max" type="submit">
                                 <x-icon name="message" class="h-4 w-4" />
                                 Reply Review
                             </button>

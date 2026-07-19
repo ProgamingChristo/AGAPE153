@@ -28,7 +28,11 @@
         <div class="agape-container grid gap-8 py-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-end">
             <div data-reveal>
                 <div class="flex flex-wrap gap-2">
-                    <a class="status-pill bg-white text-teal-700" href="{{ route('products.index', ['category' => $product->category->slug]) }}">{{ $product->category->name }}</a>
+                    @if ($product->category)
+                        <a class="status-pill bg-white text-teal-700" href="{{ route('products.index', ['category' => $product->category->slug]) }}">{{ $product->category->name }}</a>
+                    @else
+                        <span class="status-pill bg-white text-teal-700">Uncategorized</span>
+                    @endif
                     @if ($product->export_ready)
                         <span class="status-pill border-amber-200 bg-amber-50 text-amber-800">Export Ready</span>
                     @endif
@@ -90,7 +94,7 @@
                     </div>
                 @endif
                 @if ($product->images->isNotEmpty())
-                    <div class="mt-4 grid grid-cols-4 gap-3">
+                    <div class="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-4">
                         @foreach ($product->images as $image)
                             <img class="aspect-square border border-slate-200 object-cover" src="{{ $image->image_url ?: asset('images/product-placeholder.svg') }}" onerror="this.src='{{ asset('images/product-placeholder.svg') }}'" alt="{{ $image->alt_text ?: $product->name }}" loading="lazy" decoding="async">
                         @endforeach
@@ -101,19 +105,19 @@
             <aside class="h-max trade-panel p-5" data-reveal>
                 <p class="section-kicker"><x-icon name="orders" class="h-4 w-4" />Product Sheet</p>
                 <dl class="mt-5 grid gap-3 text-sm">
-                    <div class="flex justify-between gap-4 border-b border-slate-100 pb-3">
+                    <div class="flex flex-wrap justify-between gap-4 border-b border-slate-100 pb-3">
                         <dt class="text-slate-500">Grade</dt>
                         <dd class="font-black text-slate-950">{{ $product->grade ?: '-' }}</dd>
                     </div>
-                    <div class="flex justify-between gap-4 border-b border-slate-100 pb-3">
+                    <div class="flex flex-wrap justify-between gap-4 border-b border-slate-100 pb-3">
                         <dt class="text-slate-500">Export Ready</dt>
                         <dd class="font-black text-slate-950">{{ $product->export_ready ? 'Yes' : 'Inquiry required' }}</dd>
                     </div>
-                    <div class="flex justify-between gap-4 border-b border-slate-100 pb-3">
+                    <div class="flex flex-wrap justify-between gap-4 border-b border-slate-100 pb-3">
                         <dt class="text-slate-500">Unit</dt>
                         <dd class="font-black text-slate-950">{{ $product->unit }}</dd>
                     </div>
-                    <div class="flex justify-between gap-4">
+                    <div class="flex flex-wrap justify-between gap-4">
                         <dt class="text-slate-500">Currency</dt>
                         <dd class="font-black text-slate-950">{{ $product->currency }}</dd>
                     </div>

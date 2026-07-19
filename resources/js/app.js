@@ -73,6 +73,38 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    const adminSidebar = document.querySelector('[data-admin-sidebar]');
+    const adminOverlay = document.querySelector('[data-admin-overlay]');
+    const adminMenuToggle = document.querySelector('[data-admin-menu-toggle]');
+    const adminMenuClose = document.querySelector('[data-admin-menu-close]');
+
+    if (adminSidebar && adminOverlay && adminMenuToggle) {
+        const setAdminMenuState = (isOpen) => {
+            document.body.classList.toggle('admin-menu-open', isOpen);
+            adminMenuToggle.setAttribute('aria-expanded', String(isOpen));
+        };
+
+        adminMenuToggle.addEventListener('click', () => setAdminMenuState(true));
+        adminMenuClose?.addEventListener('click', () => setAdminMenuState(false));
+        adminOverlay.addEventListener('click', () => setAdminMenuState(false));
+
+        adminSidebar.querySelectorAll('a').forEach((link) => {
+            link.addEventListener('click', () => setAdminMenuState(false));
+        });
+
+        window.addEventListener('keydown', (event) => {
+            if (event.key === 'Escape') {
+                setAdminMenuState(false);
+            }
+        });
+
+        window.addEventListener('resize', () => {
+            if (window.innerWidth >= 1024) {
+                setAdminMenuState(false);
+            }
+        }, { passive: true });
+    }
+
     const timeoutMinutes = Number(document.body.dataset.adminTimeoutMinutes || 0);
 
     if (timeoutMinutes <= 0) {

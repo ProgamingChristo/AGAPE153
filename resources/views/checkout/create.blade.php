@@ -66,17 +66,17 @@
                 <p class="section-kicker"><x-icon name="orders" class="h-4 w-4" />Order Summary</p>
                 <div class="mt-5 grid gap-4">
                     @foreach ($lines as $line)
-                        <div class="flex gap-3 border-b border-slate-100 pb-4">
+                        <div class="flex flex-wrap gap-3 border-b border-slate-100 pb-4 sm:flex-nowrap">
                             <img class="h-16 w-16 rounded-2xl object-cover" src="{{ $line['product']->image_url ?: asset('images/product-placeholder.svg') }}" onerror="this.src='{{ asset('images/product-placeholder.svg') }}'" alt="{{ $line['product']->name }}">
                             <div class="min-w-0 flex-1">
                                 <div class="font-black text-slate-950">{{ $line['product']->name }}</div>
                                 <div class="mt-1 text-sm text-slate-500">{{ $line['quantity'] }} {{ $line['product']->unit }} x {{ $line['product']->formattedPrice() }}</div>
                             </div>
-                            <div class="font-black text-slate-950">Rp{{ number_format($line['line_total'], 0, ',', '.') }}</div>
+                            <div class="w-full break-words font-black text-slate-950 sm:w-auto sm:text-right">Rp{{ number_format($line['line_total'], 0, ',', '.') }}</div>
                         </div>
                     @endforeach
                 </div>
-                <div class="mt-5 flex justify-between rounded-2xl bg-[#f8faf9] p-4 text-lg font-black">
+                <div class="mt-5 flex flex-wrap justify-between gap-3 rounded-2xl bg-[#f8faf9] p-4 text-lg font-black">
                     <span class="text-slate-950">Total</span>
                     <span class="text-teal-800">Rp{{ number_format($subtotal, 0, ',', '.') }}</span>
                 </div>

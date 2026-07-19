@@ -480,3 +480,222 @@
         display: none;
     }
 }
+
+.user-shell,
+.admin-shell {
+    overflow-x: clip;
+}
+
+.user-shell main,
+.admin-shell main,
+.agape-container,
+.agape-container > *,
+.trade-panel,
+.soft-panel,
+.commerce-card,
+.market-row {
+    min-width: 0;
+}
+
+.user-shell img,
+.user-shell video,
+.user-shell iframe,
+.admin-shell img,
+.admin-shell video,
+.admin-shell iframe {
+    max-width: 100%;
+}
+
+.user-shell h1,
+.admin-shell h1 {
+    overflow-wrap: anywhere;
+    font-size: clamp(2.25rem, 9vw, 4.5rem);
+    line-height: 0.98;
+}
+
+.user-shell h2,
+.admin-shell h2 {
+    overflow-wrap: anywhere;
+    font-size: clamp(1.75rem, 6vw, 3rem);
+    line-height: 1.05;
+}
+
+.user-shell h3,
+.admin-shell h3,
+.user-shell p,
+.admin-shell p,
+.user-shell a,
+.admin-shell a,
+.user-shell span,
+.admin-shell span,
+.user-shell dd,
+.admin-shell dd {
+    overflow-wrap: anywhere;
+}
+
+.btn-primary,
+.btn-secondary {
+    max-width: 100%;
+    min-width: 0;
+    text-align: center;
+    line-height: 1.25;
+    white-space: normal;
+}
+
+.field-input,
+.user-shell input,
+.user-shell select,
+.user-shell textarea,
+.admin-shell input,
+.admin-shell select,
+.admin-shell textarea {
+    max-width: 100%;
+    min-width: 0;
+}
+
+.user-shell input[type='file'],
+.admin-shell input[type='file'] {
+    overflow: hidden;
+}
+
+[data-site-nav-menu],
+.trade-ticker {
+    scrollbar-width: none;
+}
+
+[data-site-nav-menu]::-webkit-scrollbar,
+.trade-ticker::-webkit-scrollbar {
+    display: none;
+}
+
+.admin-shell .nav-link {
+    width: 100%;
+    justify-content: flex-start;
+    white-space: normal;
+}
+
+.admin-shell .nav-link::after {
+    display: none;
+}
+
+body.admin-menu-open {
+    overflow: hidden;
+}
+
+body.admin-menu-open [data-admin-sidebar] {
+    transform: translateX(0);
+}
+
+body.admin-menu-open [data-admin-overlay] {
+    pointer-events: auto;
+    opacity: 1;
+}
+
+@media (max-width: 767px) {
+    .agape-container {
+        width: min(100% - 1rem, 1240px);
+    }
+
+    .section-pad {
+        padding-block: 2.75rem;
+    }
+
+    .section-kicker {
+        max-width: 100%;
+        letter-spacing: 0.12em;
+    }
+
+    .user-shell [data-site-topbar] {
+        display: none;
+    }
+
+    .user-shell [data-site-header] nav {
+        align-items: center;
+    }
+
+    .user-shell [data-site-nav-menu] {
+        margin-inline: -0.25rem;
+        border-radius: 1rem;
+        scroll-padding-inline: 0.5rem;
+    }
+
+    .nav-link {
+        padding: 0.55rem 0.7rem;
+    }
+
+    .market-row {
+        grid-template-columns: 72px minmax(0, 1fr);
+        gap: 0.75rem;
+        border-radius: 1rem;
+    }
+
+    .market-row > img {
+        height: 4.5rem;
+        width: 4.5rem;
+        border-radius: 0.85rem;
+    }
+
+    .brand-tile {
+        min-width: 2.55rem;
+        padding: 0.25rem 0.4rem;
+        box-shadow: 3px 3px 0 rgba(15, 23, 42, 0.14);
+    }
+
+    .trade-panel,
+    .commerce-card,
+    .soft-panel {
+        border-radius: 1rem;
+    }
+
+    .admin-shell main {
+        padding-inline: 0.85rem;
+    }
+
+    .admin-shell .btn-primary,
+    .admin-shell .btn-secondary {
+        width: 100%;
+    }
+
+    .admin-shell form .btn-primary,
+    .admin-shell form .btn-secondary {
+        justify-self: stretch;
+    }
+
+    .admin-shell .flex > form {
+        min-width: min(100%, 10rem);
+    }
+
+    .admin-shell nav[role='navigation'] {
+        overflow-x: auto;
+        padding-bottom: 0.25rem;
+    }
+
+    .admin-shell [class*="grid-cols-["] {
+        max-width: 100%;
+    }
+
+    .admin-shell section,
+    .admin-shell article,
+    .admin-shell form,
+    .admin-shell aside {
+        max-width: 100%;
+    }
+}
+
+@media (max-width: 420px) {
+    .market-row {
+        grid-template-columns: 1fr;
+    }
+
+    .market-row > img {
+        height: auto;
+        width: 100%;
+        aspect-ratio: 16 / 10;
+    }
+
+    .user-shell .icon-button,
+    .admin-shell .icon-button {
+        height: 2.55rem;
+        width: 2.55rem;
+    }
+}

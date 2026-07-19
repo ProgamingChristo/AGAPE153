@@ -71,7 +71,7 @@
                         <div class="relative overflow-hidden bg-slate-100">
                             <img class="aspect-square w-full object-cover transition duration-500 group-hover:scale-105 sm:aspect-[4/3]" src="{{ $product->image_url ?: asset('images/product-placeholder.svg') }}" onerror="this.src='{{ asset('images/product-placeholder.svg') }}'" alt="{{ $product->name }}" loading="lazy" decoding="async">
                             <div class="absolute left-3 top-3 flex flex-wrap gap-2">
-                                <span class="rounded-full bg-white/90 px-3 py-1 text-xs font-black text-teal-800 shadow-sm backdrop-blur">{{ $product->category->name }}</span>
+                                <span class="rounded-full bg-white/90 px-3 py-1 text-xs font-black text-teal-800 shadow-sm backdrop-blur">{{ $product->category?->name ?? 'Uncategorized' }}</span>
                                 <span class="rounded-full bg-white/90 px-3 py-1 text-xs font-black text-slate-700 shadow-sm backdrop-blur">{{ $product->stock_quantity > 0 ? 'In Stock' : 'Preorder' }}</span>
                             </div>
                             @if ($product->export_ready || $product->video_url)

@@ -47,7 +47,7 @@
                 <label class="grid gap-2 text-sm font-bold text-slate-700">Message
                     <textarea class="min-h-44 rounded-xl border border-slate-200 bg-white px-4 py-3 font-normal" name="reply_message" placeholder="Tulis balasan untuk customer..." required>{{ old('reply_message', $message->reply_message) }}</textarea>
                 </label>
-                <button class="btn-primary w-max" type="submit">
+                <button class="btn-primary w-full sm:w-max" type="submit">
                     <x-icon name="mail" class="h-4 w-4" />
                     Send Reply
                 </button>

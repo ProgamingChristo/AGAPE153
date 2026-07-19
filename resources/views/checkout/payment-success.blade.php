@@ -60,11 +60,11 @@
                         <x-icon name="{{ $isPaid ? 'check' : 'history' }}" class="h-7 w-7" />
                     </span>
                     <dl class="mt-6 grid gap-4 text-sm">
-                        <div class="flex justify-between gap-4 rounded-2xl bg-[#f8faf9] p-4">
+                        <div class="flex flex-wrap justify-between gap-4 rounded-2xl bg-[#f8faf9] p-4">
                             <dt class="text-slate-500">Payment Status</dt>
                             <dd class="font-black {{ $isPaid ? 'text-teal-800' : 'text-amber-700' }}">{{ strtoupper($order->payment_status) }}</dd>
                         </div>
-                        <div class="flex justify-between gap-4 rounded-2xl bg-[#f8faf9] p-4">
+                        <div class="flex flex-wrap justify-between gap-4 rounded-2xl bg-[#f8faf9] p-4">
                             <dt class="text-slate-500">Total</dt>
                             <dd class="font-black text-slate-950">Rp{{ number_format($order->total_amount, 0, ',', '.') }}</dd>
                         </div>

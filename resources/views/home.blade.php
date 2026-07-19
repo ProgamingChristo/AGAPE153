@@ -55,11 +55,11 @@
                     {{ $siteAppearance['hero_badge'] ?? 'Indonesian Commodity Trading Desk' }}
                 </div>
                 <h1 class="mt-5 max-w-5xl leading-[0.88]">
-                    <span class="block text-6xl font-black tracking-wide text-[#e9c95a] drop-shadow-[0_10px_28px_rgba(0,0,0,0.28)] sm:text-7xl lg:text-8xl">AGAPE</span>
-                    <span class="mt-4 flex flex-wrap gap-3 text-5xl font-black leading-none sm:text-6xl lg:text-7xl" aria-label="153">
-                        <span class="grid min-h-20 min-w-20 place-items-center border-2 border-white/80 bg-[#e64b3c] px-4 text-slate-950 shadow-[8px_8px_0_rgba(0,0,0,0.22)]">1</span>
-                        <span class="grid min-h-20 min-w-20 place-items-center border-2 border-white/80 bg-[#e9c95a] px-4 text-slate-950 shadow-[8px_8px_0_rgba(0,0,0,0.22)]">5</span>
-                        <span class="grid min-h-20 min-w-20 place-items-center border-2 border-white/80 bg-[#2d9db7] px-4 text-slate-950 shadow-[8px_8px_0_rgba(0,0,0,0.22)]">3</span>
+                    <span class="block text-[clamp(3.25rem,18vw,8rem)] font-black tracking-wide text-[#e9c95a] drop-shadow-[0_10px_28px_rgba(0,0,0,0.28)]">AGAPE</span>
+                    <span class="mt-4 flex flex-wrap gap-2 text-[clamp(2.75rem,15vw,5.5rem)] font-black leading-none sm:gap-3" aria-label="153">
+                        <span class="grid aspect-square w-[clamp(4rem,18vw,5.5rem)] place-items-center border-2 border-white/80 bg-[#e64b3c] px-3 text-slate-950 shadow-[8px_8px_0_rgba(0,0,0,0.22)]">1</span>
+                        <span class="grid aspect-square w-[clamp(4rem,18vw,5.5rem)] place-items-center border-2 border-white/80 bg-[#e9c95a] px-3 text-slate-950 shadow-[8px_8px_0_rgba(0,0,0,0.22)]">5</span>
+                        <span class="grid aspect-square w-[clamp(4rem,18vw,5.5rem)] place-items-center border-2 border-white/80 bg-[#2d9db7] px-3 text-slate-950 shadow-[8px_8px_0_rgba(0,0,0,0.22)]">3</span>
                     </span>
                 </h1>
                 <p class="mt-6 max-w-2xl text-xl font-black leading-8 text-white">{{ $siteAppearance['hero_title'] ?? 'Spices, coffee, and agricultural products from Indonesia.' }}</p>
@@ -167,7 +167,7 @@
                             <div class="grid gap-3 md:grid-cols-[1fr_120px_120px_120px] md:items-center">
                                 <div>
                                     <div class="flex flex-wrap gap-2">
-                                        <span class="status-pill text-teal-700">{{ $product->category->name }}</span>
+                                        <span class="status-pill text-teal-700">{{ $product->category?->name ?? 'Uncategorized' }}</span>
                                         @if ($product->export_ready)
                                             <span class="status-pill border-amber-200 bg-amber-50 text-amber-800">Export</span>
                                         @endif
