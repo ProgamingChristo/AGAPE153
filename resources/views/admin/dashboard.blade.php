@@ -8,14 +8,22 @@
             <p class="text-sm font-black uppercase tracking-[0.22em] text-teal-700">Dashboard</p>
             <h1 class="mt-3 text-4xl font-black text-slate-950">Business overview.</h1>
         </div>
-        <a class="btn-primary" href="{{ route('admin.products.create') }}">Add Product</a>
+        <div class="flex flex-wrap gap-3">
+            <a class="btn-secondary" href="{{ route('admin.orders.index') }}"><x-icon name="orders" class="h-4 w-4" />Manage Orders</a>
+            <a class="btn-primary" href="{{ route('admin.products.create') }}">Add Product</a>
+        </div>
     </div>
 
-    <div class="mt-8 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
-        @foreach ([['Products', $totalProducts], ['Orders', $totalOrders], ['Members', $totalMembers], ['Product Views', $totalViews]] as [$label, $value])
-            <div class="rounded-2xl border border-slate-200 bg-white p-6">
-                <div class="text-sm font-bold text-slate-500">{{ $label }}</div>
-                <div class="mt-2 text-3xl font-black text-slate-950">{{ number_format($value) }}</div>
+    <div class="mt-8 grid gap-4 sm:grid-cols-2 xl:grid-cols-5">
+        @foreach ([['Products', $totalProducts, 'package'], ['Orders', $totalOrders, 'orders'], ['Members', $totalMembers, 'user'], ['Messages', $newMessages, 'message'], ['Product Views', $totalViews, 'search']] as [$label, $value, $icon])
+            <div class="lift-card rounded-2xl border border-slate-200 bg-white p-6">
+                <div class="flex items-center justify-between gap-4">
+                    <div class="text-sm font-bold text-slate-500">{{ $label }}</div>
+                    <span class="grid h-10 w-10 place-items-center rounded-xl bg-teal-50 text-teal-700">
+                        <x-icon :name="$icon" class="h-5 w-5" />
+                    </span>
+                </div>
+                <div class="mt-4 text-3xl font-black text-slate-950">{{ number_format($value) }}</div>
             </div>
         @endforeach
     </div>

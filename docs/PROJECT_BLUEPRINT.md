@@ -42,10 +42,14 @@ Tampilan dibuat profesional, ringan, dan product-first: hero dengan visual produ
 
 Implemented:
 - Landing page lengkap dengan SEO meta, JSON-LD, `robots.txt`, dan `sitemap.xml`.
+- Logo Agape153 lokal di `public/images/agape153-logo.svg`.
+- Kontak resmi: WhatsApp `+62816795153`, email `info.agape153@gmail.com`, dan social media resmi Agape153.
+- About/company profile page berbasis PDF Agape153, default English dengan toggle Bahasa Indonesia.
 - Katalog produk, search, filter kategori, detail produk.
 - Cart, checkout WhatsApp, order success, order tracking.
 - Login, register, logout, profile, password update.
-- Member dashboard dengan order history dan wishlist.
+- Member dashboard, dedicated purchase history, purchase detail, dan wishlist.
+- Dedicated admin login dengan session token, idle timeout, dan automatic logout.
 - Admin dashboard, CRUD product, CRUD category.
 - Migration dan seeder awal untuk database `agape153`.
 

@@ -8,7 +8,7 @@
         <h1 class="mt-3 text-4xl font-black text-slate-950">{{ $category->exists ? 'Edit category' : 'Add category' }}.</h1>
     </div>
 
-    <form class="mt-8 grid gap-6 rounded-2xl border border-slate-200 bg-white p-6" method="POST" action="{{ $category->exists ? route('admin.categories.update', $category) : route('admin.categories.store') }}">
+    <form class="mt-8 grid gap-6 rounded-2xl border border-slate-200 bg-white p-6" method="POST" enctype="multipart/form-data" action="{{ $category->exists ? route('admin.categories.update', $category) : route('admin.categories.store') }}">
         @csrf
         @if ($category->exists)
             @method('PUT')
@@ -35,13 +35,19 @@
             <label class="grid gap-2 text-sm font-bold">Slug
                 <input class="rounded-xl border border-slate-200 px-4 py-3 font-normal" name="slug" value="{{ old('slug', $category->slug) }}">
             </label>
-            <label class="grid gap-2 text-sm font-bold">Image URL
-                <input class="rounded-xl border border-slate-200 px-4 py-3 font-normal" name="image_url" value="{{ old('image_url', $category->image_url) }}">
+            <label class="grid gap-2 text-sm font-bold">Category Image
+                <input class="rounded-xl border border-slate-200 px-4 py-3 font-normal file:mr-4 file:rounded-lg file:border-0 file:bg-teal-700 file:px-3 file:py-2 file:text-sm file:font-bold file:text-white" type="file" name="image_file" accept="image/*">
             </label>
             <label class="grid gap-2 text-sm font-bold">Sort Order
                 <input class="rounded-xl border border-slate-200 px-4 py-3 font-normal" type="number" name="sort_order" value="{{ old('sort_order', $category->sort_order ?? 0) }}" min="0">
             </label>
         </div>
+        @if ($category->image_url)
+            <div class="rounded-2xl border border-slate-200 bg-[#f8faf9] p-4">
+                <div class="mb-3 text-sm font-bold text-slate-700">Current image</div>
+                <img class="h-40 w-40 rounded-xl object-cover" src="{{ $category->image_url }}" onerror="this.src='{{ asset('images/product-placeholder.svg') }}'" alt="{{ $category->name }}">
+            </div>
+        @endif
         <label class="grid gap-2 text-sm font-bold">Description
             <textarea class="min-h-32 rounded-xl border border-slate-200 px-4 py-3 font-normal" name="description">{{ old('description', $category->description) }}</textarea>
         </label>

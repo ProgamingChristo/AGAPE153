@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\CartEvent;
 use App\Models\Product;
 use Illuminate\Http\Request;
-use Illuminate\Support\Collection;
 
 class CartController extends Controller
 {
@@ -32,6 +32,16 @@ class CartController extends Controller
 
         session(['cart' => $cart]);
 
+        CartEvent::query()->create([
+            'session_id' => $request->session()->getId(),
+            'user_id' => $request->user()?->id,
+            'product_id' => $product->id,
+            'event' => 'added',
+            'quantity' => (int) $data['quantity'],
+            'source' => $request->headers->get('referer'),
+            'ip_address' => $request->ip(),
+        ]);
+
         return back()->with('status', "{$product->name} ditambahkan ke cart.");
     }
 
@@ -47,6 +57,7 @@ class CartController extends Controller
         foreach ($data['quantities'] as $productId => $quantity) {
             if ((int) $quantity === 0) {
                 unset($cart[$productId]);
+
                 continue;
             }
 
@@ -56,6 +67,15 @@ class CartController extends Controller
         }
 
         session(['cart' => $cart]);
+
+        CartEvent::query()->create([
+            'session_id' => $request->session()->getId(),
+            'user_id' => $request->user()?->id,
+            'event' => 'updated',
+            'quantity' => collect($cart)->sum('quantity'),
+            'source' => $request->headers->get('referer'),
+            'ip_address' => $request->ip(),
+        ]);
 
         return back()->with('status', 'Cart diperbarui.');
     }

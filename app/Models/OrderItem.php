@@ -11,6 +11,7 @@ class OrderItem extends Model
         'product_id',
         'product_name',
         'product_sku',
+        'product_image_url',
         'quantity',
         'unit',
         'unit_price',
@@ -33,5 +34,10 @@ class OrderItem extends Model
     public function product()
     {
         return $this->belongsTo(Product::class);
+    }
+
+    public function review()
+    {
+        return $this->hasOne(ProductReview::class);
     }
 }

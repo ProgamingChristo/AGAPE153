@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 class CategoryController extends Controller
@@ -53,6 +54,21 @@ class CategoryController extends Controller
         return back()->with('status', 'Kategori dihapus.');
     }
 
+    public function trash()
+    {
+        return view('admin.categories.trash', [
+            'categories' => Category::onlyTrashed()->with('parent')->latest('deleted_at')->paginate(15),
+        ]);
+    }
+
+    public function restore(int $category)
+    {
+        $trashedCategory = Category::onlyTrashed()->findOrFail($category);
+        $trashedCategory->restore();
+
+        return redirect()->route('admin.categories.index')->with('status', 'Kategori berhasil direstore.');
+    }
+
     private function validated(Request $request, ?Category $category = null): array
     {
         $data = $request->validate([
@@ -61,7 +77,7 @@ class CategoryController extends Controller
             'slug' => ['nullable', 'string', 'max:140', 'unique:categories,slug,'.($category?->id ?? 'NULL')],
             'type' => ['required', 'in:spice,coffee,export,other'],
             'description' => ['nullable', 'string'],
-            'image_url' => ['nullable', 'url', 'max:500'],
+            'image_file' => ['nullable', 'image', 'max:4096'],
             'sort_order' => ['nullable', 'integer', 'min:0', 'max:999'],
             'is_active' => ['nullable', 'boolean'],
         ]);
@@ -69,6 +85,12 @@ class CategoryController extends Controller
         $data['slug'] = $data['slug'] ?: Str::slug($data['name']);
         $data['is_active'] = $request->boolean('is_active');
         $data['sort_order'] = (int) ($data['sort_order'] ?? 0);
+        unset($data['image_file']);
+
+        if ($request->hasFile('image_file')) {
+            $path = $request->file('image_file')->store('categories', 'public');
+            $data['image_url'] = Storage::url($path);
+        }
 
         return $data;
     }

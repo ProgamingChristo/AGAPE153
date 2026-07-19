@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\ContactMessage;
 use App\Models\Order;
 use App\Models\Product;
 use App\Models\ProductView;
@@ -17,6 +18,7 @@ class DashboardController extends Controller
             'totalOrders' => Order::query()->count(),
             'totalMembers' => User::query()->where('role', 'member')->count(),
             'totalViews' => ProductView::query()->count(),
+            'newMessages' => ContactMessage::query()->where('status', 'new')->count(),
             'recentOrders' => Order::query()->with('items')->latest()->take(6)->get(),
             'topProducts' => Product::query()->orderByDesc('view_count')->take(6)->get(),
         ]);

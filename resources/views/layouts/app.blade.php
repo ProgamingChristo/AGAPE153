@@ -5,42 +5,103 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>@yield('title', 'Agape153 - Indonesian Spices & Coffee Export')</title>
-    <meta name="description" content="@yield('description', 'Agape153 memasok rempah-rempah dan kopi Indonesia untuk pasar lokal dan ekspor global.')">
+    <meta name="description" content="@yield('description', 'Agape153 memasok rempah-rempah dan kopi Indonesia untuk pasar lokal dan ekspor international.')">
     <link rel="canonical" href="{{ url()->current() }}">
     <meta property="og:title" content="@yield('title', 'Agape153')">
     <meta property="og:description" content="@yield('description', 'Indonesian spices and coffee supplier.')">
     <meta property="og:type" content="website">
     <meta property="og:url" content="{{ url()->current() }}">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @yield('schema')
 </head>
-<body class="min-h-screen font-sans antialiased">
+<body class="user-shell min-h-screen font-sans antialiased" style="--agape-primary: {{ $siteAppearance['primary_color'] ?? '#0f766e' }}; --agape-accent: {{ $siteAppearance['accent_color'] ?? '#e9c95a' }}; --agape-soft: {{ $siteAppearance['soft_color'] ?? '#edf7f4' }};">
     @php
         $cartCount = collect(session('cart', []))->sum('quantity');
     @endphp
 
-    <header class="sticky top-0 z-40 border-b border-black/5 bg-white/90 backdrop-blur">
-        <nav class="agape-container flex min-h-16 items-center justify-between gap-6">
-            <a href="{{ route('home') }}" class="flex items-center gap-3 font-black tracking-tight text-teal-800">
-                <span class="grid h-9 w-9 place-items-center rounded-xl bg-teal-700 text-white">153</span>
-                <span>Agape153</span>
+    <div class="cursor-glow" data-cursor-glow></div>
+    <div class="cursor-ring" data-cursor-ring></div>
+    <div class="cursor-dot" data-cursor-dot></div>
+
+    <header data-site-header class="sticky top-0 z-40 border-b border-white/70 bg-white/75 shadow-[0_18px_48px_rgba(15,23,42,0.08)] backdrop-blur-2xl">
+        <div data-site-topbar class="border-b border-slate-200/70 bg-white/55">
+            <div class="agape-container flex min-h-9 items-center justify-between gap-3 overflow-x-auto text-xs font-bold text-slate-600">
+                <div class="flex shrink-0 items-center gap-2">
+                    <span class="h-2 w-2 rounded-full bg-teal-600 shadow-[0_0_0_4px_rgba(13,148,136,0.12)]"></span>
+                    Indonesian agriculture, spices, and coffee for international buyers
+                </div>
+                <div class="flex shrink-0 items-center gap-4">
+                    <a class="inline-flex items-center gap-1 hover:text-teal-700" href="mailto:{{ $siteContact['email'] }}">
+                        <x-icon name="mail" class="h-3.5 w-3.5" />
+                        {{ $siteContact['email'] }}
+                    </a>
+                    <a class="inline-flex items-center gap-1 hover:text-teal-700" href="https://wa.me/{{ preg_replace('/\D+/', '', $siteContact['whatsapp']) }}" target="_blank" rel="noopener">
+                        <x-icon name="phone" class="h-3.5 w-3.5" />
+                        {{ $siteContact['phone'] }}
+                    </a>
+                </div>
+            </div>
+        </div>
+        <nav class="agape-container flex flex-wrap items-center justify-between gap-3 py-3 lg:flex-nowrap">
+            <a href="{{ route('home') }}" class="shrink-0 transition hover:-translate-y-0.5" aria-label="Agape153 home">
+                <x-logo variant="compact" />
             </a>
-            <div class="hidden items-center gap-6 text-sm font-semibold text-slate-700 md:flex">
-                <a class="hover:text-teal-700" href="{{ route('home') }}#about">About</a>
-                <a class="hover:text-teal-700" href="{{ route('products.index') }}">Products</a>
-                <a class="hover:text-teal-700" href="{{ route('home') }}#export">Export</a>
-                <a class="hover:text-teal-700" href="{{ route('orders.track') }}">Tracking</a>
-                <a class="hover:text-teal-700" href="{{ route('home') }}#contact">Contact</a>
+            <div data-site-nav-menu class="order-3 flex w-full items-center gap-1 overflow-x-auto rounded-full border border-slate-200/80 bg-white/80 px-2 py-1 text-sm font-semibold text-slate-700 shadow-sm md:order-none md:w-auto md:overflow-visible">
+                <a class="nav-link shrink-0" href="{{ route('about') }}"><x-icon name="globe" class="h-4 w-4" />{{ $siteText['nav.about'] ?? 'About' }}</a>
+                <a class="nav-link shrink-0" href="{{ route('products.index') }}"><x-icon name="package" class="h-4 w-4" />{{ $siteText['nav.products'] ?? 'Products' }}</a>
+                <a class="nav-link shrink-0" href="{{ route('home') }}#export"><x-icon name="truck" class="h-4 w-4" />{{ $siteText['nav.export'] ?? 'Export' }}</a>
+                <a class="nav-link shrink-0" href="{{ route('orders.track') }}"><x-icon name="search" class="h-4 w-4" />{{ $siteText['nav.tracking'] ?? 'Tracking' }}</a>
+                @auth
+                    @unless (auth()->user()->isAdmin())
+                        <a class="nav-link shrink-0" href="{{ route('member.purchase-history') }}"><x-icon name="orders" class="h-4 w-4" />Invoice</a>
+                    @endunless
+                @endauth
+                <a class="nav-link shrink-0" href="{{ route('home') }}#contact"><x-icon name="phone" class="h-4 w-4" />{{ $siteText['nav.contact'] ?? 'Contact' }}</a>
             </div>
             <div class="flex items-center gap-2">
-                <a href="{{ route('cart.index') }}" class="rounded-xl border border-slate-200 px-3 py-2 text-sm font-bold text-slate-700 hover:border-teal-300 hover:text-teal-700">
-                    Cart {{ $cartCount ? "({$cartCount})" : '' }}
+                <form method="POST" action="{{ route('language.switch', app()->getLocale() === 'en' ? 'id' : 'en') }}">
+                    @csrf
+                    <button class="icon-button" type="submit" title="Switch language" aria-label="Switch language">
+                        <span class="text-xs font-black uppercase">{{ app()->getLocale() === 'en' ? 'ID' : 'EN' }}</span>
+                    </button>
+                </form>
+                <a href="{{ route('cart.index') }}" class="icon-button relative" title="Cart" aria-label="Open cart">
+                    <x-icon name="cart" class="h-5 w-5" />
+                    @if ($cartCount)
+                        <span class="absolute -right-1 -top-1 grid h-5 min-w-5 place-items-center rounded-full bg-teal-700 px-1 text-xs font-black text-white">{{ $cartCount }}</span>
+                    @endif
+                </a>
+                <a href="https://wa.me/{{ preg_replace('/\D+/', '', $siteContact['whatsapp']) }}" target="_blank" rel="noopener" class="hidden rounded-full bg-amber-300 px-4 py-2 text-sm font-black text-slate-950 shadow-[0_12px_26px_rgba(234,179,8,0.22)] transition hover:-translate-y-0.5 hover:bg-amber-200 lg:inline-flex lg:items-center lg:gap-2">
+                    <x-icon name="phone" class="h-4 w-4" />
+                    WhatsApp
                 </a>
                 @auth
-                    <a href="{{ auth()->user()->isAdmin() ? route('admin.dashboard') : route('member.dashboard') }}" class="hidden rounded-xl bg-slate-900 px-3 py-2 text-sm font-bold text-white sm:inline-flex">Dashboard</a>
+                    <a href="{{ auth()->user()->isAdmin() ? route('admin.dashboard') : route('member.dashboard') }}" class="icon-button sm:hidden" title="Dashboard" aria-label="Open dashboard">
+                        <x-icon name="dashboard" class="h-5 w-5" />
+                    </a>
+                    <a href="{{ auth()->user()->isAdmin() ? route('admin.dashboard') : route('member.dashboard') }}" class="hidden rounded-full bg-[#101820] px-4 py-2 text-sm font-bold text-white shadow-[0_12px_26px_rgba(16,24,32,0.18)] transition hover:-translate-y-0.5 hover:bg-teal-800 sm:inline-flex sm:items-center sm:gap-2">
+                        <x-icon name="dashboard" class="h-4 w-4" />
+                        Dashboard
+                    </a>
+                    <form method="POST" action="{{ route('logout') }}">
+                        @csrf
+                        <button class="btn-secondary px-3 py-2 text-sm" type="submit" title="Logout" aria-label="Logout">
+                            <x-icon name="logout" class="h-4 w-4" />
+                            <span class="hidden sm:inline">Logout</span>
+                        </button>
+                    </form>
                 @else
-                    <a href="{{ route('login') }}" class="hidden rounded-xl bg-slate-900 px-3 py-2 text-sm font-bold text-white sm:inline-flex">Login</a>
+                    <a href="{{ route('login') }}" class="icon-button sm:hidden" title="Login" aria-label="Login">
+                        <x-icon name="login" class="h-5 w-5" />
+                    </a>
+                    <a href="{{ route('login') }}" class="hidden rounded-full bg-[#101820] px-4 py-2 text-sm font-bold text-white shadow-[0_12px_26px_rgba(16,24,32,0.18)] transition hover:-translate-y-0.5 hover:bg-teal-800 sm:inline-flex sm:items-center sm:gap-2">
+                        <x-icon name="login" class="h-4 w-4" />
+                        Login
+                    </a>
                 @endauth
             </div>
         </nav>
@@ -67,28 +128,99 @@
         @yield('content')
     </main>
 
-    <footer class="border-t border-slate-200 bg-white">
-        <div class="agape-container grid gap-8 py-10 md:grid-cols-4">
-            <div class="md:col-span-2">
-                <div class="text-xl font-black text-teal-800">Agape153</div>
-                <p class="mt-3 max-w-xl text-sm leading-6 text-slate-600">Supplier rempah-rempah dan kopi Indonesia untuk pembeli lokal, distributor, horeca, dan importir global.</p>
-            </div>
-            <div>
-                <div class="font-bold text-slate-900">Company</div>
-                <div class="mt-3 grid gap-2 text-sm text-slate-600">
-                    <a href="{{ route('home') }}#about">Company Profile</a>
+    <footer class="border-t border-slate-200 bg-[#101820] text-white">
+        <div class="logo-stripe"><span></span><span></span><span></span></div>
+        <div class="agape-container grid gap-8 py-10 xl:grid-cols-[1.15fr_0.85fr]">
+            <div class="grid gap-8 md:grid-cols-[1.2fr_0.8fr_0.8fr]">
+                <div>
+                <x-logo />
+                <p class="mt-4 max-w-xl text-sm leading-6 text-slate-300">{{ $siteContact['footer_description'] }}</p>
+                <div class="mt-5 grid max-w-xl gap-3 sm:grid-cols-3">
+                    <div class="border border-white/10 bg-white/10 p-4">
+                        <div class="text-lg font-black text-amber-200">ID</div>
+                        <div class="text-xs font-bold text-slate-300">Sourcing origin</div>
+                    </div>
+                    <div class="border border-white/10 bg-white/10 p-4">
+                        <div class="text-lg font-black text-amber-200">B2B</div>
+                        <div class="text-xs font-bold text-slate-300">Buyer workflow</div>
+                    </div>
+                    <div class="border border-white/10 bg-white/10 p-4">
+                        <div class="text-lg font-black text-amber-200">153</div>
+                        <div class="text-xs font-bold text-slate-300">Agape trading</div>
+                    </div>
+                </div>
+                <div class="mt-5 flex flex-wrap gap-2">
+                    <a class="icon-button" href="{{ $siteContact['youtube_url'] }}" target="_blank" rel="noopener" title="YouTube" aria-label="YouTube"><x-icon name="globe" class="h-5 w-5" /></a>
+                    <a class="icon-button" href="{{ $siteContact['instagram_url'] }}" target="_blank" rel="noopener" title="Instagram" aria-label="Instagram"><x-icon name="at" class="h-5 w-5" /></a>
+                    <a class="icon-button" href="{{ $siteContact['facebook_url'] }}" target="_blank" rel="noopener" title="Facebook" aria-label="Facebook"><x-icon name="globe" class="h-5 w-5" /></a>
+                    <a class="icon-button" href="{{ $siteContact['linkedin_url'] }}" target="_blank" rel="noopener" title="LinkedIn" aria-label="LinkedIn"><x-icon name="globe" class="h-5 w-5" /></a>
+                    <a class="icon-button" href="{{ $siteContact['tiktok_url'] }}" target="_blank" rel="noopener" title="TikTok" aria-label="TikTok"><x-icon name="music" class="h-5 w-5" /></a>
+                    <a class="icon-button" href="{{ $siteContact['threads_url'] }}" target="_blank" rel="noopener" title="Threads" aria-label="Threads"><x-icon name="at" class="h-5 w-5" /></a>
+                </div>
+                </div>
+                <div>
+                <div class="font-bold text-white">Company</div>
+                <div class="mt-3 grid gap-2 text-sm text-slate-300">
+                    <a href="{{ route('about') }}">Company Profile</a>
                     <a href="{{ route('home') }}#certifications">Certifications</a>
                     <a href="{{ route('home') }}#faq">FAQ</a>
                 </div>
-            </div>
-            <div>
-                <div class="font-bold text-slate-900">Commerce</div>
-                <div class="mt-3 grid gap-2 text-sm text-slate-600">
-                    <a href="{{ route('products.index') }}">Product Catalog</a>
+                </div>
+                <div>
+                <div class="font-bold text-white">Buyer Tools</div>
+                <div class="mt-3 grid gap-2 text-sm text-slate-300">
+                    <a href="{{ route('products.index') }}">Catalog</a>
                     <a href="{{ route('cart.index') }}">Cart</a>
-                    <a href="{{ route('orders.track') }}">Order Tracking</a>
+                    <a href="{{ route('orders.track') }}">Tracking</a>
+                    @auth
+                        @unless (auth()->user()->isAdmin())
+                            <a href="{{ route('member.purchase-history') }}">Invoice</a>
+                        @endunless
+                    @endauth
+                </div>
+                <div class="mt-8 font-bold text-white">Contact</div>
+                <div class="mt-3 grid gap-2 text-sm text-slate-300">
+                    <a href="mailto:{{ $siteContact['email'] }}">{{ $siteContact['email'] }}</a>
+                    <a href="https://wa.me/{{ preg_replace('/\D+/', '', $siteContact['whatsapp']) }}" target="_blank" rel="noopener">{{ $siteContact['phone'] }}</a>
+                    <a class="btn-primary mt-2 w-max px-3 py-2 text-xs" href="{{ route('home') }}#contact">
+                        <x-icon name="message" class="h-4 w-4" />
+                        Contact Form
+                    </a>
+                </div>
                 </div>
             </div>
+
+            <aside class="overflow-hidden rounded-3xl border border-white/20 bg-white/12 p-4 shadow-[0_28px_80px_rgba(0,0,0,0.22)] backdrop-blur-xl">
+                <div class="logo-stripe -mx-4 -mt-4 mb-4"><span></span><span></span><span></span></div>
+                <div class="flex items-center justify-between border-b border-white/15 pb-4">
+                    <div>
+                        <div class="text-xs font-black uppercase tracking-[0.18em] text-slate-300">Live sourcing board</div>
+                        <div class="mt-1 text-xl font-black text-white">Buyer-ready flow</div>
+                    </div>
+                    <x-logo variant="compact" />
+                </div>
+                <div class="mt-4 grid gap-3">
+                    @foreach ([
+                        ['label' => 'Catalog Lines', 'value' => $siteFooterStats['catalog_lines'] ?? 0, 'value_class' => 'text-3xl text-amber-200'],
+                        ['label' => 'Featured SKUs', 'value' => $siteFooterStats['featured_skus'] ?? 0, 'value_class' => 'text-3xl text-sky-200'],
+                        ['label' => 'Payment', 'value' => 'Online / WhatsApp', 'value_class' => 'text-xl text-teal-200 text-right'],
+                    ] as $metric)
+                        <div class="flex items-center justify-between gap-4 rounded-2xl border border-white/10 bg-[#101820]/45 p-4">
+                            <span class="text-sm font-bold text-slate-300">{{ $metric['label'] }}</span>
+                            <strong class="{{ $metric['value_class'] }} font-black">{{ $metric['value'] }}</strong>
+                        </div>
+                    @endforeach
+                </div>
+                <div class="trade-ticker mt-4">
+                    <span>Spices</span>
+                    <span>Coffee</span>
+                    <span>Agriculture</span>
+                    <span>Export</span>
+                </div>
+            </aside>
+        </div>
+        <div class="agape-container border-t border-white/10 py-5 text-xs font-semibold text-slate-400">
+            &copy; {{ now()->year }} Agape153. Indonesian commodity trading desk.
         </div>
     </footer>
 </body>

@@ -13,6 +13,8 @@ class ProductController extends Controller
     {
         $products = Product::query()
             ->with('category')
+            ->withAvg(['reviews as reviews_avg_rating' => fn ($query) => $query->where('status', 'published')], 'rating')
+            ->withCount(['reviews as reviews_count' => fn ($query) => $query->where('status', 'published')])
             ->active()
             ->search($request->string('q')->toString())
             ->when($request->filled('category'), function ($query) use ($request): void {
@@ -46,7 +48,7 @@ class ProductController extends Controller
         ]);
 
         return view('products.show', [
-            'product' => $product->load(['category', 'images']),
+            'product' => $product->load(['category', 'images', 'publishedReviews.user', 'publishedReviews.repliedBy']),
             'relatedProducts' => Product::query()
                 ->active()
                 ->where('category_id', $product->category_id)

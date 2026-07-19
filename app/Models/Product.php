@@ -17,6 +17,7 @@ class Product extends Model
         'sku',
         'short_description',
         'description',
+        'product_details',
         'origin',
         'grade',
         'unit',
@@ -28,6 +29,7 @@ class Product extends Model
         'is_active',
         'export_ready',
         'image_url',
+        'video_url',
         'meta_title',
         'meta_description',
         'view_count',
@@ -40,6 +42,7 @@ class Product extends Model
             'is_featured' => 'boolean',
             'is_active' => 'boolean',
             'export_ready' => 'boolean',
+            'product_details' => 'array',
         ];
     }
 
@@ -61,6 +64,26 @@ class Product extends Model
     public function orderItems()
     {
         return $this->hasMany(OrderItem::class);
+    }
+
+    public function stockMovements()
+    {
+        return $this->hasMany(StockMovement::class);
+    }
+
+    public function reviews()
+    {
+        return $this->hasMany(ProductReview::class);
+    }
+
+    public function publishedReviews()
+    {
+        return $this->hasMany(ProductReview::class)->where('status', 'published')->latest();
+    }
+
+    public function averageRating(): float
+    {
+        return round((float) $this->publishedReviews()->avg('rating'), 1);
     }
 
     public function scopeActive($query)
@@ -94,5 +117,40 @@ class Product extends Model
         }
 
         return 'Rp'.number_format((float) $this->price, 0, ',', '.').'/'.$this->unit;
+    }
+
+    public function videoEmbedUrl(): ?string
+    {
+        if (! $this->video_url) {
+            return null;
+        }
+
+        $url = $this->video_url;
+
+        if (preg_match('/(?:youtube\.com\/watch\?v=|youtu\.be\/)([A-Za-z0-9_-]+)/', $url, $matches)) {
+            return 'https://www.youtube.com/embed/'.$matches[1];
+        }
+
+        if (preg_match('/vimeo\.com\/(\d+)/', $url, $matches)) {
+            return 'https://player.vimeo.com/video/'.$matches[1];
+        }
+
+        $path = parse_url($url, PHP_URL_PATH) ?: $url;
+        if (preg_match('/\.(html?|php)$/i', $path)) {
+            return $url;
+        }
+
+        return null;
+    }
+
+    public function videoFileUrl(): ?string
+    {
+        if (! $this->video_url) {
+            return null;
+        }
+
+        $path = parse_url($this->video_url, PHP_URL_PATH) ?: $this->video_url;
+
+        return preg_match('/\.(mp4|webm|ogg)$/i', $path) ? $this->video_url : null;
     }
 }
