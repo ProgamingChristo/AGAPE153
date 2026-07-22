@@ -198,7 +198,7 @@ class ProductController extends Controller
                 ]);
             }
 
-            $data['image_url'] = Storage::disk('public')->url($path);
+            $data['image_url'] = '/storage/'.$path;
         }
 
         if ($request->hasFile('video_file')) {
@@ -210,7 +210,7 @@ class ProductController extends Controller
                 ]);
             }
 
-            $data['video_url'] = Storage::disk('public')->url($path);
+            $data['video_url'] = '/storage/'.$path;
         }
 
         return $data;

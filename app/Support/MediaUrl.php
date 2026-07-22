@@ -14,10 +14,6 @@ class MediaUrl
             return null;
         }
 
-        if (Str::startsWith($value, ['http://', 'https://', '//', 'data:'])) {
-            return $value;
-        }
-
         $path = ltrim(parse_url($value, PHP_URL_PATH) ?: $value, '/');
 
         if (Str::startsWith($path, 'storage/')) {
@@ -26,6 +22,10 @@ class MediaUrl
 
         if (Str::startsWith($path, 'app/public/')) {
             return url('media/'.self::encodePath(Str::after($path, 'app/public/')));
+        }
+
+        if (Str::startsWith($value, ['http://', 'https://', '//', 'data:'])) {
+            return $value;
         }
 
         return asset($path);

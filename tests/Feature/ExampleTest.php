@@ -10,6 +10,7 @@ use App\Models\ProductReview;
 use App\Models\User;
 use App\Models\WebsiteSetting;
 use App\Models\WhatsAppVerificationCode;
+use App\Support\MediaUrl;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Hash;
@@ -398,6 +399,13 @@ class ExampleTest extends TestCase
         $this->assertCount(2, $product->product_details);
         Storage::disk('public')->assertExists(str_replace('/storage/', '', $product->getRawOriginal('image_url')));
         Storage::disk('public')->assertExists(str_replace('/storage/', '', $product->getRawOriginal('video_url')));
+    }
+
+    public function test_media_url_converts_absolute_storage_urls_to_media_route(): void
+    {
+        config(['app.url' => 'https://agape153.com']);
+
+        $this->assertSame(url('media/products/arabica%20roasted.jpg'), MediaUrl::public('https://agape153.com/storage/products/arabica roasted.jpg'));
     }
 
     public function test_admin_can_accept_order(): void
