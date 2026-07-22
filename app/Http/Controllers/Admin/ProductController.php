@@ -11,6 +11,7 @@ use App\Services\NotificationService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use Illuminate\Validation\ValidationException;
 
 class ProductController extends Controller
 {
@@ -45,7 +46,7 @@ class ProductController extends Controller
     {
         Product::query()->create($this->validated($request));
 
-        return redirect()->route('admin.products.index')->with('status', 'Produk berhasil dibuat.');
+        return redirect()->route('admin.products.index')->with('success', 'Produk berhasil dibuat.');
     }
 
     public function edit(Product $product)
@@ -58,9 +59,13 @@ class ProductController extends Controller
 
     public function update(Request $request, Product $product)
     {
+        $hasMediaUpload = $request->hasFile('image_file') || $request->hasFile('video_file');
+
         $product->update($this->validated($request, $product));
 
-        return redirect()->route('admin.products.index')->with('status', 'Produk diperbarui.');
+        return redirect()
+            ->route('admin.products.index')
+            ->with('success', $hasMediaUpload ? 'Produk dan media berhasil diperbarui.' : 'Produk diperbarui.');
     }
 
     public function destroy(Product $product)
@@ -186,12 +191,26 @@ class ProductController extends Controller
 
         if ($request->hasFile('image_file')) {
             $path = $request->file('image_file')->store('products', 'public');
-            $data['image_url'] = Storage::url($path);
+
+            if (! $path) {
+                throw ValidationException::withMessages([
+                    'image_file' => 'Upload gambar gagal. Pastikan file gambar valid dan folder storage dapat ditulis.',
+                ]);
+            }
+
+            $data['image_url'] = Storage::disk('public')->url($path);
         }
 
         if ($request->hasFile('video_file')) {
             $path = $request->file('video_file')->store('products/videos', 'public');
-            $data['video_url'] = Storage::url($path);
+
+            if (! $path) {
+                throw ValidationException::withMessages([
+                    'video_file' => 'Upload video gagal. Pastikan format video valid dan ukuran file sesuai batas.',
+                ]);
+            }
+
+            $data['video_url'] = Storage::disk('public')->url($path);
         }
 
         return $data;

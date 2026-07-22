@@ -120,5 +120,6 @@
             @yield('content')
         </main>
     </div>
+    <x-flash-alerts />
 </body>
 </html>

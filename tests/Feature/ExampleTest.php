@@ -389,13 +389,15 @@ class ExampleTest extends TestCase
 
         $product = Product::query()->where('slug', 'arabica-upload-test')->firstOrFail();
 
-        $this->assertStringStartsWith('/storage/products/', $product->image_url);
-        $this->assertStringStartsWith('/storage/products/videos/', $product->video_url);
+        $this->assertStringStartsWith('/storage/products/', $product->getRawOriginal('image_url'));
+        $this->assertStringStartsWith('/storage/products/videos/', $product->getRawOriginal('video_url'));
+        $this->assertStringContainsString('/media/products/', $product->image_url);
+        $this->assertStringContainsString('/media/products/videos/', $product->video_url);
         $this->assertSame('Packaging', $product->product_details[0]['label']);
         $this->assertSame('Vacuum pack', $product->product_details[0]['value']);
         $this->assertCount(2, $product->product_details);
-        Storage::disk('public')->assertExists(str_replace('/storage/', '', $product->image_url));
-        Storage::disk('public')->assertExists(str_replace('/storage/', '', $product->video_url));
+        Storage::disk('public')->assertExists(str_replace('/storage/', '', $product->getRawOriginal('image_url')));
+        Storage::disk('public')->assertExists(str_replace('/storage/', '', $product->getRawOriginal('video_url')));
     }
 
     public function test_admin_can_accept_order(): void

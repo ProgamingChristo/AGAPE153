@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Support\MediaUrl;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
 
 class ProductImage extends Model
@@ -13,6 +15,13 @@ class ProductImage extends Model
         return [
             'is_primary' => 'boolean',
         ];
+    }
+
+    protected function imageUrl(): Attribute
+    {
+        return Attribute::make(
+            get: fn ($value): ?string => MediaUrl::public($value),
+        );
     }
 
     public function product()

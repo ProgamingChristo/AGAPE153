@@ -225,5 +225,6 @@
             &copy; {{ now()->year }} Agape153. {{ $t['footer.copyright'] ?? 'Indonesian commodity trading desk.' }}
         </div>
     </footer>
+    <x-flash-alerts />
 </body>
 </html>
