@@ -1,12 +1,36 @@
 @extends('layouts.app')
 
-@section('title', 'About Agape153 - Indonesian Agriculture International Commodity Trading')
-@section('description', 'Agape153 is an Indonesian agricultural commodity trading company connecting spices, herbal roots, and premium products to international buyers.')
+@section('title', ($siteText['nav.about'] ?? 'About').' Agape153 - Indonesian Agriculture International Commodity Trading')
+@section('description', $siteText['meta.description'] ?? 'Agape153 is an Indonesian agricultural commodity trading company connecting spices, herbal roots, and premium products to international buyers.')
 
 @section('content')
+    @php
+        $t = $siteText ?? [];
+        $slideSeconds = 2;
+        $aboutSlides = collect([
+            'nutmeg-pala-whole-mace.jpg',
+            'cloves-cengkeh.jpg',
+            'white-pepper.jpg',
+            'black-pepper.jpg',
+            'dried-chili-cabe-kering.jpg',
+            'chili-powder-cabe-bubuk.jpg',
+            'garlic-bawang-putih.jpg',
+            'turmeric-kunyit.jpg',
+            'galangal-lengkuas.jpg',
+            'curcuma-xanthorrhiza-temulawak.jpg',
+            'papaya-leaves-daun-papaya.jpg',
+            'banana-stem-batang-pisang.jpg',
+            'robusta-green-beans.jpg',
+            'arabica-green-beans.jpg',
+        ])->map(fn ($image) => asset('images/catalog/'.$image));
+    @endphp
     <section class="relative overflow-hidden bg-slate-950 text-white">
-        <div class="absolute inset-0">
-            <img class="h-full w-full object-cover opacity-35" src="https://images.unsplash.com/photo-1586201375761-83865001e31c?auto=format&fit=crop&w=1800&q=80" alt="Indonesian agriculture commodity">
+        <div class="hero-slideshow absolute inset-0" style="--hero-slide-duration: {{ max(1, $aboutSlides->count()) * $slideSeconds }}s;">
+            @foreach ($aboutSlides as $index => $slide)
+                <img class="hero-slide" style="--hero-slide-delay: {{ $index * $slideSeconds }}s;" src="{{ $slide }}" onerror="this.src='{{ asset('images/product-placeholder.svg') }}'" alt="Agape153 about commodity {{ $index + 1 }}" fetchpriority="{{ $index === 0 ? 'high' : 'auto' }}">
+            @endforeach
+            <div class="absolute inset-0 bg-gradient-to-r from-slate-950/78 via-slate-950/62 to-slate-950/44"></div>
+            <div class="absolute inset-0 bg-[radial-gradient(circle_at_20%_22%,rgba(233,201,90,0.18),transparent_30%),radial-gradient(circle_at_80%_70%,rgba(45,157,183,0.16),transparent_34%)]"></div>
         </div>
         <div class="agape-container relative grid min-h-[70vh] items-center gap-10 py-16 lg:grid-cols-[1.05fr_0.95fr]">
             <div class="fade-up">
@@ -19,11 +43,11 @@
                 <div class="mt-8 flex flex-wrap gap-3">
                     <a href="{{ route('products.index', ['export_ready' => 1]) }}" class="btn-primary">
                         <x-icon name="package" class="h-4 w-4" />
-                        Export Catalog
+                        {{ $t['about.catalog_button'] ?? 'Product Catalog' }}
                     </a>
                     <a href="{{ route('about', ['lang' => $locale === 'en' ? 'id' : 'en']) }}" class="btn-secondary">
                         <x-icon name="language" class="h-4 w-4" />
-                        {{ $locale === 'en' ? 'Read in Bahasa' : 'Read in English' }}
+                        {{ $locale === 'en' ? ($t['about.language_id'] ?? 'Read in Bahasa') : ($t['about.language_en'] ?? 'Read in English') }}
                     </a>
                 </div>
             </div>
@@ -41,8 +65,8 @@
     <section class="section-pad bg-white">
         <div class="agape-container grid gap-10 lg:grid-cols-[0.85fr_1.15fr]">
             <div>
-                <p class="text-sm font-black uppercase tracking-[0.22em] text-teal-700">The Journey</p>
-                <h2 class="mt-3 text-3xl font-black text-slate-950 sm:text-4xl">From local sourcing roots to international trading trust.</h2>
+                <p class="text-sm font-black uppercase tracking-[0.22em] text-teal-700">{{ $t['about.journey_kicker'] ?? 'The Journey' }}</p>
+                <h2 class="mt-3 text-3xl font-black text-slate-950 sm:text-4xl">{{ $t['about.journey_title'] ?? 'From local sourcing roots to international trading trust.' }}</h2>
             </div>
             <div class="grid gap-4">
                 @foreach ($content['overview'] as $index => $paragraph)
@@ -78,12 +102,12 @@
         <div class="agape-container">
             <div class="flex flex-col justify-between gap-4 md:flex-row md:items-end">
                 <div>
-                    <p class="text-sm font-black uppercase tracking-[0.22em] text-teal-700">Commodity Focus</p>
-                    <h2 class="mt-3 text-3xl font-black text-slate-950 sm:text-4xl">Products aligned with international demand.</h2>
+                    <p class="text-sm font-black uppercase tracking-[0.22em] text-teal-700">{{ $t['about.focus_kicker'] ?? 'Commodity Focus' }}</p>
+                    <h2 class="mt-3 text-3xl font-black text-slate-950 sm:text-4xl">{{ $t['about.focus_title'] ?? 'Products aligned with international demand.' }}</h2>
                 </div>
                 <a class="btn-secondary" href="{{ route('products.index') }}">
                     <x-icon name="search" class="h-4 w-4" />
-                    Browse Products
+                    {{ $t['about.browse_products'] ?? 'Browse Products' }}
                 </a>
             </div>
             <div class="mt-8 grid gap-5 md:grid-cols-3">
@@ -106,7 +130,7 @@
 
     <section class="section-pad bg-slate-950 text-white">
         <div class="agape-container">
-            <p class="text-sm font-black uppercase tracking-[0.22em] text-teal-300">Operating Pillars</p>
+            <p class="text-sm font-black uppercase tracking-[0.22em] text-teal-300">{{ $t['about.pillars_kicker'] ?? 'Operating Pillars' }}</p>
             <div class="mt-6 grid gap-5 lg:grid-cols-3">
                 @foreach ($content['pillars'] as $index => $pillar)
                     <article class="lift-card rounded-2xl border border-white/10 bg-white/10 p-6 backdrop-blur">
@@ -124,33 +148,33 @@
     <section class="section-pad bg-white">
         <div class="agape-container grid gap-8 lg:grid-cols-[0.9fr_1.1fr]">
             <div>
-                <p class="text-sm font-black uppercase tracking-[0.22em] text-teal-700">Contact Information</p>
-                <h2 class="mt-3 text-3xl font-black text-slate-950 sm:text-4xl">Ready for sourcing and partnership discussions.</h2>
+                <p class="text-sm font-black uppercase tracking-[0.22em] text-teal-700">{{ $t['about.contact_kicker'] ?? 'Contact Information' }}</p>
+                <h2 class="mt-3 text-3xl font-black text-slate-950 sm:text-4xl">{{ $t['about.contact_title'] ?? 'Ready for sourcing and partnership discussions.' }}</h2>
             </div>
             <div class="grid gap-4 sm:grid-cols-3">
                 <div class="rounded-2xl border border-slate-200 p-5">
                     <x-icon name="mail" class="h-5 w-5 text-teal-700" />
-                    <div class="mt-3 text-sm text-slate-500">Email</div>
+                    <div class="mt-3 text-sm text-slate-500">{{ $t['about.email'] ?? 'Email' }}</div>
                     <a class="mt-1 block break-words font-black text-slate-950 hover:text-teal-700" href="mailto:{{ $siteContact['email'] }}">{{ $siteContact['email'] }}</a>
                 </div>
                 <div class="rounded-2xl border border-slate-200 p-5">
                     <x-icon name="phone" class="h-5 w-5 text-teal-700" />
-                    <div class="mt-3 text-sm text-slate-500">Phone / WhatsApp</div>
+                    <div class="mt-3 text-sm text-slate-500">{{ $t['about.phone'] ?? 'Phone / WhatsApp' }}</div>
                     <a class="mt-1 block font-black text-slate-950 hover:text-teal-700" href="https://wa.me/{{ preg_replace('/\D+/', '', $siteContact['whatsapp']) }}" target="_blank" rel="noopener">{{ $siteContact['phone'] }}</a>
                 </div>
                 <div class="rounded-2xl border border-slate-200 p-5">
                     <x-icon name="map" class="h-5 w-5 text-teal-700" />
-                    <div class="mt-3 text-sm text-slate-500">Location</div>
+                    <div class="mt-3 text-sm text-slate-500">{{ $t['about.location'] ?? 'Location' }}</div>
                     <div class="mt-1 font-black text-slate-950">Jakarta, Indonesia</div>
                 </div>
             </div>
             <div class="mt-5 flex flex-wrap gap-2 lg:col-start-2">
-                <a class="btn-secondary" href="{{ $siteContact['youtube_url'] }}" target="_blank" rel="noopener"><x-icon name="globe" class="h-4 w-4" />YouTube</a>
-                <a class="btn-secondary" href="{{ $siteContact['instagram_url'] }}" target="_blank" rel="noopener"><x-icon name="at" class="h-4 w-4" />Instagram</a>
-                <a class="btn-secondary" href="{{ $siteContact['facebook_url'] }}" target="_blank" rel="noopener"><x-icon name="globe" class="h-4 w-4" />Facebook</a>
-                <a class="btn-secondary" href="{{ $siteContact['linkedin_url'] }}" target="_blank" rel="noopener"><x-icon name="globe" class="h-4 w-4" />LinkedIn</a>
-                <a class="btn-secondary" href="{{ $siteContact['tiktok_url'] }}" target="_blank" rel="noopener"><x-icon name="music" class="h-4 w-4" />TikTok</a>
-                <a class="btn-secondary" href="{{ $siteContact['threads_url'] }}" target="_blank" rel="noopener"><x-icon name="at" class="h-4 w-4" />Threads</a>
+                <a class="icon-button" href="{{ $siteContact['youtube_url'] }}" target="_blank" rel="noopener" title="YouTube" aria-label="YouTube"><x-icon name="youtube" class="h-5 w-5" /></a>
+                <a class="icon-button" href="{{ $siteContact['instagram_url'] }}" target="_blank" rel="noopener" title="Instagram" aria-label="Instagram"><x-icon name="instagram" class="h-5 w-5" /></a>
+                <a class="icon-button" href="{{ $siteContact['facebook_url'] }}" target="_blank" rel="noopener" title="Facebook" aria-label="Facebook"><x-icon name="facebook" class="h-5 w-5" /></a>
+                <a class="icon-button" href="{{ $siteContact['linkedin_url'] }}" target="_blank" rel="noopener" title="LinkedIn" aria-label="LinkedIn"><x-icon name="linkedin" class="h-5 w-5" /></a>
+                <a class="icon-button" href="{{ $siteContact['tiktok_url'] }}" target="_blank" rel="noopener" title="TikTok" aria-label="TikTok"><x-icon name="tiktok" class="h-5 w-5" /></a>
+                <a class="icon-button" href="{{ $siteContact['threads_url'] }}" target="_blank" rel="noopener" title="Threads" aria-label="Threads"><x-icon name="threads" class="h-5 w-5" /></a>
             </div>
         </div>
     </section>

@@ -25,6 +25,14 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         View::composer('*', function ($view): void {
+            $fontOptions = config('agape.font_families', []);
+            $fontKey = WebsiteSetting::value('appearance_font_family', 'plus_jakarta');
+            $font = $fontOptions[$fontKey] ?? $fontOptions['plus_jakarta'] ?? [
+                'label' => 'Plus Jakarta Sans',
+                'url' => 'https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap',
+                'stack' => "'Plus Jakarta Sans', ui-sans-serif, system-ui, sans-serif",
+            ];
+
             $view->with('siteContact', [
                 'phone' => WebsiteSetting::value('phone_number', '+62816795153'),
                 'whatsapp' => WebsiteSetting::value('whatsapp_number', '+62816795153'),
@@ -45,6 +53,10 @@ class AppServiceProvider extends ServiceProvider
                 'accent_color' => WebsiteSetting::value('appearance_accent_color', '#e9c95a'),
                 'soft_color' => WebsiteSetting::value('appearance_soft_color', '#edf7f4'),
                 'homepage_layout' => WebsiteSetting::value('appearance_homepage_layout', 'classic'),
+                'font_family' => $fontKey,
+                'font_label' => $font['label'],
+                'font_url' => $font['url'],
+                'font_stack' => $font['stack'],
                 'hero_badge' => WebsiteSetting::value('appearance_hero_badge', 'Indonesian spices and coffee supplier'),
                 'hero_title' => WebsiteSetting::value('appearance_hero_title', 'Agape153'),
                 'hero_subtitle' => WebsiteSetting::value('appearance_hero_subtitle', 'Katalog rempah-rempah, kopi arabica, dan robusta Indonesia untuk pembeli lokal, retail, horeca, distributor, dan importir internasional.'),
@@ -65,10 +77,14 @@ class AppServiceProvider extends ServiceProvider
                 'featured_skus' => Product::query()->active()->featured()->count(),
             ]);
             $locale = app()->getLocale();
-            $view->with('siteText', ContentTranslation::query()
+            $fallbackText = trans('site');
+            $fallbackText = is_array($fallbackText) ? $fallbackText : [];
+            $customText = ContentTranslation::query()
                 ->where('locale', $locale)
                 ->pluck('value', 'key')
-                ->all());
+                ->all();
+
+            $view->with('siteText', array_merge($fallbackText, $customText));
         });
     }
 }

@@ -1,21 +1,20 @@
-<svg width="520" height="250" viewBox="80 50 480 230" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+<svg width="218" height="144" viewBox="0 0 218 144" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
   <title id="title">Agape153 Logo</title>
-  <desc id="desc">AGAPE text above three numbered boxes: 1, 5, and 3.</desc>
-  <rect width="640" height="360" fill="white"/>
-  <text x="320" y="112" text-anchor="middle" font-family="Arial Black, Impact, system-ui, sans-serif" font-size="76" font-weight="900" letter-spacing="3" fill="#E9C95A">AGAPE</text>
-  <g transform="translate(94 150)">
-    <rect x="0" y="0" width="134" height="111" fill="#F5F6F4" stroke="#111111" stroke-width="5"/>
-    <rect x="11" y="11" width="112" height="89" fill="#E84D3D" stroke="#111111" stroke-width="4"/>
-    <text x="67" y="83" text-anchor="middle" font-family="Arial Black, Impact, system-ui, sans-serif" font-size="76" font-weight="900" fill="#111111">1</text>
+  <desc id="desc">AGAPE text aligned above three numbered boxes: 1, 5, and 3.</desc>
+  <text x="109" y="42" text-anchor="middle" font-family="Arial Black, Impact, system-ui, sans-serif" font-size="44" font-weight="900" letter-spacing="1" fill="#E9C95A">AGAPE</text>
+  <g transform="translate(0 61)">
+    <rect x="1.5" y="1.5" width="65" height="79" rx="1.5" fill="#F6F7F2" stroke="#111111" stroke-width="3"/>
+    <rect x="7.5" y="7.5" width="53" height="67" fill="#E64B3C" stroke="#111111" stroke-width="2.5"/>
+    <text x="34" y="66" text-anchor="middle" font-family="Arial Black, Impact, system-ui, sans-serif" font-size="65" font-weight="900" fill="#050505">1</text>
   </g>
-  <g transform="translate(253 150)">
-    <rect x="0" y="0" width="134" height="111" fill="#F5F6F4" stroke="#111111" stroke-width="5"/>
-    <rect x="11" y="11" width="112" height="89" fill="#F5DE67" stroke="#111111" stroke-width="4"/>
-    <text x="67" y="83" text-anchor="middle" font-family="Arial Black, Impact, system-ui, sans-serif" font-size="76" font-weight="900" fill="#111111">5</text>
+  <g transform="translate(75 61)">
+    <rect x="1.5" y="1.5" width="65" height="79" rx="1.5" fill="#F6F7F2" stroke="#111111" stroke-width="3"/>
+    <rect x="7.5" y="7.5" width="53" height="67" fill="#E9C95A" stroke="#111111" stroke-width="2.5"/>
+    <text x="34" y="66" text-anchor="middle" font-family="Arial Black, Impact, system-ui, sans-serif" font-size="65" font-weight="900" fill="#050505">5</text>
   </g>
-  <g transform="translate(412 150)">
-    <rect x="0" y="0" width="134" height="111" fill="#F5F6F4" stroke="#111111" stroke-width="5"/>
-    <rect x="11" y="11" width="112" height="89" fill="#58C7DC" stroke="#111111" stroke-width="4"/>
-    <text x="67" y="83" text-anchor="middle" font-family="Arial Black, Impact, system-ui, sans-serif" font-size="76" font-weight="900" fill="#111111">3</text>
+  <g transform="translate(150 61)">
+    <rect x="1.5" y="1.5" width="65" height="79" rx="1.5" fill="#F6F7F2" stroke="#111111" stroke-width="3"/>
+    <rect x="7.5" y="7.5" width="53" height="67" fill="#58C7DC" stroke="#111111" stroke-width="2.5"/>
+    <text x="34" y="66" text-anchor="middle" font-family="Arial Black, Impact, system-ui, sans-serif" font-size="65" font-weight="900" fill="#050505">3</text>
   </g>
 </svg>

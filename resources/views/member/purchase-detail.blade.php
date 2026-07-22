@@ -148,7 +148,7 @@
                         <dd class="font-black text-slate-950">{{ strtoupper($order->payment_status) }}</dd>
                     </div>
                     <div class="flex justify-between gap-4 rounded-2xl bg-[#f8faf9] p-4">
-                        <dt class="text-slate-500">Tracking</dt>
+                        <dt class="text-slate-500">Shipping</dt>
                         <dd class="font-black text-slate-950">{{ $order->tracking_code ?: '-' }}</dd>
                     </div>
                     <div class="flex justify-between gap-4 rounded-2xl bg-[#f8faf9] p-4">
@@ -180,7 +180,7 @@
                 @if ($order->tracking_url)
                     <a class="btn-secondary mt-3 w-full" href="{{ $order->tracking_url }}" target="_blank" rel="noopener">
                         <x-icon name="truck" class="h-4 w-4" />
-                        Open Logistic Tracking
+                        Open Shipping Tracking
                     </a>
                 @endif
             </aside>

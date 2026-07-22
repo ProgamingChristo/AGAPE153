@@ -1,15 +1,18 @@
 @extends('layouts.app')
 
-@section('title', 'Order Tracking - Agape153')
+@section('title', 'Shipping Status - Agape153')
 
 @section('content')
+    @php
+        $t = $siteText ?? [];
+    @endphp
     <section class="relative overflow-hidden bg-slate-950 text-white">
         <div class="absolute inset-0">
             <img class="h-full w-full object-cover opacity-30" src="https://images.unsplash.com/photo-1494412651409-8963ce7935a7?auto=format&fit=crop&w=1800&q=80" alt="Order tracking logistics">
             <div class="absolute inset-0 bg-slate-950/72"></div>
         </div>
         <div class="agape-container relative py-12" data-reveal>
-            <p class="section-kicker text-amber-200"><x-icon name="search" class="h-4 w-4" />Order Tracking</p>
+            <p class="section-kicker text-amber-200"><x-icon name="truck" class="h-4 w-4" />{{ $t['nav.shipping'] ?? 'Shipping' }}</p>
             <h1 class="mt-3 max-w-4xl text-4xl font-black leading-tight sm:text-6xl">Track order, payment, and shipping progress.</h1>
             <p class="mt-4 max-w-2xl leading-8 text-slate-200">Use order number or tracking code from your checkout/invoice page.</p>
         </div>
@@ -45,7 +48,7 @@
 
                         <div class="mt-6 grid gap-4 sm:grid-cols-3">
                             <div class="rounded-2xl bg-[#f8faf9] p-4">
-                                <div class="text-xs font-black uppercase tracking-[0.14em] text-slate-500">Tracking Code</div>
+                                <div class="text-xs font-black uppercase tracking-[0.14em] text-slate-500">Shipping Code</div>
                                 <div class="mt-1 font-black text-slate-950">{{ $order->tracking_code ?: '-' }}</div>
                             </div>
                             <div class="rounded-2xl bg-[#f8faf9] p-4">
@@ -97,7 +100,7 @@
                             @if ($order->tracking_url)
                                 <a class="btn-primary" href="{{ $order->tracking_url }}" target="_blank" rel="noopener">
                                     <x-icon name="truck" class="h-4 w-4" />
-                                    Open Logistic Tracking
+                                    Open Shipping Tracking
                                 </a>
                             @endif
                             <a class="btn-secondary" href="{{ route('products.index') }}">Browse More Products</a>

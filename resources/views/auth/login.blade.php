@@ -16,7 +16,7 @@
                     <p class="mt-8 text-sm font-black uppercase tracking-[0.22em] text-teal-700">Buyer Center</p>
                     <h1 class="mt-3 max-w-xl text-5xl font-black leading-tight text-slate-950">Satu akun untuk order, invoice, tracking, dan repeat purchase.</h1>
                     <div class="mt-8 grid max-w-xl grid-cols-3 gap-3">
-                        @foreach ([['icon' => 'cart', 'label' => 'Cart'], ['icon' => 'download', 'label' => 'Invoice'], ['icon' => 'truck', 'label' => 'Tracking']] as $item)
+                        @foreach ([['icon' => 'cart', 'label' => 'Cart'], ['icon' => 'download', 'label' => 'Invoice'], ['icon' => 'truck', 'label' => 'Shipping']] as $item)
                             <div class="rounded-2xl border border-white/80 bg-white/75 p-4 shadow-sm backdrop-blur">
                                 <x-icon :name="$item['icon']" class="h-5 w-5 text-teal-700" />
                                 <div class="mt-3 text-sm font-black text-slate-800">{{ $item['label'] }}</div>

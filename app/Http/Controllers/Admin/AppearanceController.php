@@ -14,16 +14,24 @@ class AppearanceController extends Controller
     {
         return view('admin.appearance.edit', [
             'appearance' => $this->appearance(),
+            'fontOptions' => config('agape.font_families', []),
         ]);
     }
 
     public function update(Request $request)
     {
+        if (! $request->filled('font_family')) {
+            $request->merge([
+                'font_family' => WebsiteSetting::value('appearance_font_family', 'plus_jakarta'),
+            ]);
+        }
+
         $data = $request->validate([
             'primary_color' => ['required', 'regex:/^#[0-9A-Fa-f]{6}$/'],
             'accent_color' => ['required', 'regex:/^#[0-9A-Fa-f]{6}$/'],
             'soft_color' => ['required', 'regex:/^#[0-9A-Fa-f]{6}$/'],
             'homepage_layout' => ['required', 'in:classic,compact,catalog_first'],
+            'font_family' => ['required', 'in:'.implode(',', array_keys(config('agape.font_families', [])))],
             'hero_badge' => ['required', 'string', 'max:120'],
             'hero_title' => ['required', 'string', 'max:120'],
             'hero_subtitle' => ['required', 'string', 'max:260'],
@@ -62,6 +70,7 @@ class AppearanceController extends Controller
             'accent_color',
             'soft_color',
             'homepage_layout',
+            'font_family',
             'hero_badge',
             'hero_title',
             'hero_subtitle',
@@ -107,6 +116,7 @@ class AppearanceController extends Controller
             'accent_color' => WebsiteSetting::value('appearance_accent_color', '#e9c95a'),
             'soft_color' => WebsiteSetting::value('appearance_soft_color', '#edf7f4'),
             'homepage_layout' => WebsiteSetting::value('appearance_homepage_layout', 'classic'),
+            'font_family' => WebsiteSetting::value('appearance_font_family', 'plus_jakarta'),
             'hero_badge' => WebsiteSetting::value('appearance_hero_badge', 'Indonesian spices and coffee supplier'),
             'hero_title' => WebsiteSetting::value('appearance_hero_title', 'Agape153'),
             'hero_subtitle' => WebsiteSetting::value('appearance_hero_subtitle', 'Katalog rempah-rempah, kopi arabica, dan robusta Indonesia untuk pembeli lokal, retail, horeca, distributor, dan importir internasional.'),

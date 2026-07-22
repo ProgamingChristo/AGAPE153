@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
-@section('title', 'Agape153 - Indonesian Commodity Trading Desk')
-@section('description', 'Agape153 supplies Indonesian spices, coffee, and agriculture commodities for local buyers and international trading partners.')
+@section('title', $siteText['meta.title'] ?? 'Agape153 - Indonesian Commodity Trading Desk')
+@section('description', $siteText['meta.description'] ?? 'Agape153 supplies Indonesian spices, coffee, and agriculture commodities for local buyers and international trading partners.')
 
 @section('schema')
 <script type="application/ld+json">
@@ -29,62 +29,66 @@
 
 @section('content')
     @php
-        $heroSlides = collect($siteAppearance['hero_slides'] ?? [])
-            ->filter()
-            ->unique()
-            ->values();
-
-        if ($heroSlides->isEmpty()) {
-            $heroSlides = collect([
-                $siteAppearance['hero_image_url'] ?? 'https://images.unsplash.com/photo-1596040033229-a9821ebd058d?auto=format&fit=crop&w=1800&q=80',
-            ]);
-        }
+        $t = $siteText ?? [];
+        $slideSeconds = 2;
+        $heroSlides = collect([
+            'nutmeg-pala-whole-mace.jpg',
+            'cloves-cengkeh.jpg',
+            'white-pepper.jpg',
+            'black-pepper.jpg',
+            'dried-chili-cabe-kering.jpg',
+            'chili-powder-cabe-bubuk.jpg',
+            'garlic-bawang-putih.jpg',
+            'turmeric-kunyit.jpg',
+            'galangal-lengkuas.jpg',
+            'curcuma-xanthorrhiza-temulawak.jpg',
+            'papaya-leaves-daun-papaya.jpg',
+            'banana-stem-batang-pisang.jpg',
+            'robusta-green-beans.jpg',
+            'arabica-green-beans.jpg',
+        ])->map(fn ($image) => asset('images/catalog/'.$image));
     @endphp
     <section class="relative overflow-hidden bg-[#101820] text-white">
-        <div class="hero-slideshow absolute inset-0" style="--hero-slide-duration: {{ max(1, $heroSlides->count()) * 6 }}s;">
+        <div class="hero-slideshow absolute inset-0" style="--hero-slide-duration: {{ max(1, $heroSlides->count()) * $slideSeconds }}s;">
             @foreach ($heroSlides as $index => $slide)
-                <img class="{{ $heroSlides->count() > 1 ? 'hero-slide' : 'absolute inset-0 h-full w-full object-cover opacity-[0.48]' }}" style="--hero-slide-delay: {{ $index * 6 }}s;" src="{{ $slide }}" onerror="this.src='{{ asset('images/product-placeholder.svg') }}'" alt="Indonesian commodity sourcing {{ $index + 1 }}">
+                <img class="hero-slide" style="--hero-slide-delay: {{ $index * $slideSeconds }}s;" src="{{ $slide }}" onerror="this.src='{{ asset('images/product-placeholder.svg') }}'" alt="Agape153 commodity product {{ $index + 1 }}" fetchpriority="{{ $index === 0 ? 'high' : 'auto' }}">
             @endforeach
-            <div class="absolute inset-0 bg-[#101820]/78"></div>
-            <div class="absolute inset-0 bg-[radial-gradient(circle_at_22%_24%,rgba(233,201,90,0.22),transparent_30%),radial-gradient(circle_at_78%_72%,rgba(45,157,183,0.24),transparent_32%)]"></div>
+            <div class="absolute inset-0 bg-gradient-to-r from-[#101820]/76 via-[#101820]/58 to-[#101820]/46"></div>
+            <div class="absolute inset-0 bg-[radial-gradient(circle_at_22%_24%,rgba(233,201,90,0.18),transparent_30%),radial-gradient(circle_at_78%_72%,rgba(45,157,183,0.18),transparent_34%)]"></div>
         </div>
 
         <div class="agape-container relative grid min-h-[calc(100vh-7rem)] items-end py-8">
             <div class="max-w-5xl pb-4" data-reveal>
                 <div class="inline-flex border border-white/15 bg-white/10 px-3 py-2 text-xs font-black uppercase tracking-[0.2em] text-amber-200">
-                    {{ $siteAppearance['hero_badge'] ?? 'Indonesian Commodity Trading Desk' }}
+                    {{ $t['hero.badge'] ?? 'Indonesian spices and coffee supplier' }}
                 </div>
-                <h1 class="mt-5 max-w-5xl leading-[0.88]">
-                    <span class="block text-[clamp(3.25rem,18vw,8rem)] font-black tracking-wide text-[#e9c95a] drop-shadow-[0_10px_28px_rgba(0,0,0,0.28)]">AGAPE</span>
-                    <span class="mt-4 flex flex-wrap gap-2 text-[clamp(2.75rem,15vw,5.5rem)] font-black leading-none sm:gap-3" aria-label="153">
-                        <span class="grid aspect-square w-[clamp(4rem,18vw,5.5rem)] place-items-center border-2 border-white/80 bg-[#e64b3c] px-3 text-slate-950 shadow-[8px_8px_0_rgba(0,0,0,0.22)]">1</span>
-                        <span class="grid aspect-square w-[clamp(4rem,18vw,5.5rem)] place-items-center border-2 border-white/80 bg-[#e9c95a] px-3 text-slate-950 shadow-[8px_8px_0_rgba(0,0,0,0.22)]">5</span>
-                        <span class="grid aspect-square w-[clamp(4rem,18vw,5.5rem)] place-items-center border-2 border-white/80 bg-[#2d9db7] px-3 text-slate-950 shadow-[8px_8px_0_rgba(0,0,0,0.22)]">3</span>
-                    </span>
-                </h1>
-                <p class="mt-6 max-w-2xl text-xl font-black leading-8 text-white">{{ $siteAppearance['hero_title'] ?? 'Spices, coffee, and agricultural products from Indonesia.' }}</p>
-                <p class="mt-4 max-w-2xl leading-8 text-slate-200">{{ $siteAppearance['hero_subtitle'] ?? 'A digital sourcing flow for local buyers, horeca, distributors, exporters, and international importers.' }}</p>
+                <div class="mt-5">
+                    <x-logo variant="hero" class="drop-shadow-[0_18px_34px_rgba(0,0,0,0.32)]" />
+                </div>
+                <p class="mt-6 max-w-2xl text-xl font-black leading-8 text-white">{{ $t['hero.title'] ?? 'Agape153' }}</p>
+                <p class="mt-4 max-w-2xl leading-8 text-slate-200">{{ $t['hero.subtitle'] ?? 'A curated product catalog for Indonesian spices, coffee, and agricultural commodities.' }}</p>
                 <div class="mt-8 flex flex-wrap gap-3">
                     <a href="{{ route('products.index') }}" class="btn-primary">
                         <x-icon name="package" class="h-4 w-4" />
-                        Open Trading Catalog
+                        {{ $t['hero.catalog_button'] ?? 'Open Product Catalog' }}
                     </a>
                     <a href="#contact" class="btn-secondary">
                         <x-icon name="message" class="h-4 w-4" />
-                        Request Supply
+                        {{ $t['hero.request_button'] ?? 'Request Supply' }}
                     </a>
                 </div>
             </div>
         </div>
     </section>
 
+    @auth
     <section class="bg-white py-5">
         <div class="agape-container grid gap-3 md:grid-cols-4">
             @foreach ([
-                ['n' => '01', 'title' => 'Browse'],
-                ['n' => '02', 'title' => 'Cart'],
-                ['n' => '03', 'title' => 'Online / WA'],
-                ['n' => '04', 'title' => 'Invoice'],
+                ['n' => '01', 'title' => $t['steps.browse'] ?? 'Browse'],
+                ['n' => '02', 'title' => $t['steps.cart'] ?? 'Cart'],
+                ['n' => '03', 'title' => $t['steps.payment'] ?? 'Online / WhatsApp'],
+                ['n' => '04', 'title' => $t['steps.invoice'] ?? 'Invoice'],
             ] as $step)
                 <div class="trade-panel p-4" data-reveal>
                     <div class="text-3xl font-black text-slate-950">{{ $step['n'] }}</div>
@@ -93,24 +97,25 @@
             @endforeach
         </div>
     </section>
+    @endauth
 
     <section id="about" class="section-pad bg-[#f4f6f3]">
         <div class="agape-container grid gap-6 lg:grid-cols-[0.78fr_1.22fr]">
             <div data-reveal>
-                <p class="section-kicker"><x-icon name="globe" class="h-4 w-4" />Company</p>
-                <h2 class="mt-3 text-4xl font-black leading-tight text-slate-950 sm:text-5xl">Built like a procurement desk, not a brochure.</h2>
-                <p class="mt-5 leading-8 text-slate-600">Agape153 turns product discovery, buyer inquiry, online payment, order tracking, and invoice download into one connected user journey.</p>
+                <p class="section-kicker"><x-icon name="globe" class="h-4 w-4" />{{ $t['home.company_kicker'] ?? 'Company' }}</p>
+                <h2 class="mt-3 text-4xl font-black leading-tight text-slate-950 sm:text-5xl">{{ $t['home.company_title'] ?? 'Built like a sourcing desk, made easy for buyers.' }}</h2>
+                <p class="mt-5 leading-8 text-slate-600">{{ $t['home.company_body'] ?? 'Agape153 connects product discovery, buyer inquiry, online payment, shipping updates, and invoice download in one practical journey.' }}</p>
                 <a class="btn-secondary mt-6" href="{{ route('about') }}">
                     <x-icon name="arrow" class="h-4 w-4" />
-                    Company Profile
+                    {{ $t['home.company_button'] ?? 'Company Profile' }}
                 </a>
             </div>
             <div class="grid gap-4 sm:grid-cols-2">
                 @foreach ([
-                    ['icon' => 'leaf', 'title' => 'Spices', 'body' => 'Nutmeg, mace, pepper, cloves, and other Indonesian origin products.'],
-                    ['icon' => 'coffee', 'title' => 'Coffee', 'body' => 'Arabica and robusta catalog paths for local and international buyers.'],
-                    ['icon' => 'truck', 'title' => 'Export', 'body' => 'Built for destination, packing, MOQ, logistics, and quotation discussion.'],
-                    ['icon' => 'orders', 'title' => 'Invoice', 'body' => 'Member order history, payment status, and downloadable PDF invoice.'],
+                    ['icon' => 'leaf', 'title' => $t['home.card.spices'] ?? 'Spices', 'body' => $t['home.card.spices_body'] ?? 'Nutmeg, mace, pepper, cloves, chili, garlic, and other Indonesian origin products.'],
+                    ['icon' => 'coffee', 'title' => $t['home.card.coffee'] ?? 'Coffee', 'body' => $t['home.card.coffee_body'] ?? 'Arabica and robusta green bean sourcing paths for local and international buyers.'],
+                    ['icon' => 'truck', 'title' => $t['home.card.shipping'] ?? 'Shipping', 'body' => $t['home.card.shipping_body'] ?? 'Order follow-up, packing notes, destination needs, and shipment progress in one flow.'],
+                    ['icon' => 'orders', 'title' => $t['home.card.invoice'] ?? 'Invoice', 'body' => $t['home.card.invoice_body'] ?? 'Member order history, payment status, and downloadable PDF invoice.'],
                 ] as $card)
                     <article class="trade-panel p-5" data-reveal>
                         <x-icon :name="$card['icon']" class="h-6 w-6 text-teal-700" />
@@ -126,10 +131,10 @@
         <div class="agape-container">
             <div class="flex flex-col justify-between gap-4 md:flex-row md:items-end" data-reveal>
                 <div>
-                    <p class="section-kicker text-amber-200"><x-icon name="package" class="h-4 w-4" />Commodity Lines</p>
-                    <h2 class="mt-3 max-w-3xl text-4xl font-black sm:text-5xl">Choose a category and move straight into sourcing.</h2>
+                    <p class="section-kicker text-amber-200"><x-icon name="package" class="h-4 w-4" />{{ $t['home.categories_kicker'] ?? 'Commodity Lines' }}</p>
+                    <h2 class="mt-3 max-w-3xl text-4xl font-black sm:text-5xl">{{ $t['home.categories_title'] ?? 'Choose a category and move straight into sourcing.' }}</h2>
                 </div>
-                <a class="btn-secondary" href="{{ route('products.index') }}">All Products</a>
+                <a class="btn-secondary" href="{{ route('products.index') }}">{{ $t['home.all_products'] ?? 'All Products' }}</a>
             </div>
 
             <div class="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
@@ -144,7 +149,7 @@
                         </div>
                     </a>
                 @empty
-                    <div class="border border-white/10 bg-white/10 p-6 text-slate-200">Categories will appear here after admin publishes them.</div>
+                    <div class="border border-white/10 bg-white/10 p-6 text-slate-200">{{ $t['home.empty_categories'] ?? 'Categories will appear here after admin publishes them.' }}</div>
                 @endforelse
             </div>
         </div>
@@ -154,10 +159,10 @@
         <div class="agape-container">
             <div class="grid gap-6 lg:grid-cols-[0.75fr_1.25fr]">
                 <div data-reveal>
-                    <p class="section-kicker"><x-icon name="coffee" class="h-4 w-4" />Featured Market</p>
-                    <h2 class="mt-3 text-4xl font-black leading-tight text-slate-950 sm:text-5xl">Featured SKUs as a trade list.</h2>
-                    <p class="mt-4 leading-8 text-slate-600">A denser buyer view with product image, category, MOQ, stock, export readiness, and price.</p>
-                    <a class="btn-primary mt-6" href="{{ route('products.index') }}">Open Full Catalog</a>
+                    <p class="section-kicker"><x-icon name="coffee" class="h-4 w-4" />{{ $t['home.featured_kicker'] ?? 'Buyer Picks' }}</p>
+                    <h2 class="mt-3 text-4xl font-black leading-tight text-slate-950 sm:text-5xl">{{ $t['home.featured_title'] ?? 'Popular products ready to request.' }}</h2>
+                    <p class="mt-4 leading-8 text-slate-600">{{ $t['home.featured_body'] ?? 'See the product photo, category, minimum order, available stock, shipping readiness, and price in a compact buyer-friendly list.' }}</p>
+                    <a class="btn-primary mt-6" href="{{ route('products.index') }}">{{ $t['home.full_catalog'] ?? 'Open Full Catalog' }}</a>
                 </div>
 
                 <div class="grid gap-3">
@@ -167,37 +172,37 @@
                             <div class="grid gap-3 md:grid-cols-[1fr_120px_120px_120px] md:items-center">
                                 <div>
                                     <div class="flex flex-wrap gap-2">
-                                        <span class="status-pill text-teal-700">{{ $product->category?->name ?? 'Uncategorized' }}</span>
+                                        <span class="status-pill text-teal-700">{{ $product->category?->name ?? ($t['home.uncategorized'] ?? 'Uncategorized') }}</span>
                                         @if ($product->export_ready)
-                                            <span class="status-pill border-amber-200 bg-amber-50 text-amber-800">Export</span>
+                                            <span class="status-pill border-amber-200 bg-amber-50 text-amber-800">{{ $t['home.shipping_ready'] ?? 'Shipping Ready' }}</span>
                                         @endif
                                     </div>
                                     <h3 class="mt-2 font-black text-slate-950">{{ $product->name }}</h3>
                                 </div>
-                                <div class="text-sm font-bold text-slate-600">MOQ<br><span class="text-slate-950">{{ $product->min_order_quantity }} {{ $product->unit }}</span></div>
-                                <div class="text-sm font-bold text-slate-600">Stock<br><span class="text-slate-950">{{ $product->stock_quantity }} {{ $product->unit }}</span></div>
+                                <div class="text-sm font-bold text-slate-600">{{ $t['home.moq'] ?? 'Min. Order' }}<br><span class="text-slate-950">{{ $product->min_order_quantity }} {{ $product->unit }}</span></div>
+                                <div class="text-sm font-bold text-slate-600">{{ $t['home.stock'] ?? 'Stock' }}<br><span class="text-slate-950">{{ $product->stock_quantity }} {{ $product->unit }}</span></div>
                                 <div class="font-black text-teal-800">{{ $product->formattedPrice() }}</div>
                             </div>
                         </a>
                     @empty
-                        <div class="trade-panel p-6 text-slate-600">Featured products will appear here after admin marks products as featured.</div>
+                        <div class="trade-panel p-6 text-slate-600">{{ $t['home.empty_featured'] ?? 'Featured products will appear here after admin marks products as featured.' }}</div>
                     @endforelse
                 </div>
             </div>
         </div>
     </section>
 
-    <section id="export" class="section-pad bg-[#f4f6f3]">
+    <section id="shipping" class="section-pad bg-[#f4f6f3]">
         <div class="agape-container grid gap-6 lg:grid-cols-3">
             <div class="lg:col-span-1" data-reveal>
-                <p class="section-kicker"><x-icon name="truck" class="h-4 w-4" />Export Flow</p>
-                <h2 class="mt-3 text-4xl font-black text-slate-950">From inquiry to invoice.</h2>
+                <p class="section-kicker"><x-icon name="truck" class="h-4 w-4" />{{ $t['home.shipping_kicker'] ?? 'Shipping Flow' }}</p>
+                <h2 class="mt-3 text-4xl font-black text-slate-950">{{ $t['home.shipping_title'] ?? 'From inquiry to invoice.' }}</h2>
             </div>
             <div class="grid gap-4 sm:grid-cols-3 lg:col-span-2">
                 @foreach ([
-                    ['title' => 'Buyer sends requirements', 'body' => 'Product, grade, quantity, destination, and packing needs.'],
-                    ['title' => 'Admin follows up', 'body' => 'Contact form and order data stay visible in admin.'],
-                    ['title' => 'Payment and invoice', 'body' => 'Online payment popup, WhatsApp path, and PDF invoice for members.'],
+                    ['title' => $t['home.flow.requirements_title'] ?? 'Buyer sends requirements', 'body' => $t['home.flow.requirements_body'] ?? 'Product, grade, quantity, destination, packing needs, and timeline.'],
+                    ['title' => $t['home.flow.followup_title'] ?? 'Admin follows up', 'body' => $t['home.flow.followup_body'] ?? 'Contact form and order data stay visible in admin for faster response.'],
+                    ['title' => $t['home.flow.payment_title'] ?? 'Payment and invoice', 'body' => $t['home.flow.payment_body'] ?? 'Online payment popup, WhatsApp option, and PDF invoice for members.'],
                 ] as $item)
                     <article class="trade-panel p-5" data-reveal>
                         <h3 class="text-lg font-black text-slate-950">{{ $item['title'] }}</h3>
@@ -214,7 +219,7 @@
                 <div class="flex flex-col justify-between gap-4 md:flex-row md:items-end" data-reveal>
                     <div>
                         <p class="section-kicker"><x-icon name="leaf" class="h-4 w-4" />Gallery</p>
-                        <h2 class="mt-3 text-4xl font-black text-slate-950">Visual sourcing board.</h2>
+                        <h2 class="mt-3 text-4xl font-black text-slate-950">{{ $t['home.gallery_title'] ?? 'Visual sourcing board.' }}</h2>
                     </div>
                 </div>
                 <div class="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
@@ -224,7 +229,7 @@
                             <figcaption class="p-4 text-sm font-bold text-slate-800">{{ $gallery->title }}</figcaption>
                         </figure>
                     @empty
-                        <div class="trade-panel p-6 text-slate-600 sm:col-span-2 lg:col-span-3">Gallery items will appear after admin uploads them.</div>
+                        <div class="trade-panel p-6 text-slate-600 sm:col-span-2 lg:col-span-3">{{ $t['home.empty_gallery'] ?? 'Gallery items will appear after admin uploads them.' }}</div>
                     @endforelse
                 </div>
             </div>
@@ -234,7 +239,7 @@
     @if ($siteAppearance['show_testimonials'] ?? true)
         <section class="section-pad bg-[#101820] text-white">
             <div class="agape-container">
-                <p class="section-kicker text-amber-200"><x-icon name="message" class="h-4 w-4" />Testimonials</p>
+                <p class="section-kicker text-amber-200"><x-icon name="message" class="h-4 w-4" />{{ $t['home.testimonials_kicker'] ?? 'Testimonials' }}</p>
                 <div class="mt-6 grid gap-5 md:grid-cols-3">
                     @forelse ($testimonials as $testimonial)
                         <blockquote class="border border-white/10 bg-white/10 p-6" data-reveal>
@@ -242,7 +247,7 @@
                             <footer class="mt-5 font-black">{{ $testimonial->name }} <span class="font-medium text-slate-300">/ {{ $testimonial->country }}</span></footer>
                         </blockquote>
                     @empty
-                        <div class="border border-white/10 bg-white/10 p-6 text-slate-200 md:col-span-3">Testimonials will appear after admin publishes them.</div>
+                        <div class="border border-white/10 bg-white/10 p-6 text-slate-200 md:col-span-3">{{ $t['home.empty_testimonials'] ?? 'Testimonials will appear after admin publishes them.' }}</div>
                     @endforelse
                 </div>
             </div>
@@ -252,8 +257,8 @@
     <section id="faq" class="section-pad bg-white">
         <div class="agape-container grid gap-8 lg:grid-cols-[0.75fr_1.25fr]">
             <div data-reveal>
-                <p class="section-kicker"><x-icon name="search" class="h-4 w-4" />FAQ</p>
-                <h2 class="mt-3 text-4xl font-black text-slate-950">Buyer questions, answered fast.</h2>
+                <p class="section-kicker"><x-icon name="search" class="h-4 w-4" />{{ $t['home.faq_kicker'] ?? 'FAQ' }}</p>
+                <h2 class="mt-3 text-4xl font-black text-slate-950">{{ $t['home.faq_title'] ?? 'Buyer questions, answered fast.' }}</h2>
             </div>
             <div class="grid gap-3">
                 @forelse ($faqs as $faq)
@@ -262,7 +267,7 @@
                         <p class="mt-3 text-sm leading-6 text-slate-600">{{ $faq->answer }}</p>
                     </details>
                 @empty
-                    <div class="trade-panel p-6 text-slate-600">FAQ content will appear after admin publishes it.</div>
+                    <div class="trade-panel p-6 text-slate-600">{{ $t['home.empty_faq'] ?? 'FAQ content will appear after admin publishes it.' }}</div>
                 @endforelse
             </div>
         </div>
@@ -273,31 +278,31 @@
             <form class="trade-panel p-6 md:p-8" action="{{ route('contact.store') }}" method="POST" data-reveal>
                 @csrf
                 <div class="logo-stripe -mx-6 -mt-6 mb-6 md:-mx-8 md:-mt-8"><span></span><span></span><span></span></div>
-                <p class="section-kicker"><x-icon name="message" class="h-4 w-4" />Contact Form</p>
-                <h2 class="mt-3 text-3xl font-black text-slate-950">Send sourcing request.</h2>
+                <p class="section-kicker"><x-icon name="message" class="h-4 w-4" />{{ $t['home.contact_kicker'] ?? 'Contact Form' }}</p>
+                <h2 class="mt-3 text-3xl font-black text-slate-950">{{ $t['home.contact_title'] ?? 'Send sourcing request.' }}</h2>
                 <div class="mt-6 grid gap-4 md:grid-cols-2">
-                    <input class="field-input" name="name" value="{{ old('name') }}" placeholder="Full name" required>
-                    <input class="field-input" type="email" name="email" value="{{ old('email') }}" placeholder="Email address" required>
-                    <input class="field-input" name="phone" value="{{ old('phone') }}" placeholder="Phone / WhatsApp">
-                    <input class="field-input" name="company_name" value="{{ old('company_name') }}" placeholder="Company name">
+                    <input class="field-input" name="name" value="{{ old('name') }}" placeholder="{{ $t['home.contact_name'] ?? 'Full name' }}" required>
+                    <input class="field-input" type="email" name="email" value="{{ old('email') }}" placeholder="{{ $t['home.contact_email'] ?? 'Email address' }}" required>
+                    <input class="field-input" name="phone" value="{{ old('phone') }}" placeholder="{{ $t['home.contact_phone'] ?? 'Phone / WhatsApp' }}">
+                    <input class="field-input" name="company_name" value="{{ old('company_name') }}" placeholder="{{ $t['home.contact_company'] ?? 'Company name' }}">
                     <select class="field-input md:col-span-2" name="interest">
-                        <option value="">Select interest</option>
-                        @foreach (['Spices', 'Arabica Coffee', 'Robusta Coffee', 'Export Partnership', 'Bulk Inquiry', 'Other'] as $interest)
+                        <option value="">{{ $t['home.contact_interest'] ?? 'Select interest' }}</option>
+                        @foreach (['Spices', 'Arabica Coffee', 'Robusta Coffee', 'Shipping Partnership', 'Bulk Inquiry', 'Other'] as $interest)
                             <option value="{{ $interest }}" @selected(old('interest') === $interest)>{{ $interest }}</option>
                         @endforeach
                     </select>
                 </div>
-                <textarea class="field-input mt-4 min-h-36" name="message" placeholder="Product, grade, quantity, destination, packing, timeline..." required>{{ old('message') }}</textarea>
+                <textarea class="field-input mt-4 min-h-36" name="message" placeholder="{{ $t['home.contact_message'] ?? 'Product, grade, quantity, destination, packing, timeline...' }}" required>{{ old('message') }}</textarea>
                 <div class="mt-5 flex flex-col gap-3 sm:flex-row">
-                    <button class="btn-primary" type="submit"><x-icon name="message" class="h-4 w-4" />Send to Admin</button>
+                    <button class="btn-primary" type="submit"><x-icon name="message" class="h-4 w-4" />{{ $t['home.contact_submit'] ?? 'Send to Admin' }}</button>
                     <a class="btn-secondary" href="https://wa.me/{{ preg_replace('/\D+/', '', $siteContact['whatsapp']) }}?text={{ rawurlencode('Hello Agape153, I would like to ask about your product catalog.') }}" target="_blank" rel="noopener"><x-icon name="phone" class="h-4 w-4" />WhatsApp</a>
                 </div>
             </form>
 
             <div data-reveal>
                 <x-logo />
-                <p class="section-kicker mt-7"><x-icon name="phone" class="h-4 w-4" />Contact Desk</p>
-                <h2 class="mt-3 text-4xl font-black text-slate-950">Talk to Agape153.</h2>
+                <p class="section-kicker mt-7"><x-icon name="phone" class="h-4 w-4" />{{ $t['home.contact_desk'] ?? 'Contact Desk' }}</p>
+                <h2 class="mt-3 text-4xl font-black text-slate-950">{{ $t['home.contact_heading'] ?? 'Talk to Agape153.' }}</h2>
                 <div class="mt-6 grid gap-3">
                     <a class="trade-panel flex items-center gap-3 p-4" href="mailto:{{ $siteContact['email'] }}">
                         <x-icon name="mail" class="h-5 w-5 text-teal-700" />
@@ -309,11 +314,11 @@
                     </a>
                 </div>
                 <div class="mt-6 flex flex-wrap gap-2">
-                    <a class="btn-secondary" href="{{ $siteContact['youtube_url'] }}" target="_blank" rel="noopener">YouTube</a>
-                    <a class="btn-secondary" href="{{ $siteContact['instagram_url'] }}" target="_blank" rel="noopener">Instagram</a>
-                    <a class="btn-secondary" href="{{ $siteContact['linkedin_url'] }}" target="_blank" rel="noopener">LinkedIn</a>
-                    <a class="btn-secondary" href="{{ $siteContact['tiktok_url'] }}" target="_blank" rel="noopener">TikTok</a>
-                    <a class="btn-secondary" href="{{ $siteContact['threads_url'] }}" target="_blank" rel="noopener">Threads</a>
+                    <a class="icon-button" href="{{ $siteContact['youtube_url'] }}" target="_blank" rel="noopener" title="YouTube" aria-label="YouTube"><x-icon name="youtube" class="h-5 w-5" /></a>
+                    <a class="icon-button" href="{{ $siteContact['instagram_url'] }}" target="_blank" rel="noopener" title="Instagram" aria-label="Instagram"><x-icon name="instagram" class="h-5 w-5" /></a>
+                    <a class="icon-button" href="{{ $siteContact['linkedin_url'] }}" target="_blank" rel="noopener" title="LinkedIn" aria-label="LinkedIn"><x-icon name="linkedin" class="h-5 w-5" /></a>
+                    <a class="icon-button" href="{{ $siteContact['tiktok_url'] }}" target="_blank" rel="noopener" title="TikTok" aria-label="TikTok"><x-icon name="tiktok" class="h-5 w-5" /></a>
+                    <a class="icon-button" href="{{ $siteContact['threads_url'] }}" target="_blank" rel="noopener" title="Threads" aria-label="Threads"><x-icon name="threads" class="h-5 w-5" /></a>
                 </div>
             </div>
         </div>

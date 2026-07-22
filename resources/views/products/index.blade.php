@@ -4,13 +4,16 @@
 @section('description', 'Katalog rempah-rempah, kopi, dan komoditas pertanian Indonesia Agape153.')
 
 @section('content')
+    @php
+        $t = $siteText ?? [];
+    @endphp
     <section class="bg-[#101820] text-white">
         <div class="logo-stripe"><span></span><span></span><span></span></div>
         <div class="agape-container grid gap-6 py-10 lg:grid-cols-[1fr_360px] lg:items-end">
             <div data-reveal>
                 <p class="section-kicker text-amber-200"><x-icon name="package" class="h-4 w-4" />Product Catalog</p>
                 <h1 class="mt-3 max-w-4xl text-5xl font-black leading-tight sm:text-7xl">Trade list for Indonesian commodities.</h1>
-                <p class="mt-4 max-w-2xl leading-8 text-slate-200">Dense product information for faster sourcing decisions: category, origin, MOQ, stock, export flag, and price.</p>
+                <p class="mt-4 max-w-2xl leading-8 text-slate-200">Clear product information for faster sourcing decisions: category, origin, minimum order, stock, shipping readiness, and price.</p>
             </div>
             <aside class="border border-white/10 bg-white/10 p-5" data-reveal>
                 <div class="flex items-center justify-between">
@@ -41,7 +44,7 @@
                 </select>
                 <label class="flex items-center gap-2 border border-slate-200 bg-[#f8faf9] px-4 py-3 text-sm font-black text-slate-700">
                     <input type="checkbox" name="export_ready" value="1" @checked(request()->boolean('export_ready'))>
-                    Export
+                    {{ $t['home.shipping_ready'] ?? 'Shipping Ready' }}
                 </label>
                 <button class="btn-primary" type="submit">
                     <x-icon name="search" class="h-4 w-4" />
@@ -58,7 +61,7 @@
                     <span class="border-slate-200 bg-white">Spices</span>
                     <span class="border-slate-200 bg-white">Coffee</span>
                     <span class="border-slate-200 bg-white">Agriculture</span>
-                    <span class="border-slate-200 bg-white">Export</span>
+                    <span class="border-slate-200 bg-white">{{ $t['nav.shipping'] ?? 'Shipping' }}</span>
                 </div>
                 @if ($query || $selectedCategory || request()->boolean('export_ready'))
                     <a class="btn-secondary" href="{{ route('products.index') }}">Clear Filter</a>
@@ -77,7 +80,7 @@
                             @if ($product->export_ready || $product->video_url)
                                 <div class="absolute bottom-3 left-3 right-3 flex flex-wrap gap-2">
                                     @if ($product->export_ready)
-                                        <span class="rounded-full bg-amber-200/95 px-3 py-1 text-xs font-black text-slate-950 shadow-sm backdrop-blur">Export Ready</span>
+                                        <span class="rounded-full bg-amber-200/95 px-3 py-1 text-xs font-black text-slate-950 shadow-sm backdrop-blur">{{ $t['home.shipping_ready'] ?? 'Shipping Ready' }}</span>
                                     @endif
                                     @if ($product->video_url)
                                         <span class="inline-flex items-center gap-1 rounded-full bg-sky-100/95 px-3 py-1 text-xs font-black text-sky-900 shadow-sm backdrop-blur">

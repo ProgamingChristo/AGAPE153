@@ -22,6 +22,13 @@
             linear-gradient(90deg, rgba(230, 75, 60, 0.055) 0 1px, transparent 1px 72px),
             linear-gradient(0deg, rgba(45, 157, 183, 0.05) 0 1px, transparent 1px 72px);
         color: #13201c;
+        font-feature-settings: 'kern', 'liga', 'calt';
+        text-rendering: geometricPrecision;
+    }
+
+    .user-shell,
+    .admin-shell {
+        font-family: var(--agape-font-family, 'Plus Jakarta Sans', 'Instrument Sans', ui-sans-serif, system-ui, sans-serif);
     }
 
     ::selection {
@@ -64,7 +71,7 @@
         object-fit: cover;
         opacity: 0;
         transform: scale(1.08) translate3d(0, 0, 0);
-        animation: agape-hero-slide var(--hero-slide-duration, 18s) ease-in-out infinite;
+        animation: agape-hero-slide var(--hero-slide-duration, 28s) ease-in-out infinite;
         animation-delay: var(--hero-slide-delay, 0s);
         will-change: opacity, transform, filter;
     }
@@ -345,6 +352,12 @@
         background: #2d9db7;
     }
 
+    .agape-master-logo {
+        display: block;
+        height: auto;
+        object-fit: contain;
+    }
+
     .fade-up {
         animation: fade-up 520ms ease both;
     }
@@ -435,26 +448,35 @@
 
 @keyframes agape-hero-slide {
     0% {
-        opacity: 0.48;
-        transform: scale(1.04) translate3d(0, 0, 0);
-        filter: saturate(1.08);
+        opacity: 0;
+        transform: scale(1.08) translate3d(0.8%, 0, 0);
+        filter: saturate(0.98) contrast(1.02);
     }
 
-    31% {
-        opacity: 0.48;
-        transform: scale(1.08) translate3d(-0.5%, 0, 0);
-        filter: saturate(1.06);
+    2%,
+    7% {
+        opacity: 0.58;
+        transform: scale(1.035) translate3d(0, 0, 0);
+        filter: saturate(1.08) contrast(1.04);
     }
 
-    40%,
+    10%,
     100% {
         opacity: 0;
-        transform: scale(1.12) translate3d(1.5%, 0, 0);
-        filter: saturate(0.92);
+        transform: scale(1.13) translate3d(-1.2%, 0.6%, 0);
+        filter: saturate(0.94) contrast(1);
     }
 }
 
-@media (pointer: coarse), (prefers-reduced-motion: reduce) {
+@media (pointer: coarse) {
+    .cursor-ring,
+    .cursor-dot,
+    .cursor-glow {
+        display: none !important;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
     .cursor-ring,
     .cursor-dot,
     .cursor-glow {
@@ -509,15 +531,15 @@
 .user-shell h1,
 .admin-shell h1 {
     overflow-wrap: anywhere;
-    font-size: clamp(2.25rem, 9vw, 4.5rem);
-    line-height: 0.98;
+    font-size: clamp(2.15rem, 7vw, 4.15rem);
+    line-height: 1;
 }
 
 .user-shell h2,
 .admin-shell h2 {
     overflow-wrap: anywhere;
-    font-size: clamp(1.75rem, 6vw, 3rem);
-    line-height: 1.05;
+    font-size: clamp(1.65rem, 4.8vw, 2.85rem);
+    line-height: 1.08;
 }
 
 .user-shell h3,
@@ -540,6 +562,19 @@
     text-align: center;
     line-height: 1.25;
     white-space: normal;
+}
+
+.user-shell [data-site-header] a,
+.user-shell [data-site-header] button,
+.user-shell [data-site-header] span {
+    overflow-wrap: normal;
+    word-break: normal;
+}
+
+.user-shell [data-site-header] .btn-primary,
+.user-shell [data-site-header] .btn-secondary,
+.user-shell [data-site-header] .nav-link {
+    white-space: nowrap;
 }
 
 .field-input,

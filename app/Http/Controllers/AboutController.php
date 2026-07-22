@@ -3,12 +3,20 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
 
 class AboutController extends Controller
 {
     public function __invoke(Request $request)
     {
-        $locale = $request->string('lang')->lower()->toString() === 'id' ? 'id' : 'en';
+        $requestedLocale = $request->string('lang')->lower()->toString();
+
+        if (in_array($requestedLocale, ['id', 'en'], true)) {
+            session(['locale' => $requestedLocale]);
+            App::setLocale($requestedLocale);
+        }
+
+        $locale = App::getLocale();
 
         return view('about', [
             'locale' => $locale,
@@ -21,18 +29,18 @@ class AboutController extends Controller
         if ($locale === 'id') {
             return [
                 'eyebrow' => 'Profil Perusahaan',
-                'title' => 'Indonesian Agriculture for International Commodity Trading',
-                'lead' => 'Agape153 menghubungkan kekayaan agrikultur Indonesia dengan pembeli international melalui komoditas rempah, herbal roots, dan produk pertanian yang dikurasi secara profesional.',
+                'title' => 'Pertanian Indonesia untuk Perdagangan Komoditas Internasional',
+                'lead' => 'Agape153 menghubungkan kekayaan agrikultur Indonesia dengan pembeli internasional melalui komoditas rempah, akar herbal, dan produk pertanian yang dikurasi secara profesional.',
                 'overview' => [
-                    'Didirikan pada tahun 2021, Agape153 memulai perjalanan dengan misi membawa sumber daya pertanian Indonesia ke pasar international.',
+                    'Didirikan pada tahun 2021, Agape153 memulai perjalanan dengan misi membawa sumber daya pertanian Indonesia ke pasar internasional.',
                     'Berbasis strategis di Jakarta, perusahaan memiliki akses yang kuat untuk koordinasi logistik, quality control, dan konektivitas perdagangan internasional.',
                     'Agape153 menggabungkan profesionalisme, nilai organik, transparansi, dan standar kualitas untuk membangun kepercayaan jangka panjang.',
                 ],
-                'vision' => 'Menjadi pemasok international terpercaya untuk komoditas pertanian Indonesia dengan integritas, kualitas premium, dan hubungan bisnis jangka panjang.',
+                'vision' => 'Menjadi pemasok internasional terpercaya untuk komoditas pertanian Indonesia dengan integritas, kualitas premium, dan hubungan bisnis jangka panjang.',
                 'mission' => 'Menyediakan produk yang memenuhi standar internasional, membangun kemitraan berkelanjutan, dan menjaga identitas Made in Indonesia di pasar dunia.',
                 'pillars' => [
                     ['title' => 'Quality Assurance', 'body' => 'Purity testing, moisture control, microbial safety, and compliance with EU and international standards.'],
-                    ['title' => 'Export Logistics', 'body' => 'Food-grade jute bags, vacuum packs, FOB/CIF shipping options, and complete export documentation.'],
+                    ['title' => 'Shipping Logistics', 'body' => 'Food-grade jute bags, vacuum packs, FOB/CIF shipping options, and complete shipping documentation.'],
                     ['title' => 'International Partnership', 'body' => 'Long-term relationships with importers, distributors, roasters, manufacturers, and institutional buyers.'],
                 ],
             ];
@@ -41,9 +49,9 @@ class AboutController extends Controller
         return [
             'eyebrow' => 'Company Profile',
             'title' => 'Indonesian Agriculture for International Commodity Trading',
-            'lead' => 'Agape153 connects Indonesia’s agricultural abundance with international buyers through carefully sourced spices, herbal roots, and premium agricultural commodities.',
+            'lead' => "Agape153 connects Indonesia's agricultural abundance with international buyers through carefully sourced spices, herbal roots, and premium agricultural commodities.",
             'overview' => [
-                'Founded in 2021, Agape153 began with a clear mission: to bring Indonesia’s natural richness into the international commodity market with integrity and excellence.',
+                "Founded in 2021, Agape153 began with a clear mission: to bring Indonesia's natural richness into the international commodity market with integrity and excellence.",
                 'Strategically headquartered in Jakarta, the economic heart of Indonesia, the company benefits from stronger logistics coordination, streamlined quality control, and international connectivity.',
                 'From local supply roots to international trading, Agape153 combines organic values with professional execution, transparency, and quality discipline.',
             ],
@@ -51,7 +59,7 @@ class AboutController extends Controller
             'mission' => 'To deliver products that meet international standards, build sustainable partnerships, and represent the Made in Indonesia identity with confidence in international markets.',
             'pillars' => [
                 ['title' => 'Quality Assurance', 'body' => 'Purity testing, microscopic analysis, moisture control, microbial safety, and compliance with EU and international standards.'],
-                ['title' => 'Packaging & Logistics', 'body' => 'Food-grade jute bags, vacuum packaging, sustainable materials, FOB/CIF arrangements, and complete export documentation.'],
+                ['title' => 'Packaging & Shipping', 'body' => 'Food-grade jute bags, vacuum packaging, sustainable materials, FOB/CIF arrangements, and complete shipping documentation.'],
                 ['title' => 'Partnership Focus', 'body' => 'Sustainable relationships with importers, distributors, roasters, manufacturers, and international institutional buyers.'],
             ],
         ];

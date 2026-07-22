@@ -31,7 +31,7 @@
                         </a>
 
                         <div class="mt-7 grid gap-3">
-                            @foreach ([['icon' => 'phone', 'label' => 'WhatsApp OTP'], ['icon' => 'mail', 'label' => 'Email Login'], ['icon' => 'download', 'label' => 'Invoice PDF'], ['icon' => 'truck', 'label' => 'Order Tracking']] as $item)
+                            @foreach ([['icon' => 'phone', 'label' => 'WhatsApp OTP'], ['icon' => 'mail', 'label' => 'Email Login'], ['icon' => 'download', 'label' => 'Invoice PDF'], ['icon' => 'truck', 'label' => 'Shipping Updates']] as $item)
                                 <div class="flex items-center gap-3 rounded-2xl bg-slate-50 p-4 font-bold text-slate-700">
                                     <span class="grid h-9 w-9 place-items-center rounded-full bg-white text-teal-700 shadow-sm">
                                         <x-icon :name="$item['icon']" class="h-4 w-4" />

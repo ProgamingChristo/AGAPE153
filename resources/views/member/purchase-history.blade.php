@@ -33,7 +33,7 @@
                             <div class="mt-1 text-sm text-slate-500">{{ $order->created_at->format('d M Y H:i') }} / {{ $order->items_count }} item</div>
                         </div>
                         <div>
-                            <div class="text-xs font-black uppercase tracking-[0.16em] text-slate-500">Tracking</div>
+                            <div class="text-xs font-black uppercase tracking-[0.16em] text-slate-500">Shipping</div>
                             <div class="mt-1 font-bold text-slate-800">{{ $order->tracking_code ?: '-' }}</div>
                         </div>
                         <div>

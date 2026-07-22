@@ -7,10 +7,11 @@
     <title>@yield('title', 'Admin - Agape153')</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="{{ $siteAppearance['font_url'] ?? 'https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap' }}" rel="stylesheet">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body class="admin-shell bg-[#f8faf9] font-sans text-slate-900"
+    style="--agape-font-family: {{ $siteAppearance['font_stack'] ?? "'Plus Jakarta Sans', ui-sans-serif, system-ui, sans-serif" }}; font-family: {{ $siteAppearance['font_stack'] ?? "'Plus Jakarta Sans', ui-sans-serif, system-ui, sans-serif" }};"
     data-admin-timeout-minutes="{{ (int) config('session.admin_lifetime', 30) }}"
     data-admin-logout-url="{{ route('admin.logout') }}"
     data-admin-login-url="{{ route('admin.login') }}">
@@ -42,7 +43,9 @@
                 </button>
             </div>
             <nav class="mt-5 grid gap-2 pb-8 text-sm font-bold lg:mt-8">
-                @php($adminUser = auth()->user())
+                @php
+                    $adminUser = auth()->user();
+                @endphp
                 <a class="nav-link rounded-xl px-3 py-2 hover:bg-teal-50" href="{{ route('admin.dashboard') }}"><x-icon name="dashboard" class="h-4 w-4" />Dashboard</a>
                 @if ($adminUser->hasPermission('manage-orders'))
                     <a class="nav-link rounded-xl px-3 py-2 hover:bg-teal-50" href="{{ route('admin.orders.index') }}"><x-icon name="orders" class="h-4 w-4" />Orders</a>

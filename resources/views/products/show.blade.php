@@ -23,6 +23,9 @@
 @endsection
 
 @section('content')
+    @php
+        $t = $siteText ?? [];
+    @endphp
     <section class="bg-[#101820] text-white">
         <div class="logo-stripe"><span></span><span></span><span></span></div>
         <div class="agape-container grid gap-8 py-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-end">
@@ -34,7 +37,7 @@
                         <span class="status-pill bg-white text-teal-700">Uncategorized</span>
                     @endif
                     @if ($product->export_ready)
-                        <span class="status-pill border-amber-200 bg-amber-50 text-amber-800">Export Ready</span>
+                        <span class="status-pill border-amber-200 bg-amber-50 text-amber-800">{{ $t['home.shipping_ready'] ?? 'Shipping Ready' }}</span>
                     @endif
                     <span class="status-pill bg-white">{{ $product->stock_quantity > 0 ? 'In Stock' : 'Preorder' }}</span>
                 </div>
@@ -110,7 +113,7 @@
                         <dd class="font-black text-slate-950">{{ $product->grade ?: '-' }}</dd>
                     </div>
                     <div class="flex flex-wrap justify-between gap-4 border-b border-slate-100 pb-3">
-                        <dt class="text-slate-500">Export Ready</dt>
+                        <dt class="text-slate-500">{{ $t['home.shipping_ready'] ?? 'Shipping Ready' }}</dt>
                         <dd class="font-black text-slate-950">{{ $product->export_ready ? 'Yes' : 'Inquiry required' }}</dd>
                     </div>
                     <div class="flex flex-wrap justify-between gap-4 border-b border-slate-100 pb-3">

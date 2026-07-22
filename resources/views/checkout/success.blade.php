@@ -26,7 +26,7 @@
             <div class="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm md:p-8" data-reveal>
                 <dl class="grid gap-4 sm:grid-cols-3">
                     <div class="rounded-2xl bg-[#f8faf9] p-4">
-                        <dt class="text-sm text-slate-500">Tracking Code</dt>
+                        <dt class="text-sm text-slate-500">Shipping Code</dt>
                         <dd class="mt-1 font-black text-slate-950">{{ $order->tracking_code }}</dd>
                     </div>
                     <div class="rounded-2xl bg-[#f8faf9] p-4">

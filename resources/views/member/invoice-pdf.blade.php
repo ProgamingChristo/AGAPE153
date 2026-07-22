@@ -66,6 +66,6 @@
         <tr><td class="total">Total</td><td class="total" style="text-align:right">Rp{{ number_format($order->total_amount, 0, ',', '.') }}</td></tr>
     </table>
 
-    <p class="muted" style="margin-top: 28px;">Payment status: {{ strtoupper($order->payment_status) }} / Order status: {{ $order->statusLabel() }} / Tracking: {{ $order->tracking_code ?: '-' }}</p>
+    <p class="muted" style="margin-top: 28px;">Payment status: {{ strtoupper($order->payment_status) }} / Order status: {{ $order->statusLabel() }} / Shipping: {{ $order->tracking_code ?: '-' }}</p>
 </body>
 </html>

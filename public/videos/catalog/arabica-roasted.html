@@ -10,7 +10,7 @@
         .stage { position: relative; display: grid; min-height: 100vh; place-items: center; isolation: isolate; }
         .stage::before { content: ""; position: absolute; inset: -20%; background: radial-gradient(circle at 20% 30%, rgba(233, 201, 90, .36), transparent 30%), radial-gradient(circle at 80% 70%, rgba(45, 157, 183, .34), transparent 32%); animation: pulse 7s ease-in-out infinite alternate; z-index: -2; }
         .stage::after { content: ""; position: absolute; inset: 0; background: linear-gradient(110deg, rgba(16, 24, 32, .15), rgba(16, 24, 32, .82)); z-index: -1; }
-        img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: .46; transform: scale(1.08); animation: drift 12s ease-in-out infinite alternate; z-index: -3; }
+        img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: .5; transform: scale(1.08); animation: drift 12s ease-in-out infinite alternate; z-index: -3; }
         .card { width: min(82vw, 760px); border: 1px solid rgba(255,255,255,.18); background: rgba(16,24,32,.72); padding: clamp(24px, 5vw, 56px); box-shadow: 0 28px 80px rgba(0,0,0,.38); backdrop-filter: blur(14px); }
         .stripe { display: grid; grid-template-columns: 1fr 1fr 1fr; height: 8px; margin-bottom: 28px; }
         .stripe span:nth-child(1) { background: #e64b3c; }
@@ -25,7 +25,7 @@
 </head>
 <body>
     <main class="stage">
-        <img src="/images/catalog/arabica-green-beans.jpg" alt="Arabica Roasted">
+        <img src="/images/catalog/arabica-roasted.png" alt="Arabica Roasted">
         <section class="card">
             <div class="stripe"><span></span><span></span><span></span></div>
             <p>Agape153 Catalog</p>

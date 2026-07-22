@@ -32,6 +32,34 @@
         </section>
 
         <section class="border-t border-slate-100 pt-6">
+            <div class="flex flex-col justify-between gap-2 md:flex-row md:items-start">
+                <div>
+                    <h2 class="text-xl font-black text-slate-950">Font Control Panel</h2>
+                    <p class="mt-2 max-w-2xl text-sm leading-6 text-slate-500">Pilih font utama untuk seluruh halaman user dan admin. Preview di bawah memakai font yang sama dengan pilihan tersebut.</p>
+                </div>
+                <span class="rounded-full bg-teal-50 px-3 py-1 text-xs font-black text-teal-800">
+                    Active: {{ $fontOptions[$appearance['font_family']]['label'] ?? 'Plus Jakarta Sans' }}
+                </span>
+            </div>
+            <div class="mt-4 grid gap-3 md:grid-cols-2 xl:grid-cols-3">
+                @foreach ($fontOptions as $value => $font)
+                    <label class="group relative overflow-hidden rounded-2xl border p-4 transition hover:-translate-y-0.5 hover:border-teal-300 hover:shadow-[0_18px_42px_rgba(15,23,42,0.08)] {{ old('font_family', $appearance['font_family']) === $value ? 'border-teal-500 bg-teal-50/70' : 'border-slate-200 bg-white' }}">
+                        <input class="peer sr-only" type="radio" name="font_family" value="{{ $value }}" @checked(old('font_family', $appearance['font_family']) === $value)>
+                        <span class="absolute right-4 top-4 grid h-5 w-5 place-items-center rounded-full border border-slate-300 bg-white peer-checked:border-teal-700 peer-checked:bg-teal-700">
+                            <span class="h-2 w-2 rounded-full bg-white {{ old('font_family', $appearance['font_family']) === $value ? 'opacity-100' : 'opacity-0' }}"></span>
+                        </span>
+                        <span class="block pr-8" style="font-family: {{ $font['stack'] }}">
+                            <span class="block text-lg font-black text-slate-950">{{ $font['label'] }}</span>
+                            <span class="mt-1 block text-xs font-semibold leading-5 text-slate-500">{{ $font['description'] }}</span>
+                            <span class="mt-4 block text-2xl font-black leading-tight text-slate-950">Agape153 Product Catalog</span>
+                            <span class="mt-2 block text-sm leading-6 text-slate-600">Indonesian spices, coffee, and agricultural commodities for international buyers.</span>
+                        </span>
+                    </label>
+                @endforeach
+            </div>
+        </section>
+
+        <section class="border-t border-slate-100 pt-6">
             <h2 class="text-xl font-black text-slate-950">Homepage Layout</h2>
             <div class="mt-4 grid gap-4 md:grid-cols-2">
                 <label class="grid gap-2 text-sm font-bold text-slate-700">Layout Style

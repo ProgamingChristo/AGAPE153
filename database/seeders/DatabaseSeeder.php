@@ -98,8 +98,12 @@ class DatabaseSeeder extends Seeder
                     'parent_id' => $categories['Coffee (Green Beans)']->id,
                     'name' => $name,
                     'type' => 'coffee',
-                    'description' => "{$name} green beans for Agape153 coffee sourcing catalog.",
-                    'image_url' => $this->catalogImageUrl("{$name} Green Beans", 'Coffee (Green Beans)'),
+                    'description' => $name === 'Arabica'
+                        ? 'Arabica roasted coffee beans for Agape153 coffee sourcing catalog.'
+                        : "{$name} green beans for Agape153 coffee sourcing catalog.",
+                    'image_url' => $name === 'Arabica'
+                        ? '/images/catalog/arabica-green-beans.jpg'
+                        : $this->catalogImageUrl("{$name} Green Beans", 'Coffee (Green Beans)'),
                     'is_active' => true,
                     'sort_order' => $index + 1,
                 ]
@@ -150,7 +154,7 @@ class DatabaseSeeder extends Seeder
             ['category' => 'Other Agricultural Products', 'name' => 'Papaya Leaves / Daun Papaya', 'sku' => 'AG-PAPAYA-LEAVES', 'short_description' => 'Papaya leaves available for agriculture-derived product inquiries and buyer-specific processing.', 'origin' => 'Indonesia', 'grade' => 'Fresh / Dry by Request', 'price' => 30000, 'featured' => false, 'export' => false, 'catalog_media' => true, 'details' => [['label' => 'Form', 'value' => 'Fresh or dried leaves by request'], ['label' => 'Use Case', 'value' => 'Agricultural processing and custom sourcing'], ['label' => 'Availability', 'value' => 'Confirmed per order volume']]],
             ['category' => 'Other Agricultural Products', 'name' => 'Banana Stem / Batang Pisang', 'sku' => 'AG-BANANA-STEM', 'short_description' => 'Banana stem for agricultural product inquiries, processing needs, and custom sourcing.', 'origin' => 'Indonesia', 'grade' => 'Fresh Cut', 'price' => 25000, 'featured' => false, 'export' => false, 'catalog_media' => true, 'details' => [['label' => 'Form', 'value' => 'Fresh cut banana stem'], ['label' => 'Use Case', 'value' => 'Agriculture-derived product and processing inquiry'], ['label' => 'Supply', 'value' => 'Prepared by confirmed buyer requirement']]],
             ['category' => 'Robusta', 'name' => 'Robusta Green Beans', 'sku' => 'CF-ROBUSTA-GREEN', 'short_description' => 'Indonesian robusta green beans for roasters, espresso blends, retail, and commercial buyers.', 'origin' => 'Indonesia', 'grade' => 'Green Beans', 'price' => 80000, 'featured' => true, 'export' => true, 'catalog_media' => true, 'details' => [['label' => 'Form', 'value' => 'Green coffee beans'], ['label' => 'Profile', 'value' => 'Strong body and commercial roasting flexibility'], ['label' => 'Buyer Use', 'value' => 'Roasting, espresso blend, and distribution']]],
-            ['category' => 'Arabica', 'name' => 'Arabica Green Beans', 'sku' => 'CF-ARABICA-GREEN', 'short_description' => 'Indonesian arabica green beans for specialty roasters, distributors, and international buyers.', 'origin' => 'Indonesia', 'grade' => 'Green Beans', 'price' => 145000, 'featured' => true, 'export' => true, 'catalog_media' => true, 'details' => [['label' => 'Form', 'value' => 'Green coffee beans'], ['label' => 'Profile', 'value' => 'Origin-dependent aroma, acidity, and sweetness'], ['label' => 'Buyer Use', 'value' => 'Specialty roasting, retail, and export']]],
+            ['category' => 'Arabica', 'name' => 'Arabica Roasted', 'sku' => 'CF-ARABICA-ROASTED', 'short_description' => 'Roasted Indonesian arabica coffee beans with warm aroma for retail, horeca, gift packs, and buyer-ready coffee supply.', 'origin' => 'Indonesia', 'grade' => 'Roasted Beans', 'price' => 145000, 'featured' => true, 'export' => true, 'catalog_media' => true, 'image' => '/images/catalog/arabica-green-beans.jpg', 'details' => [['label' => 'Form', 'value' => 'Roasted arabica coffee beans'], ['label' => 'Profile', 'value' => 'Warm aroma, clean cup, and origin-dependent sweetness'], ['label' => 'Buyer Use', 'value' => 'Retail coffee, horeca, gifting, and distribution']]],
             ['category' => 'Jambi', 'name' => 'Robusta Grade A Jambi', 'sku' => 'RB-JBI-A', 'short_description' => 'Robusta grade A dari Jambi dengan body kuat, bitterness bersih, dan cocok untuk espresso blend.', 'origin' => 'Jambi', 'grade' => 'Grade A', 'price' => 80000, 'featured' => true, 'export' => true, 'image' => 'https://images.unsplash.com/photo-1559525839-d9b6c2c04241?auto=format&fit=crop&w=900&q=80'],
             ['category' => 'Gayo', 'name' => 'Arabica Gayo Premium', 'sku' => 'AR-GYO-P', 'short_description' => 'Arabica Gayo dengan aroma kompleks, acidity seimbang, dan aftertaste manis.', 'origin' => 'Aceh Gayo', 'grade' => 'Premium', 'price' => 145000, 'featured' => true, 'export' => true, 'image' => 'https://images.unsplash.com/photo-1559496417-e7f25cb247f3?auto=format&fit=crop&w=900&q=80'],
             ['category' => 'Toraja', 'name' => 'Arabica Toraja Specialty', 'sku' => 'AR-TRJ-S', 'short_description' => 'Karakter earthy, spice, dan body tebal dari dataran tinggi Toraja.', 'origin' => 'Toraja', 'grade' => 'Specialty', 'price' => 155000, 'featured' => true, 'export' => true, 'image' => 'https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&w=900&q=80'],
@@ -258,6 +262,7 @@ class DatabaseSeeder extends Seeder
             'appearance_accent_color' => '#e9c95a',
             'appearance_soft_color' => '#edf7f4',
             'appearance_homepage_layout' => 'classic',
+            'appearance_font_family' => 'plus_jakarta',
             'appearance_hero_badge' => 'Indonesian spices and coffee supplier',
             'appearance_hero_title' => 'Agape153',
             'appearance_hero_subtitle' => 'Katalog rempah-rempah, kopi arabica, dan robusta Indonesia untuk pembeli lokal, retail, horeca, distributor, dan importir internasional.',
