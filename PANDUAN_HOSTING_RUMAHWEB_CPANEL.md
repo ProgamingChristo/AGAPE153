@@ -101,9 +101,22 @@ Jika nama folder app berbeda, misalnya `AGAPE153`, ubah `../agape153_app/` sesua
 
 ## 4. Pastikan `.htaccess` Ada Di `public_html`
 
+Versi pakem ada di `docs/RUMAHWEB_HTACCESS_PAKEM.md` dan `public/.htaccess`.
+Setelah `git pull`, salin ulang file ini ke public webroot:
+
+```bash
+cd ~/agape153.com
+cp public/.htaccess ~/public_html/.htaccess
+php artisan optimize:clear
+```
+
 File `public_html/.htaccess` harus berisi rewrite Laravel:
 
 ```apache
+# AGAPE153 Laravel public entrypoint.
+# Keep this file as the canonical cPanel public_html/.htaccess.
+# Do not append cPanel EA-PHP handlers here, because ea-php84 on this hosting
+# has previously booted without required extensions such as mbstring/pdo_mysql.
 <IfModule mod_rewrite.c>
     <IfModule mod_negotiation.c>
         Options -MultiViews -Indexes
@@ -126,6 +139,8 @@ File `public_html/.htaccess` harus berisi rewrite Laravel:
     RewriteRule ^ index.php [L]
 </IfModule>
 ```
+
+Jangan tambahkan block `# php -- BEGIN cPanel-generated handler` / `AddHandler application/x-httpd-ea-php84` ke file ini. Kalau block tersebut muncul lagi, hapus karena itu bisa memaksa web memakai runtime PHP tanpa extension Laravel yang dibutuhkan.
 
 Kalau domain masih menampilkan `Index of /`, biasanya penyebabnya salah satu ini:
 
