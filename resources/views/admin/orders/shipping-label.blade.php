@@ -14,10 +14,7 @@
         .stripe span:nth-child(3) { background: #2d9db7; }
         .wrap { padding: 24px; }
         .header { display: flex; justify-content: space-between; gap: 24px; border-bottom: 2px solid #101820; padding-bottom: 18px; }
-        .brand { font-size: 28px; font-weight: 900; letter-spacing: .04em; color: #e9c95a; }
-        .brand span:nth-child(2) { color: #e64b3c; }
-        .brand span:nth-child(3) { color: #e9c95a; }
-        .brand span:nth-child(4) { color: #2d9db7; }
+        .logo { width: 112px; height: auto; display: block; margin-bottom: 10px; }
         .title { text-align: right; }
         .title h1 { margin: 0; font-size: 26px; }
         .title div { margin-top: 6px; font-weight: 700; color: #475569; }
@@ -45,7 +42,7 @@
         <div class="wrap">
             <div class="header">
                 <div>
-                    <div class="brand">AGAPE <span>1</span><span>5</span><span>3</span></div>
+                    <img class="logo" src="{{ asset('images/agape153-logo.png') }}" alt="Agape153">
                     <div class="value">{{ $siteContact['email'] ?? 'info.agape153@gmail.com' }}</div>
                     <div>{{ $siteContact['phone'] ?? '+62816795153' }}</div>
                 </div>

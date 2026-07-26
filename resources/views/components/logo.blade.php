@@ -5,12 +5,26 @@
 
 @php
     $sizeClass = match ($variant) {
-        'compact' => 'h-14 w-auto md:h-16',
-        'hero' => 'h-auto w-[min(70vw,24rem)] sm:w-[28rem]',
-        default => 'h-20 w-auto',
+        'compact' => '',
+        'hero' => '',
+        default => '',
+    };
+
+    $sizeStyle = match ($variant) {
+        'compact' => 'width: clamp(4.75rem, 7vw, 6.25rem); height: auto;',
+        'hero' => 'width: min(72vw, 28rem); height: auto;',
+        default => 'width: clamp(6rem, 10vw, 8.25rem); height: auto;',
     };
 @endphp
 
 <span {{ $attributes->merge(['class' => 'inline-flex items-center gap-3']) }}>
-    <img class="{{ $sizeClass }} agape-master-logo" src="{{ asset('images/agape153-logo.svg') }}" alt="{{ $label }}">
+    <img
+        class="{{ $sizeClass }} agape-master-logo"
+        src="{{ asset('images/agape153-logo.png') }}"
+        alt="{{ $label }}"
+        style="{{ $sizeStyle }}"
+        width="462"
+        height="427"
+        decoding="async"
+    >
 </span>

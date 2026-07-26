@@ -44,12 +44,8 @@
                             @endguest
                         </div>
                     </div>
-                    <div class="rounded-3xl bg-[#edf7f4] p-6">
-                        <div class="grid grid-cols-3 gap-3 text-center">
-                            <span class="brand-tile bg-[#e64b3c] text-3xl text-slate-950">1</span>
-                            <span class="brand-tile bg-[#f2d763] text-3xl text-slate-950">5</span>
-                            <span class="brand-tile bg-[#63c6dc] text-3xl text-slate-950">3</span>
-                        </div>
+                    <div class="flex items-center justify-center rounded-3xl bg-[#edf7f4] p-6">
+                        <x-logo />
                     </div>
                 </div>
             @else

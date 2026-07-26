@@ -5,8 +5,7 @@
     <style>
         body { font-family: DejaVu Sans, sans-serif; color: #17221f; font-size: 12px; }
         .header { border-bottom: 2px solid #0f766e; padding-bottom: 16px; margin-bottom: 20px; }
-        .logo { width: 120px; margin-bottom: 8px; }
-        .brand { font-size: 24px; font-weight: 800; color: #0f766e; }
+        .logo { width: 96px; margin-bottom: 10px; }
         .muted { color: #64748b; }
         .grid { width: 100%; border-collapse: collapse; }
         .grid th { text-align: left; background: #edf7f4; padding: 10px; }
@@ -19,12 +18,11 @@
 <body>
     <div class="header">
         @php
-            $logoPath = public_path('images/agape153-logo.svg');
+            $logoPath = public_path('images/agape153-logo.png');
         @endphp
         @if (file_exists($logoPath))
-            <img class="logo" src="data:image/svg+xml;base64,{{ base64_encode(file_get_contents($logoPath)) }}" alt="Agape153">
+            <img class="logo" src="data:image/png;base64,{{ base64_encode(file_get_contents($logoPath)) }}" alt="Agape153">
         @endif
-        <div class="brand">AGAPE153</div>
         <div class="muted">Indonesian Agriculture International Commodity Trading</div>
         <div class="muted">{{ $siteContact['email'] ?? 'info.agape153@gmail.com' }} / {{ $siteContact['phone'] ?? '+62816795153' }}</div>
     </div>

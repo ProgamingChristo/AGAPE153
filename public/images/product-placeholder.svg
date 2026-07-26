@@ -2,8 +2,6 @@
   <title id="title">Agape153 Product Placeholder</title>
   <rect width="600" height="420" rx="28" fill="#F3F8F6"/>
   <rect x="42" y="42" width="516" height="336" rx="24" fill="#FFFFFF" stroke="#CFE3DF" stroke-width="4"/>
-  <path d="M154 280c52-74 85-86 126-34 28-42 62-47 100-3 17-24 35-36 59-32 25 4 41 24 61 69H154Z" fill="#0F766E" opacity=".18"/>
-  <circle cx="205" cy="154" r="42" fill="#E9C95A" opacity=".9"/>
-  <text x="300" y="230" text-anchor="middle" font-family="Arial Black, Impact, sans-serif" font-size="42" font-weight="900" fill="#0F766E">AGAPE153</text>
-  <text x="300" y="270" text-anchor="middle" font-family="Arial, sans-serif" font-size="22" fill="#475569">Indonesian Commodity</text>
+  <image href="agape153-logo.png" x="190" y="86" width="220" height="204" preserveAspectRatio="xMidYMid meet"/>
+  <text x="300" y="330" text-anchor="middle" font-family="Arial, sans-serif" font-size="20" font-weight="700" fill="#475569">Product image coming soon</text>
 </svg>
