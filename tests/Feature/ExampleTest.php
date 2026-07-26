@@ -24,11 +24,10 @@ class ExampleTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_homepage_returns_successfully(): void
+    public function test_root_redirects_to_about_page(): void
     {
-        $response = $this->get('/');
-
-        $response->assertStatus(200);
+        $this->get('/')
+            ->assertRedirect(route('about'));
     }
 
     public function test_about_page_returns_successfully(): void

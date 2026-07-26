@@ -71,7 +71,6 @@
             <div class="grid gap-4">
                 @foreach ($content['overview'] as $index => $paragraph)
                     <div class="lift-card rounded-2xl border border-slate-200 bg-[#f8faf9] p-6">
-                        <div class="mb-3 inline-grid h-9 w-9 place-items-center rounded-xl bg-teal-700 text-sm font-black text-white">0{{ $index + 1 }}</div>
                         <p class="leading-7 text-slate-600">{{ $paragraph }}</p>
                     </div>
                 @endforeach
@@ -145,7 +144,7 @@
         </div>
     </section>
 
-    <section class="section-pad bg-white">
+    <section id="contact" class="section-pad bg-white">
         <div class="agape-container grid gap-8 lg:grid-cols-[0.9fr_1.1fr]">
             <div>
                 <p class="text-sm font-black uppercase tracking-[0.22em] text-teal-700">{{ $t['about.contact_kicker'] ?? 'Contact Information' }}</p>

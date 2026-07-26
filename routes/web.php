@@ -20,7 +20,6 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\ContactController;
-use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LanguageController;
 use App\Http\Controllers\MediaController;
 use App\Http\Controllers\MemberController;
@@ -31,7 +30,7 @@ use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', HomeController::class)->name('home');
+Route::redirect('/', '/about')->name('home');
 Route::post('/language/{locale}', [LanguageController::class, 'switch'])->name('language.switch');
 Route::get('/media/{path}', [MediaController::class, 'show'])->where('path', '.*')->name('media.public');
 Route::get('/about', AboutController::class)->name('about');
