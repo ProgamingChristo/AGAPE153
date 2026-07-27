@@ -80,15 +80,15 @@
 
     <section class="section-pad bg-[#edf7f4]">
         <div class="agape-container grid gap-6 lg:grid-cols-2">
-            <div class="lift-card rounded-2xl border border-teal-100 bg-white p-8">
-                <div class="inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-teal-700 text-white">
+            <div class="lift-card rounded-2xl border border-slate-200 bg-white p-8">
+                <div class="inline-flex h-12 w-12 items-center justify-center rounded-2xl text-slate-950" style="background-color: #e9c95a;">
                     <x-icon name="check" class="h-6 w-6" />
                 </div>
                 <h2 class="mt-5 text-2xl font-black text-slate-950">Vision</h2>
                 <p class="mt-4 leading-7 text-slate-600">{{ $content['vision'] }}</p>
             </div>
-            <div class="lift-card rounded-2xl border border-teal-100 bg-white p-8">
-                <div class="inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-slate-950 text-white">
+            <div class="lift-card rounded-2xl border border-slate-200 bg-white p-8">
+                <div class="inline-flex h-12 w-12 items-center justify-center rounded-2xl text-slate-950" style="background-color: #63c6dc;">
                     <x-icon name="arrow" class="h-6 w-6" />
                 </div>
                 <h2 class="mt-5 text-2xl font-black text-slate-950">Mission</h2>
