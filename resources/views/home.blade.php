@@ -181,8 +181,8 @@
                                     </div>
                                     <h3 class="mt-2 font-black text-slate-950">{{ $product->name }}</h3>
                                 </div>
-                                <div class="text-sm font-bold text-slate-600">{{ $t['home.moq'] ?? 'Min. Order' }}<br><span class="text-slate-950">{{ $product->min_order_quantity }} {{ $product->unit }}</span></div>
-                                <div class="text-sm font-bold text-slate-600">{{ $t['home.stock'] ?? 'Stock' }}<br><span class="text-slate-950">{{ $product->stock_quantity }} {{ $product->unit }}</span></div>
+                                <div class="text-sm font-bold text-slate-600">{{ $t['home.moq'] ?? 'Min. Order' }}<br><span class="text-slate-950">{{ $product->formattedMoq() }}</span></div>
+                                <div class="text-sm font-bold text-slate-600">{{ $t['home.stock'] ?? 'Stock' }}<br><span class="text-slate-950">{{ $product->formattedStock() }}</span></div>
                                 <div class="text-sm font-black leading-snug text-teal-800">
                                     {{ $quoteLabel }}
                                     <span class="mt-1 block text-xs font-bold text-slate-500">{{ $quoteHint }}</span>

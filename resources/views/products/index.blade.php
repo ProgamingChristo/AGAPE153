@@ -102,11 +102,11 @@
                             <div class="grid grid-cols-2 gap-2 text-sm">
                                 <div class="rounded-2xl border border-slate-200 bg-[#f8faf9] p-3">
                                     <div class="text-xs font-black uppercase tracking-[0.12em] text-slate-500">MOQ</div>
-                                    <div class="mt-1 font-black text-slate-950">{{ $product->min_order_quantity }} {{ $product->unit }}</div>
+                                    <div class="mt-1 font-black text-slate-950">{{ $product->formattedMoq() }}</div>
                                 </div>
                                 <div class="rounded-2xl border border-slate-200 bg-[#f8faf9] p-3">
                                     <div class="text-xs font-black uppercase tracking-[0.12em] text-slate-500">Stock</div>
-                                    <div class="mt-1 font-black text-slate-950">{{ $product->stock_quantity }} {{ $product->unit }}</div>
+                                    <div class="mt-1 font-black text-slate-950">{{ $product->formattedStock() }}</div>
                                 </div>
                             </div>
 

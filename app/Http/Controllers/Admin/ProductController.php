@@ -36,7 +36,8 @@ class ProductController extends Controller
                 'is_active' => true,
                 'currency' => 'IDR',
                 'unit' => 'Kg',
-                'min_order_quantity' => 1,
+                'min_order_quantity' => 100,
+                'stock_quantity' => 20000,
             ]),
             'categories' => Category::query()->active()->orderBy('name')->get(),
         ]);

@@ -58,7 +58,8 @@ class ExampleTest extends TestCase
             'unit' => 'Kg',
             'price' => 98000,
             'currency' => 'IDR',
-            'stock_quantity' => 10,
+            'min_order_quantity' => 100,
+            'stock_quantity' => 20000,
             'is_active' => true,
             'image_url' => 'https://example.com/lada.jpg',
             'video_url' => '/videos/catalog/lada-hitam.html',
@@ -72,6 +73,8 @@ class ExampleTest extends TestCase
             ->assertSee('Food grade jute bag')
             ->assertSee('Please contact or drop us email')
             ->assertDontSee('Rp98.000/Kg')
+            ->assertSee('100 kgs')
+            ->assertSee('20,000 kgs')
             ->assertSee('Product Video');
     }
 

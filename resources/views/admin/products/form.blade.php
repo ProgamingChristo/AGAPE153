@@ -73,10 +73,10 @@
                 <input class="rounded-xl border border-slate-200 px-4 py-3 font-normal" name="currency" value="{{ old('currency', $product->currency ?: 'IDR') }}" maxlength="3" required>
             </label>
             <label class="grid gap-2 text-sm font-bold">Stock
-                <input class="rounded-xl border border-slate-200 px-4 py-3 font-normal" type="number" name="stock_quantity" value="{{ old('stock_quantity', $product->stock_quantity ?? 0) }}" min="0" required>
+                <input class="rounded-xl border border-slate-200 px-4 py-3 font-normal" type="number" name="stock_quantity" value="{{ old('stock_quantity', $product->stock_quantity ?? 20000) }}" min="0" required>
             </label>
             <label class="grid gap-2 text-sm font-bold">MOQ
-                <input class="rounded-xl border border-slate-200 px-4 py-3 font-normal" type="number" name="min_order_quantity" value="{{ old('min_order_quantity', $product->min_order_quantity ?: 1) }}" min="1" required>
+                <input class="rounded-xl border border-slate-200 px-4 py-3 font-normal" type="number" name="min_order_quantity" value="{{ old('min_order_quantity', $product->min_order_quantity ?: 100) }}" min="1" required>
             </label>
             <label class="grid gap-2 text-sm font-bold">Product Image
                 <input class="rounded-xl border border-slate-200 px-4 py-3 font-normal file:mr-4 file:rounded-lg file:border-0 file:bg-teal-700 file:px-3 file:py-2 file:text-sm file:font-bold file:text-white" type="file" name="image_file" accept="image/*">

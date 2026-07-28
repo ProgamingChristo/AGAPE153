@@ -102,7 +102,7 @@
                                         <div class="font-black text-slate-950">{{ $wishlist->product->name }}</div>
                                         <div class="mt-1 text-sm font-black text-teal-800">{{ $quoteLabel }}</div>
                                         <div class="mt-1 text-xs font-bold text-slate-500">{{ $quoteHint }}</div>
-                                        <div class="mt-2 text-xs font-bold text-slate-500">{{ $wishlist->product->stock_quantity }} {{ $wishlist->product->unit }} stock</div>
+                                        <div class="mt-2 text-xs font-bold text-slate-500">{{ $wishlist->product->formattedStock() }} stock</div>
                                     </div>
                                 </a>
                             @endif

@@ -48,11 +48,11 @@
                 </div>
                 <div class="border border-white/10 bg-white/10 p-4">
                     <div class="text-xs font-black uppercase tracking-[0.14em] text-slate-300">MOQ</div>
-                    <div class="mt-2 text-xl font-black text-white">{{ $product->min_order_quantity }} {{ $product->unit }}</div>
+                    <div class="mt-2 text-xl font-black text-white">{{ $product->formattedMoq() }}</div>
                 </div>
                 <div class="border border-white/10 bg-white/10 p-4">
                     <div class="text-xs font-black uppercase tracking-[0.14em] text-slate-300">Stock</div>
-                    <div class="mt-2 text-xl font-black text-white">{{ $product->stock_quantity }}</div>
+                    <div class="mt-2 text-xl font-black text-white">{{ $product->formattedStock() }}</div>
                 </div>
                 <div class="border border-white/10 bg-white/10 p-4">
                     <div class="text-xs font-black uppercase tracking-[0.14em] text-slate-300">Origin</div>

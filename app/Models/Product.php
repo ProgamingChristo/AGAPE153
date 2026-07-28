@@ -136,6 +136,25 @@ class Product extends Model
         return 'Rp'.number_format((float) $rawPrice, 0, ',', '.').'/'.$this->unit;
     }
 
+    public function formattedMoq(): string
+    {
+        return $this->formattedQuantity($this->min_order_quantity);
+    }
+
+    public function formattedStock(): string
+    {
+        return $this->formattedQuantity($this->stock_quantity);
+    }
+
+    private function formattedQuantity(int|float|null $quantity): string
+    {
+        $value = (float) ($quantity ?? 0);
+        $formatted = number_format($value, 0, '.', ',');
+        $unit = strtolower($this->unit) === 'kg' ? 'kgs' : $this->unit;
+
+        return "{$formatted} {$unit}";
+    }
+
     public function videoEmbedUrl(): ?string
     {
         if (! $this->video_url) {
