@@ -30,6 +30,8 @@
 @section('content')
     @php
         $t = $siteText ?? [];
+        $quoteLabel = $t['product.quote_label'] ?? 'Please contact or drop us email';
+        $quoteHint = $t['product.quote_hint'] ?? 'Pricing depends on MOQ';
         $slideSeconds = 2;
         $heroSlides = collect([
             'nutmeg-pala-whole-mace.jpg',
@@ -161,7 +163,7 @@
                 <div data-reveal>
                     <p class="section-kicker"><x-icon name="coffee" class="h-4 w-4" />{{ $t['home.featured_kicker'] ?? 'Buyer Picks' }}</p>
                     <h2 class="mt-3 text-4xl font-black leading-tight text-slate-950 sm:text-5xl">{{ $t['home.featured_title'] ?? 'Popular products ready to request.' }}</h2>
-                    <p class="mt-4 leading-8 text-slate-600">{{ $t['home.featured_body'] ?? 'See the product photo, category, minimum order, available stock, shipping readiness, and price in a compact buyer-friendly list.' }}</p>
+                    <p class="mt-4 leading-8 text-slate-600">{{ $t['home.featured_body'] ?? 'See the product photo, category, minimum order, available stock, shipping readiness, and quote guidance in a compact buyer-friendly list.' }}</p>
                     <a class="btn-primary mt-6" href="{{ route('products.index') }}">{{ $t['home.full_catalog'] ?? 'Open Full Catalog' }}</a>
                 </div>
 
@@ -181,7 +183,10 @@
                                 </div>
                                 <div class="text-sm font-bold text-slate-600">{{ $t['home.moq'] ?? 'Min. Order' }}<br><span class="text-slate-950">{{ $product->min_order_quantity }} {{ $product->unit }}</span></div>
                                 <div class="text-sm font-bold text-slate-600">{{ $t['home.stock'] ?? 'Stock' }}<br><span class="text-slate-950">{{ $product->stock_quantity }} {{ $product->unit }}</span></div>
-                                <div class="font-black text-teal-800">{{ $product->formattedPrice() }}</div>
+                                <div class="text-sm font-black leading-snug text-teal-800">
+                                    {{ $quoteLabel }}
+                                    <span class="mt-1 block text-xs font-bold text-slate-500">{{ $quoteHint }}</span>
+                                </div>
                             </div>
                         </a>
                     @empty

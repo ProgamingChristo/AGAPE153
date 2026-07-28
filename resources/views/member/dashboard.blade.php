@@ -6,6 +6,9 @@
     @php
         $paidCount = $orders->where('payment_status', 'paid')->count();
         $openCount = $orders->whereNotIn('status', ['completed', 'cancelled'])->count();
+        $t = $siteText ?? [];
+        $quoteLabel = $t['product.quote_label'] ?? 'Please contact or drop us email';
+        $quoteHint = $t['product.quote_hint'] ?? 'Pricing depends on MOQ';
     @endphp
 
     <section class="relative overflow-hidden bg-slate-950 text-white">
@@ -97,7 +100,8 @@
                                     <img class="h-20 w-20 rounded-2xl object-cover" src="{{ $wishlist->product->image_url ?: asset('images/product-placeholder.svg') }}" onerror="this.src='{{ asset('images/product-placeholder.svg') }}'" alt="{{ $wishlist->product->name }}">
                                     <div>
                                         <div class="font-black text-slate-950">{{ $wishlist->product->name }}</div>
-                                        <div class="mt-1 text-sm font-bold text-teal-800">{{ $wishlist->product->formattedPrice() }}</div>
+                                        <div class="mt-1 text-sm font-black text-teal-800">{{ $quoteLabel }}</div>
+                                        <div class="mt-1 text-xs font-bold text-slate-500">{{ $quoteHint }}</div>
                                         <div class="mt-2 text-xs font-bold text-slate-500">{{ $wishlist->product->stock_quantity }} {{ $wishlist->product->unit }} stock</div>
                                     </div>
                                 </a>

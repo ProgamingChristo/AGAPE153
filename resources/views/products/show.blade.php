@@ -11,13 +11,7 @@
     "name": "{{ $product->name }}",
     "description": "{{ $product->short_description }}",
     "image": "{{ $product->image_url }}",
-    "brand": {"@@type": "Brand", "name": "Agape153"},
-    "offers": {
-        "@@type": "Offer",
-        "priceCurrency": "{{ $product->currency }}",
-        "price": "{{ $product->price ?? 0 }}",
-        "availability": "{{ $product->stock_quantity > 0 ? 'https://schema.org/InStock' : 'https://schema.org/PreOrder' }}"
-    }
+    "brand": {"@@type": "Brand", "name": "Agape153"}
 }
 </script>
 @endsection
@@ -25,6 +19,8 @@
 @section('content')
     @php
         $t = $siteText ?? [];
+        $quoteLabel = $t['product.quote_label'] ?? 'Please contact or drop us email';
+        $quoteHint = $t['product.quote_hint'] ?? 'Pricing depends on MOQ';
     @endphp
     <section class="bg-[#101820] text-white">
         <div class="logo-stripe"><span></span><span></span><span></span></div>
@@ -46,8 +42,9 @@
             </div>
             <div class="grid grid-cols-2 gap-3 sm:grid-cols-4" data-reveal>
                 <div class="border border-white/10 bg-white/10 p-4">
-                    <div class="text-xs font-black uppercase tracking-[0.14em] text-slate-300">Price</div>
-                    <div class="mt-2 text-xl font-black text-amber-200">{{ $product->formattedPrice() }}</div>
+                    <div class="text-xs font-black uppercase tracking-[0.14em] text-slate-300">Quote</div>
+                    <div class="mt-2 text-lg font-black leading-tight text-amber-200">{{ $quoteLabel }}</div>
+                    <div class="mt-1 text-xs font-bold text-slate-300">{{ $quoteHint }}</div>
                 </div>
                 <div class="border border-white/10 bg-white/10 p-4">
                     <div class="text-xs font-black uppercase tracking-[0.14em] text-slate-300">MOQ</div>
@@ -247,7 +244,8 @@
                             <img class="h-20 w-20 shrink-0 object-cover" src="{{ $related->image_url ?: asset('images/product-placeholder.svg') }}" onerror="this.src='{{ asset('images/product-placeholder.svg') }}'" alt="{{ $related->name }}" loading="lazy" decoding="async">
                             <div>
                                 <div class="font-black text-slate-950">{{ $related->name }}</div>
-                                <div class="mt-2 text-sm font-bold text-teal-800">{{ $related->formattedPrice() }}</div>
+                                <div class="mt-2 text-sm font-black text-teal-800">{{ $quoteLabel }}</div>
+                                <div class="mt-1 text-xs font-bold text-slate-500">{{ $quoteHint }}</div>
                             </div>
                         </a>
                     @endforeach

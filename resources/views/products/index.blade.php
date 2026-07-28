@@ -6,6 +6,8 @@
 @section('content')
     @php
         $t = $siteText ?? [];
+        $quoteLabel = $t['product.quote_label'] ?? 'Please contact or drop us email';
+        $quoteHint = $t['product.quote_hint'] ?? 'Pricing depends on MOQ';
     @endphp
     <section class="bg-[#101820] text-white">
         <div class="logo-stripe"><span></span><span></span><span></span></div>
@@ -13,7 +15,7 @@
             <div data-reveal>
                 <p class="section-kicker text-amber-200"><x-icon name="package" class="h-4 w-4" />Product Catalog</p>
                 <h1 class="mt-3 max-w-4xl text-5xl font-black leading-tight sm:text-7xl">Trade list for Indonesian commodities.</h1>
-                <p class="mt-4 max-w-2xl leading-8 text-slate-200">Clear product information for faster sourcing decisions: category, origin, minimum order, stock, shipping readiness, and price.</p>
+                <p class="mt-4 max-w-2xl leading-8 text-slate-200">Clear product information for faster sourcing decisions: category, origin, minimum order, stock, shipping readiness, and quote guidance.</p>
             </div>
             <aside class="border border-white/10 bg-white/10 p-5" data-reveal>
                 <div class="flex items-center justify-between">
@@ -110,8 +112,9 @@
 
                             <div class="mt-auto flex items-end justify-between gap-3 border-t border-slate-100 pt-4">
                                 <div>
-                                    <div class="text-xs font-black uppercase tracking-[0.14em] text-slate-500">Price</div>
-                                    <div class="mt-1 text-xl font-black text-teal-800">{{ $product->formattedPrice() }}</div>
+                                    <div class="text-xs font-black uppercase tracking-[0.14em] text-slate-500">Quote</div>
+                                    <div class="mt-1 text-base font-black leading-snug text-teal-800">{{ $quoteLabel }}</div>
+                                    <p class="mt-1 text-xs font-bold text-slate-500">{{ $quoteHint }}</p>
                                 </div>
                                 <span class="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-[#101820] text-white transition group-hover:bg-teal-700">
                                     <x-icon name="arrow" class="h-4 w-4" />

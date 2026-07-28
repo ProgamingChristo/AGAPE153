@@ -70,6 +70,8 @@ class ExampleTest extends TestCase
             ->assertSee('Lada Hitam')
             ->assertSee('Packaging')
             ->assertSee('Food grade jute bag')
+            ->assertSee('Please contact or drop us email')
+            ->assertDontSee('Rp98.000/Kg')
             ->assertSee('Product Video');
     }
 
