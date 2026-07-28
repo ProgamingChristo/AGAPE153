@@ -24,7 +24,7 @@
             <img class="logo" src="data:image/png;base64,{{ base64_encode(file_get_contents($logoPath)) }}" alt="Agape153">
         @endif
         <div class="muted">Indonesian Agriculture International Commodity Trading</div>
-        <div class="muted">{{ $siteContact['email'] ?? 'info.agape153@gmail.com' }} / {{ $siteContact['phone'] ?? '+62816795153' }}</div>
+        <div class="muted">{{ $siteContact['email'] ?? 'info@agape153.com' }} / {{ $siteContact['phone'] ?? '+62816795153' }}</div>
     </div>
 
     <h1>Invoice / Order Summary</h1>

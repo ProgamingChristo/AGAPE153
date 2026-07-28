@@ -184,7 +184,8 @@ Kontak resmi Agape153:
 
 ```text
 Phone / WhatsApp: +62816795153
-Email: info.agape153@gmail.com
+Email: info@agape153.com
+Gmail backup: info.agape153@gmail.com
 YouTube: https://www.youtube.com/@AGAPE153CHANNEL
 Instagram: @agape153.official
 Facebook: https://www.facebook.com/profile.php?id=61590494259264

@@ -144,6 +144,8 @@
                 @csrf
                 @method('PUT')
                 <textarea class="min-h-24 rounded-xl border border-slate-200 px-4 py-3" name="footer_description" required>{{ $footerDescription }}</textarea>
+                <input class="rounded-xl border border-slate-200 px-4 py-3" type="email" name="company_email" value="{{ $siteContact['email'] ?? 'info@agape153.com' }}" placeholder="Primary company email">
+                <input class="rounded-xl border border-slate-200 px-4 py-3" type="email" name="company_secondary_email" value="{{ $siteContact['secondary_email'] ?? 'info.agape153@gmail.com' }}" placeholder="Secondary / Gmail backup">
                 <input class="rounded-xl border border-slate-200 px-4 py-3" name="company_address" value="{{ $siteContact['company_address'] ?? 'Indonesia' }}" placeholder="Company address">
                 <input class="rounded-xl border border-slate-200 px-4 py-3" type="number" min="0" step="100000" name="high_value_order_threshold" value="{{ old('high_value_order_threshold', \App\Models\WebsiteSetting::value('high_value_order_threshold', '10000000')) }}" placeholder="High value order threshold">
                 <button class="btn-primary justify-self-start" type="submit">Save Footer</button>

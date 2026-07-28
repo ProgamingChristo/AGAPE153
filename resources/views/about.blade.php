@@ -155,6 +155,9 @@
                     <x-icon name="mail" class="h-5 w-5 text-teal-700" />
                     <div class="mt-3 text-sm text-slate-500">{{ $t['about.email'] ?? 'Email' }}</div>
                     <a class="mt-1 block break-words font-black text-slate-950 hover:text-teal-700" href="mailto:{{ $siteContact['email'] }}">{{ $siteContact['email'] }}</a>
+                    @if (! empty($siteContact['secondary_email']) && $siteContact['secondary_email'] !== $siteContact['email'])
+                        <a class="mt-2 block break-words text-sm font-bold text-slate-500 hover:text-teal-700" href="mailto:{{ $siteContact['secondary_email'] }}">{{ $siteContact['secondary_email'] }}</a>
+                    @endif
                 </div>
                 <div class="rounded-2xl border border-slate-200 p-5">
                     <x-icon name="phone" class="h-5 w-5 text-teal-700" />

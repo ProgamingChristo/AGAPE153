@@ -43,7 +43,7 @@
             <div class="header">
                 <div>
                     <img class="logo" src="{{ asset('images/agape153-logo.png') }}" alt="Agape153">
-                    <div class="value">{{ $siteContact['email'] ?? 'info.agape153@gmail.com' }}</div>
+                    <div class="value">{{ $siteContact['email'] ?? 'info@agape153.com' }}</div>
                     <div>{{ $siteContact['phone'] ?? '+62816795153' }}</div>
                 </div>
                 <div class="title">

@@ -118,6 +118,8 @@ class CmsController extends Controller
     {
         $data = $request->validate([
             'footer_description' => ['required', 'string', 'max:500'],
+            'company_email' => ['required', 'email', 'max:160'],
+            'company_secondary_email' => ['nullable', 'email', 'max:160'],
             'company_address' => ['nullable', 'string', 'max:250'],
             'high_value_order_threshold' => ['required', 'numeric', 'min:0'],
         ]);

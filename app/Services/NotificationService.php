@@ -81,7 +81,7 @@ class NotificationService
 
     public function notifyAdmin(string $event, string $subject, string $message, array $payload = []): void
     {
-        $email = WebsiteSetting::value('company_email', 'info.agape153@gmail.com');
+        $email = WebsiteSetting::value('company_email', 'info@agape153.com');
         $phone = WebsiteSetting::value('whatsapp_number', '+62816795153');
 
         $this->sendEmail($event, $email, $subject, $message, $payload);

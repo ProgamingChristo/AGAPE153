@@ -36,7 +36,8 @@ class AppServiceProvider extends ServiceProvider
             $view->with('siteContact', [
                 'phone' => WebsiteSetting::value('phone_number', '+62816795153'),
                 'whatsapp' => WebsiteSetting::value('whatsapp_number', '+62816795153'),
-                'email' => WebsiteSetting::value('company_email', 'info.agape153@gmail.com'),
+                'email' => WebsiteSetting::value('company_email', 'info@agape153.com'),
+                'secondary_email' => WebsiteSetting::value('company_secondary_email', 'info.agape153@gmail.com'),
                 'youtube_url' => WebsiteSetting::value('youtube_url', 'https://www.youtube.com/@AGAPE153CHANNEL'),
                 'instagram_handle' => WebsiteSetting::value('instagram_handle', '@agape153.official'),
                 'instagram_url' => WebsiteSetting::value('instagram_url', 'https://www.instagram.com/agape153.official'),

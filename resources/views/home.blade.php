@@ -311,8 +311,20 @@
                 <div class="mt-6 grid gap-3">
                     <a class="trade-panel flex items-center gap-3 p-4" href="mailto:{{ $siteContact['email'] }}">
                         <x-icon name="mail" class="h-5 w-5 text-teal-700" />
-                        <span class="font-black text-slate-950">{{ $siteContact['email'] }}</span>
+                        <span class="grid gap-1">
+                            <span class="text-xs font-black uppercase tracking-[0.12em] text-slate-500">Primary Email</span>
+                            <span class="break-words font-black text-slate-950">{{ $siteContact['email'] }}</span>
+                        </span>
                     </a>
+                    @if (! empty($siteContact['secondary_email']) && $siteContact['secondary_email'] !== $siteContact['email'])
+                        <a class="trade-panel flex items-center gap-3 p-4" href="mailto:{{ $siteContact['secondary_email'] }}">
+                            <x-icon name="mail" class="h-5 w-5 text-amber-600" />
+                            <span class="grid gap-1">
+                                <span class="text-xs font-black uppercase tracking-[0.12em] text-slate-500">Gmail Backup</span>
+                                <span class="break-words font-black text-slate-950">{{ $siteContact['secondary_email'] }}</span>
+                            </span>
+                        </a>
+                    @endif
                     <a class="trade-panel flex items-center gap-3 p-4" href="https://wa.me/{{ preg_replace('/\D+/', '', $siteContact['whatsapp']) }}" target="_blank" rel="noopener">
                         <x-icon name="phone" class="h-5 w-5 text-teal-700" />
                         <span class="font-black text-slate-950">{{ $siteContact['phone'] }}</span>

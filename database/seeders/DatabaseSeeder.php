@@ -246,7 +246,8 @@ class DatabaseSeeder extends Seeder
         foreach ([
             'phone_number' => '+62816795153',
             'whatsapp_number' => '+62816795153',
-            'company_email' => 'info.agape153@gmail.com',
+            'company_email' => 'info@agape153.com',
+            'company_secondary_email' => 'info.agape153@gmail.com',
             'company_address' => 'Indonesia',
             'youtube_url' => 'https://www.youtube.com/@AGAPE153CHANNEL',
             'instagram_handle' => '@agape153.official',
