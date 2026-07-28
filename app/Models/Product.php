@@ -146,6 +146,22 @@ class Product extends Model
         return $this->formattedQuantity($this->stock_quantity);
     }
 
+    /**
+     * @return array<int, array{label: string, value: string}>
+     */
+    public function buyerDetails(): array
+    {
+        $details = $this->normalizedDetails();
+
+        return [
+            ['label' => 'Product', 'value' => $details['product'] ?? $this->name],
+            ['label' => 'Origin', 'value' => $details['origin'] ?? ($this->origin ?: 'Indonesia')],
+            ['label' => 'Quality', 'value' => $details['quality'] ?? 'Export Quality'],
+            ['label' => 'Moisture Content', 'value' => $details['moisturecontent'] ?? $details['moistureconten'] ?? $details['moisture'] ?? 'Max. 13%'],
+            ['label' => 'Packaging', 'value' => $details['packaging'] ?? '20 kg PP Bag'],
+        ];
+    }
+
     private function formattedQuantity(int|float|null $quantity): string
     {
         $value = (float) ($quantity ?? 0);
@@ -153,6 +169,28 @@ class Product extends Model
         $unit = strtolower($this->unit) === 'kg' ? 'kgs' : $this->unit;
 
         return "{$formatted} {$unit}";
+    }
+
+    /**
+     * @return array<string, string>
+     */
+    private function normalizedDetails(): array
+    {
+        $details = [];
+
+        foreach ($this->product_details ?? [] as $detail) {
+            $label = (string) ($detail['label'] ?? '');
+            $value = trim((string) ($detail['value'] ?? ''));
+
+            if ($label === '' || $value === '') {
+                continue;
+            }
+
+            $key = strtolower((string) preg_replace('/[^a-z0-9]+/i', '', $label));
+            $details[$key] = $value;
+        }
+
+        return $details;
     }
 
     public function videoEmbedUrl(): ?string

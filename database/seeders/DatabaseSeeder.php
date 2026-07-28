@@ -187,16 +187,13 @@ class DatabaseSeeder extends Seeder
                 'is_active' => true,
                 'export_ready' => $product['export'],
                 'image_url' => $product['image'] ?? $this->catalogImageUrl($product['name'], $product['category']),
+                'product_details' => $this->buyerProductDetails($product['name'], $product['origin']),
                 'meta_title' => $product['name'].' - Agape153',
                 'meta_description' => $product['short_description'],
             ];
 
             if ($product['catalog_media'] ?? false) {
                 $payload['video_url'] = $this->catalogVideoUrl($product['name'], $product['category']);
-            }
-
-            if (array_key_exists('details', $product)) {
-                $payload['product_details'] = $product['details'];
             }
 
             Product::query()->updateOrCreate(
@@ -420,6 +417,20 @@ HTML);
 
         imagejpeg($image, $path, 88);
         imagedestroy($image);
+    }
+
+    /**
+     * @return array<int, array{label: string, value: string}>
+     */
+    private function buyerProductDetails(string $product, string $origin): array
+    {
+        return [
+            ['label' => 'Product', 'value' => $product],
+            ['label' => 'Origin', 'value' => $origin ?: 'Indonesia'],
+            ['label' => 'Quality', 'value' => 'Export Quality'],
+            ['label' => 'Moisture Content', 'value' => 'Max. 13%'],
+            ['label' => 'Packaging', 'value' => '20 kg PP Bag'],
+        ];
     }
 
     /**

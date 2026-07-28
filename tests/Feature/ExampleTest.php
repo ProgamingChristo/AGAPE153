@@ -52,8 +52,11 @@ class ExampleTest extends TestCase
             'slug' => 'lada-hitam',
             'short_description' => 'Lada hitam Indonesia.',
             'product_details' => [
-                ['label' => 'Packaging', 'value' => 'Food grade jute bag'],
-                ['label' => 'Moisture', 'value' => 'Max 12%'],
+                ['label' => 'Product', 'value' => 'Lada Hitam'],
+                ['label' => 'Origin', 'value' => 'Indonesia'],
+                ['label' => 'Quality', 'value' => 'Export Quality'],
+                ['label' => 'Moisture Content', 'value' => 'Max. 13%'],
+                ['label' => 'Packaging', 'value' => '20 kg PP Bag'],
             ],
             'unit' => 'Kg',
             'price' => 98000,
@@ -69,8 +72,10 @@ class ExampleTest extends TestCase
         $this->get(route('products.show', $product))
             ->assertStatus(200)
             ->assertSee('Lada Hitam')
-            ->assertSee('Packaging')
-            ->assertSee('Food grade jute bag')
+            ->assertSee('Product Details')
+            ->assertSee('Export Quality')
+            ->assertSee('Max. 13%')
+            ->assertSee('20 kg PP Bag')
             ->assertSee('Please contact or drop us email')
             ->assertDontSee('Rp98.000/Kg')
             ->assertSee('100 kgs')

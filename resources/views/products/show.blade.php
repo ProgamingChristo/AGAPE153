@@ -21,6 +21,7 @@
         $t = $siteText ?? [];
         $quoteLabel = $t['product.quote_label'] ?? 'Please contact or drop us email';
         $quoteHint = $t['product.quote_hint'] ?? 'Pricing depends on MOQ';
+        $buyerDetails = $product->buyerDetails();
     @endphp
     <section class="bg-[#101820] text-white">
         <div class="logo-stripe"><span></span><span></span><span></span></div>
@@ -103,24 +104,14 @@
             </div>
 
             <aside class="h-max trade-panel p-5" data-reveal>
-                <p class="section-kicker"><x-icon name="orders" class="h-4 w-4" />Product Sheet</p>
+                <p class="section-kicker"><x-icon name="orders" class="h-4 w-4" />Product Details</p>
                 <dl class="mt-5 grid gap-3 text-sm">
-                    <div class="flex flex-wrap justify-between gap-4 border-b border-slate-100 pb-3">
-                        <dt class="text-slate-500">Grade</dt>
-                        <dd class="font-black text-slate-950">{{ $product->grade ?: '-' }}</dd>
-                    </div>
-                    <div class="flex flex-wrap justify-between gap-4 border-b border-slate-100 pb-3">
-                        <dt class="text-slate-500">{{ $t['home.shipping_ready'] ?? 'Shipping Ready' }}</dt>
-                        <dd class="font-black text-slate-950">{{ $product->export_ready ? 'Yes' : 'Inquiry required' }}</dd>
-                    </div>
-                    <div class="flex flex-wrap justify-between gap-4 border-b border-slate-100 pb-3">
-                        <dt class="text-slate-500">Unit</dt>
-                        <dd class="font-black text-slate-950">{{ $product->unit }}</dd>
-                    </div>
-                    <div class="flex flex-wrap justify-between gap-4">
-                        <dt class="text-slate-500">Currency</dt>
-                        <dd class="font-black text-slate-950">{{ $product->currency }}</dd>
-                    </div>
+                    @foreach ($buyerDetails as $detail)
+                        <div class="grid gap-1 border-b border-slate-100 pb-3 last:border-b-0 last:pb-0">
+                            <dt class="text-xs font-black uppercase tracking-[0.12em] text-teal-700">{{ $detail['label'] }}</dt>
+                            <dd class="break-words font-black leading-6 text-slate-950">{{ $detail['value'] }}</dd>
+                        </div>
+                    @endforeach
                 </dl>
 
                 @auth
@@ -154,6 +145,7 @@
         @php
             $productDetails = collect($product->product_details ?? [])
                 ->filter(fn ($detail) => filled($detail['value'] ?? null))
+                ->reject(fn ($detail) => in_array(strtolower((string) preg_replace('/[^a-z0-9]+/i', '', $detail['label'] ?? '')), ['product', 'origin', 'quality', 'moisturecontent', 'moistureconten', 'moisture', 'packaging'], true))
                 ->values();
             $publishedReviews = $product->publishedReviews;
             $averageRating = $publishedReviews->avg('rating');
