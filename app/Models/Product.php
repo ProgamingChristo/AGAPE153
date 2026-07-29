@@ -151,14 +151,31 @@ class Product extends Model
      */
     public function buyerDetails(): array
     {
-        $details = $this->normalizedDetails();
+        $details = collect($this->product_details ?? [])
+            ->map(function ($detail): ?array {
+                $label = trim((string) ($detail['label'] ?? ''));
+                $value = trim((string) ($detail['value'] ?? ''));
+
+                if ($label === '' || $value === '') {
+                    return null;
+                }
+
+                return ['label' => $label, 'value' => $value];
+            })
+            ->filter()
+            ->values()
+            ->all();
+
+        if ($details !== []) {
+            return $details;
+        }
 
         return [
-            ['label' => 'Product', 'value' => $details['product'] ?? $this->name],
-            ['label' => 'Origin', 'value' => $details['origin'] ?? ($this->origin ?: 'Indonesia')],
-            ['label' => 'Quality', 'value' => $details['quality'] ?? 'Export Quality'],
-            ['label' => 'Moisture Content', 'value' => $details['moisturecontent'] ?? $details['moistureconten'] ?? $details['moisture'] ?? 'Max. 13%'],
-            ['label' => 'Packaging', 'value' => $details['packaging'] ?? '20 kg PP Bag'],
+            ['label' => 'Product Name', 'value' => $this->name],
+            ['label' => 'Origin', 'value' => $this->origin ?: 'Indonesia'],
+            ['label' => 'Quality', 'value' => 'Export Grade'],
+            ['label' => 'Moisture', 'value' => 'Max. 13%'],
+            ['label' => 'Packaging', 'value' => '25 kg PP Bags or Customized'],
         ];
     }
 
@@ -169,28 +186,6 @@ class Product extends Model
         $unit = strtolower($this->unit) === 'kg' ? 'kgs' : $this->unit;
 
         return "{$formatted} {$unit}";
-    }
-
-    /**
-     * @return array<string, string>
-     */
-    private function normalizedDetails(): array
-    {
-        $details = [];
-
-        foreach ($this->product_details ?? [] as $detail) {
-            $label = (string) ($detail['label'] ?? '');
-            $value = trim((string) ($detail['value'] ?? ''));
-
-            if ($label === '' || $value === '') {
-                continue;
-            }
-
-            $key = strtolower((string) preg_replace('/[^a-z0-9]+/i', '', $label));
-            $details[$key] = $value;
-        }
-
-        return $details;
     }
 
     public function videoEmbedUrl(): ?string

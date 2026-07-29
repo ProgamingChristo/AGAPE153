@@ -424,13 +424,116 @@ HTML);
      */
     private function buyerProductDetails(string $product, string $origin): array
     {
-        return [
-            ['label' => 'Product', 'value' => $product],
-            ['label' => 'Origin', 'value' => $origin ?: 'Indonesia'],
-            ['label' => 'Quality', 'value' => 'Export Quality'],
-            ['label' => 'Moisture Content', 'value' => 'Max. 13%'],
-            ['label' => 'Packaging', 'value' => '20 kg PP Bag'],
-        ];
+        $name = Str::lower($product);
+        $origin = $origin ?: 'Indonesia';
+
+        if (str_contains($name, 'white pepper') || str_contains($name, 'lada putih')) {
+            return $this->detailRows([
+                'Product Name' => 'White Pepper',
+                'Origin' => 'Indonesia',
+                'Quality' => 'Export Grade',
+                'Form' => 'Whole Dried Peppercorns',
+                'Color' => 'Creamy White',
+                'Moisture' => 'Max. 13%',
+                'Purity' => 'Min. 99%',
+                'Packaging' => '25 kg or 50 kg PP Bags (Custom packaging available)',
+            ]);
+        }
+
+        if (str_contains($name, 'black pepper') || str_contains($name, 'lada hitam')) {
+            return $this->detailRows([
+                'Product Name' => 'Black Pepper',
+                'Origin' => 'Indonesia',
+                'Quality' => 'Export Grade',
+                'Form' => 'Whole Dried Peppercorns',
+                'Color' => 'Black',
+                'Moisture' => 'Max. 13%',
+                'Purity' => 'Min. 99%',
+                'Packaging' => '25 kg or 50 kg PP Bags (Custom packaging available)',
+            ]);
+        }
+
+        if (str_contains($name, 'nutmeg') || str_contains($name, 'pala')) {
+            return $this->detailRows([
+                'Product Name' => 'Whole Nutmeg',
+                'Origin' => 'Indonesia',
+                'Quality' => 'Export Grade',
+                'Form' => 'Whole Dried Nutmeg',
+                'Moisture' => 'Max. 10%',
+                'Color' => 'Natural Brown',
+                'Packaging' => '25 kg or 50 kg Bags',
+            ]);
+        }
+
+        if (str_contains($name, 'ginger') || str_contains($name, 'jahe')) {
+            return $this->detailRows([
+                'Product Name' => 'Dried Ginger',
+                'Origin' => 'Indonesia',
+                'Quality' => 'Export Grade',
+                'Form' => 'Whole, Sliced, or Powder',
+                'Moisture' => 'Max. 12%',
+                'Color' => 'Natural Light Brown',
+                'Packaging' => '25 kg PP Bags or as requested',
+            ]);
+        }
+
+        if (str_contains($name, 'curcuma') || str_contains($name, 'temulawak')) {
+            return $this->detailRows([
+                'Product Name' => 'Curcuma (Java Turmeric)',
+                'Origin' => 'Indonesia',
+                'Quality' => 'Export Grade',
+                'Form' => 'Dried Whole, Sliced, or Powder',
+                'Moisture' => 'Max. 12%',
+                'Color' => 'Yellow-Orange',
+                'Packaging' => '25 kg PP Bags',
+            ]);
+        }
+
+        if (str_contains($name, 'turmeric') || str_contains($name, 'kunyit')) {
+            return $this->detailRows([
+                'Product Name' => 'Turmeric',
+                'Origin' => 'Indonesia',
+                'Quality' => 'Export Grade',
+                'Form' => 'Whole Dried Fingers, Sliced, or Powder',
+                'Moisture' => 'Max. 12%',
+                'Color' => 'Bright Yellow',
+                'Packaging' => '25 kg PP Bags or Customized',
+            ]);
+        }
+
+        if (str_contains($name, 'coffee') || str_contains($name, 'robusta') || str_contains($name, 'arabica')) {
+            return $this->detailRows([
+                'Product Name' => 'Indonesian Coffee Beans',
+                'Origin' => 'Indonesia',
+                'Variety' => 'Arabica and Robusta',
+                'Quality' => 'Export Grade',
+                'Process' => 'Natural, Washed, or Semi-Washed',
+                'Form' => 'Green Coffee Beans',
+                'Moisture' => '11-13%',
+                'Packaging' => '60 kg Jute Bags or Customized',
+            ]);
+        }
+
+        return $this->detailRows([
+            'Product Name' => $product,
+            'Origin' => $origin,
+            'Quality' => 'Export Grade',
+            'Form' => 'By request',
+            'Moisture' => 'Max. 13%',
+            'Packaging' => '25 kg PP Bags or Customized',
+        ]);
+    }
+
+    /**
+     * @param  array<string, string>  $details
+     * @return array<int, array{label: string, value: string}>
+     */
+    private function detailRows(array $details): array
+    {
+        return collect($details)
+            ->map(fn (string $value, string $label): array => ['label' => $label, 'value' => $value])
+            ->values()
+            ->all();
     }
 
     /**

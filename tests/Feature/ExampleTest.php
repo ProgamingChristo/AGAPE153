@@ -52,11 +52,14 @@ class ExampleTest extends TestCase
             'slug' => 'lada-hitam',
             'short_description' => 'Lada hitam Indonesia.',
             'product_details' => [
-                ['label' => 'Product', 'value' => 'Lada Hitam'],
+                ['label' => 'Product Name', 'value' => 'Black Pepper'],
                 ['label' => 'Origin', 'value' => 'Indonesia'],
-                ['label' => 'Quality', 'value' => 'Export Quality'],
-                ['label' => 'Moisture Content', 'value' => 'Max. 13%'],
-                ['label' => 'Packaging', 'value' => '20 kg PP Bag'],
+                ['label' => 'Quality', 'value' => 'Export Grade'],
+                ['label' => 'Form', 'value' => 'Whole Dried Peppercorns'],
+                ['label' => 'Color', 'value' => 'Black'],
+                ['label' => 'Moisture', 'value' => 'Max. 13%'],
+                ['label' => 'Purity', 'value' => 'Min. 99%'],
+                ['label' => 'Packaging', 'value' => '25 kg or 50 kg PP Bags (Custom packaging available)'],
             ],
             'unit' => 'Kg',
             'price' => 98000,
@@ -73,9 +76,12 @@ class ExampleTest extends TestCase
             ->assertStatus(200)
             ->assertSee('Lada Hitam')
             ->assertSee('Product Details')
-            ->assertSee('Export Quality')
+            ->assertSee('Product Name')
+            ->assertSee('Export Grade')
+            ->assertSee('Whole Dried Peppercorns')
+            ->assertSee('Min. 99%')
             ->assertSee('Max. 13%')
-            ->assertSee('20 kg PP Bag')
+            ->assertSee('25 kg or 50 kg PP Bags')
             ->assertSee('Please contact or drop us email')
             ->assertDontSee('Rp98.000/Kg')
             ->assertSee('100 kgs')

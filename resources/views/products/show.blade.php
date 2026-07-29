@@ -22,6 +22,11 @@
         $quoteLabel = $t['product.quote_label'] ?? 'Please contact or drop us email';
         $quoteHint = $t['product.quote_hint'] ?? 'Pricing depends on MOQ';
         $buyerDetails = $product->buyerDetails();
+        $detailKey = fn ($label) => strtolower((string) preg_replace('/[^a-z0-9]+/i', '', (string) $label));
+        $buyerDetailKeys = collect($buyerDetails)
+            ->map(fn ($detail) => $detailKey($detail['label'] ?? ''))
+            ->filter()
+            ->all();
     @endphp
     <section class="bg-[#101820] text-white">
         <div class="logo-stripe"><span></span><span></span><span></span></div>
@@ -145,7 +150,7 @@
         @php
             $productDetails = collect($product->product_details ?? [])
                 ->filter(fn ($detail) => filled($detail['value'] ?? null))
-                ->reject(fn ($detail) => in_array(strtolower((string) preg_replace('/[^a-z0-9]+/i', '', $detail['label'] ?? '')), ['product', 'origin', 'quality', 'moisturecontent', 'moistureconten', 'moisture', 'packaging'], true))
+                ->reject(fn ($detail) => in_array($detailKey($detail['label'] ?? ''), $buyerDetailKeys, true))
                 ->values();
             $publishedReviews = $product->publishedReviews;
             $averageRating = $publishedReviews->avg('rating');
