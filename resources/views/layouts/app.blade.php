@@ -149,14 +149,6 @@
                         <div class="text-xs font-bold text-slate-300">Agape trading</div>
                     </div>
                 </div>
-                <div class="mt-5 flex flex-wrap gap-2">
-                    <a class="icon-button" href="{{ $siteContact['youtube_url'] }}" target="_blank" rel="noopener" title="YouTube" aria-label="YouTube"><x-icon name="youtube" class="h-5 w-5" /></a>
-                    <a class="icon-button" href="{{ $siteContact['instagram_url'] }}" target="_blank" rel="noopener" title="Instagram" aria-label="Instagram"><x-icon name="instagram" class="h-5 w-5" /></a>
-                    <a class="icon-button" href="{{ $siteContact['facebook_url'] }}" target="_blank" rel="noopener" title="Facebook" aria-label="Facebook"><x-icon name="facebook" class="h-5 w-5" /></a>
-                    <a class="icon-button" href="{{ $siteContact['linkedin_url'] }}" target="_blank" rel="noopener" title="LinkedIn" aria-label="LinkedIn"><x-icon name="linkedin" class="h-5 w-5" /></a>
-                    <a class="icon-button" href="{{ $siteContact['tiktok_url'] }}" target="_blank" rel="noopener" title="TikTok" aria-label="TikTok"><x-icon name="tiktok" class="h-5 w-5" /></a>
-                    <a class="icon-button" href="{{ $siteContact['threads_url'] }}" target="_blank" rel="noopener" title="Threads" aria-label="Threads"><x-icon name="threads" class="h-5 w-5" /></a>
-                </div>
                 </div>
                 <div>
                 <div class="font-bold text-white">{{ $t['footer.company'] ?? 'Company' }}</div>
@@ -233,8 +225,21 @@
             </aside>
             @endauth
         </div>
-        <div class="agape-container border-t border-white/10 py-5 text-xs font-semibold text-slate-400">
-            &copy; {{ now()->year }} Agape153. {{ $t['footer.copyright'] ?? 'Indonesian commodity trading desk.' }}
+        <div class="agape-container border-t border-white/10 py-5">
+            <div class="footer-social-row">
+                <div class="text-xs font-black uppercase tracking-[0.16em] text-amber-200">{{ $t['footer.follow_social'] ?? 'Follow our Social Media' }}</div>
+                <div class="flex flex-wrap items-center gap-2">
+                    <a class="icon-button footer-social-button" href="{{ $siteContact['youtube_url'] }}" target="_blank" rel="noopener" title="YouTube" aria-label="YouTube"><x-icon name="youtube" class="h-4 w-4" /></a>
+                    <a class="icon-button footer-social-button" href="{{ $siteContact['instagram_url'] }}" target="_blank" rel="noopener" title="Instagram" aria-label="Instagram"><x-icon name="instagram" class="h-4 w-4" /></a>
+                    <a class="icon-button footer-social-button" href="{{ $siteContact['facebook_url'] }}" target="_blank" rel="noopener" title="Facebook" aria-label="Facebook"><x-icon name="facebook" class="h-4 w-4" /></a>
+                    <a class="icon-button footer-social-button" href="{{ $siteContact['linkedin_url'] }}" target="_blank" rel="noopener" title="LinkedIn" aria-label="LinkedIn"><x-icon name="linkedin" class="h-4 w-4" /></a>
+                    <a class="icon-button footer-social-button" href="{{ $siteContact['tiktok_url'] }}" target="_blank" rel="noopener" title="TikTok" aria-label="TikTok"><x-icon name="tiktok" class="h-4 w-4" /></a>
+                    <a class="icon-button footer-social-button" href="{{ $siteContact['threads_url'] }}" target="_blank" rel="noopener" title="Threads" aria-label="Threads"><x-icon name="threads" class="h-4 w-4" /></a>
+                </div>
+            </div>
+            <div class="mt-4 text-xs font-semibold text-slate-400">
+                &copy; {{ now()->year }} Agape153. {{ $t['footer.copyright'] ?? 'Indonesian commodity trading desk.' }}
+            </div>
         </div>
     </footer>
     <x-flash-alerts />

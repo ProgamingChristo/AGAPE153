@@ -94,6 +94,7 @@ return [
     'footer.shipping' => 'Shipping',
     'footer.contact' => 'Contact Us',
     'footer.contact_form' => 'Contact Form',
+    'footer.follow_social' => 'Follow our Social Media',
     'footer.description' => 'Indonesian spices, coffee, and agricultural commodities supplier for local buyers, distributors, horeca, and international importers.',
     'footer.board_kicker' => 'Live sourcing board',
     'footer.board_title' => 'Buyer-ready flow',

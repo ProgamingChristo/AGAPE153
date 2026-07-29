@@ -94,6 +94,7 @@ return [
     'footer.shipping' => 'Pengiriman',
     'footer.contact' => 'Contact Us',
     'footer.contact_form' => 'Form Kontak',
+    'footer.follow_social' => 'Follow our Social Media',
     'footer.description' => 'Supplier rempah, kopi, dan komoditas pertanian Indonesia untuk pembeli lokal, distributor, horeca, dan importir internasional.',
     'footer.board_kicker' => 'Live sourcing board',
     'footer.board_title' => 'Alur buyer-ready',
