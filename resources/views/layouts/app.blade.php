@@ -42,7 +42,7 @@
                     </a>
                     <a class="inline-flex items-center gap-1 hover:text-teal-700" href="https://wa.me/{{ preg_replace('/\D+/', '', $siteContact['whatsapp']) }}" target="_blank" rel="noopener">
                         <x-icon name="phone" class="h-3.5 w-3.5" />
-                        {{ $siteContact['phone'] }}
+                        {{ $siteContact['phone_display'] ?? $siteContact['phone'] }}
                     </a>
                 </div>
             </div>
@@ -179,12 +179,21 @@
                     @endauth
                 </div>
                 <div class="mt-8 font-bold text-white">{{ $t['footer.contact'] ?? 'Contact Us' }}</div>
-                <div class="mt-3 grid gap-2 text-sm text-slate-300">
-                    <a href="mailto:{{ $siteContact['email'] }}">{{ $siteContact['email'] }}</a>
+                <div class="mt-3 grid gap-3 text-sm text-slate-300">
+                    <a class="inline-flex items-center gap-2 hover:text-amber-200" href="mailto:{{ $siteContact['email'] }}">
+                        <x-icon name="mail" class="h-4 w-4 shrink-0 text-amber-200" />
+                        <span>{{ $siteContact['email'] }}</span>
+                    </a>
                     @if (! empty($siteContact['secondary_email']) && $siteContact['secondary_email'] !== $siteContact['email'])
-                        <a href="mailto:{{ $siteContact['secondary_email'] }}">{{ $siteContact['secondary_email'] }}</a>
+                        <a class="inline-flex items-center gap-2 hover:text-sky-200" href="mailto:{{ $siteContact['secondary_email'] }}">
+                            <x-icon name="mail" class="h-4 w-4 shrink-0 text-sky-200" />
+                            <span>{{ $siteContact['secondary_email'] }}</span>
+                        </a>
                     @endif
-                    <a href="https://wa.me/{{ preg_replace('/\D+/', '', $siteContact['whatsapp']) }}" target="_blank" rel="noopener">{{ $siteContact['phone'] }}</a>
+                    <a class="inline-flex items-center gap-2 hover:text-teal-200" href="https://wa.me/{{ preg_replace('/\D+/', '', $siteContact['whatsapp']) }}" target="_blank" rel="noopener">
+                        <x-icon name="phone" class="h-4 w-4 shrink-0 text-teal-200" />
+                        <span>{{ $siteContact['phone_display'] ?? $siteContact['phone'] }}</span>
+                    </a>
                     <a class="btn-primary mt-2 w-full px-3 py-2 text-xs sm:w-max" href="{{ route('home') }}#contact">
                         <x-icon name="message" class="h-4 w-4" />
                         {{ $t['footer.contact_form'] ?? 'Contact Form' }}
@@ -215,11 +224,11 @@
                         </div>
                     @endforeach
                 </div>
-                <div class="trade-ticker mt-4">
-                    <span>Spices</span>
-                    <span>Coffee</span>
-                    <span>Agriculture</span>
-                    <span>{{ $t['nav.shipping'] ?? 'Shipping' }}</span>
+                <div class="trade-ticker agape-chip-strip mt-4" style="max-width:100%;overflow-x:auto;overflow-y:hidden;scroll-snap-type:x proximity;-webkit-overflow-scrolling:touch;padding-bottom:.35rem;">
+                    <span style="flex:0 0 auto;scroll-snap-align:start;background:#e64b3c;color:#fff;">Spices</span>
+                    <span style="flex:0 0 auto;scroll-snap-align:start;background:#e9c95a;color:#101820;">Coffee</span>
+                    <span style="flex:0 0 auto;scroll-snap-align:start;background:#2d9db7;color:#fff;">Agriculture</span>
+                    <span style="flex:0 0 auto;scroll-snap-align:start;background:#e64b3c;color:#fff;">{{ $t['nav.shipping'] ?? 'Shipping' }}</span>
                 </div>
             </aside>
             @endauth

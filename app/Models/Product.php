@@ -160,7 +160,7 @@ class Product extends Model
                     return null;
                 }
 
-                return ['label' => $label, 'value' => $value];
+                return ['label' => $this->displayDetailLabel($label), 'value' => $value];
             })
             ->filter()
             ->values()
@@ -171,12 +171,19 @@ class Product extends Model
         }
 
         return [
-            ['label' => 'Product Name', 'value' => $this->name],
+            ['label' => 'Item Name', 'value' => $this->name],
             ['label' => 'Origin', 'value' => $this->origin ?: 'Indonesia'],
             ['label' => 'Quality', 'value' => 'Export Grade'],
             ['label' => 'Moisture', 'value' => 'Max. 13%'],
             ['label' => 'Packaging', 'value' => '25 kg PP Bags or Customized'],
         ];
+    }
+
+    private function displayDetailLabel(string $label): string
+    {
+        return strtolower((string) preg_replace('/[^a-z0-9]+/i', '', $label)) === 'productname'
+            ? 'Item Name'
+            : $label;
     }
 
     private function formattedQuantity(int|float|null $quantity): string

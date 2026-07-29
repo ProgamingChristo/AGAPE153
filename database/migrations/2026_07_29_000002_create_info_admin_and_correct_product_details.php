@@ -2,11 +2,77 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
     public function up(): void
+    {
+        $this->createInfoAdminAccount();
+        $this->upsertSetting('phone_display', '+62816 795 153');
+        $this->correctProductDetails();
+    }
+
+    public function down(): void
+    {
+        //
+    }
+
+    private function createInfoAdminAccount(): void
+    {
+        if (! Schema::hasTable('users')) {
+            return;
+        }
+
+        DB::table('users')->updateOrInsert(
+            ['email' => 'info@agape153.com'],
+            [
+                'name' => 'Agape153 Info',
+                'password' => Hash::make('password'),
+                'phone' => '+62816795153',
+                'company_name' => 'Agape153',
+                'role' => 'admin',
+                'status' => 'active',
+                'email_verified_at' => now(),
+                'created_at' => now(),
+                'updated_at' => now(),
+            ]
+        );
+
+        if (! Schema::hasTable('roles') || ! Schema::hasTable('role_user')) {
+            return;
+        }
+
+        $adminRoleId = DB::table('roles')->where('name', 'admin')->value('id');
+        $infoUserId = DB::table('users')->where('email', 'info@agape153.com')->value('id');
+
+        if ($adminRoleId && $infoUserId) {
+            DB::table('role_user')->updateOrInsert([
+                'role_id' => $adminRoleId,
+                'user_id' => $infoUserId,
+            ]);
+        }
+    }
+
+    private function upsertSetting(string $key, string $value): void
+    {
+        if (! Schema::hasTable('website_settings')) {
+            return;
+        }
+
+        DB::table('website_settings')->updateOrInsert(
+            ['key' => $key],
+            [
+                'value' => $value,
+                'group' => 'general',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ]
+        );
+    }
+
+    private function correctProductDetails(): void
     {
         if (! Schema::hasTable('products') || ! Schema::hasColumn('products', 'product_details')) {
             return;
@@ -25,11 +91,6 @@ return new class extends Migration
                         ]);
                 }
             });
-    }
-
-    public function down(): void
-    {
-        //
     }
 
     /**

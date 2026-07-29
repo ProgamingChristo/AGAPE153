@@ -35,6 +35,7 @@ class AppServiceProvider extends ServiceProvider
 
             $view->with('siteContact', [
                 'phone' => WebsiteSetting::value('phone_number', '+62816795153'),
+                'phone_display' => WebsiteSetting::value('phone_display', '+62816 795 153'),
                 'whatsapp' => WebsiteSetting::value('whatsapp_number', '+62816795153'),
                 'email' => WebsiteSetting::value('company_email', 'info@agape153.com'),
                 'secondary_email' => WebsiteSetting::value('company_secondary_email', 'info.agape153@gmail.com'),

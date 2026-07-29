@@ -62,9 +62,22 @@ class DatabaseSeeder extends Seeder
             'email_verified_at' => now(),
         ]);
 
+        $infoAdmin = User::query()->updateOrCreate([
+            'email' => 'info@agape153.com',
+        ], [
+            'name' => 'Agape153 Info',
+            'password' => 'password',
+            'phone' => '+62816795153',
+            'company_name' => 'Agape153',
+            'role' => 'admin',
+            'status' => 'active',
+            'email_verified_at' => now(),
+        ]);
+
         $roleIds = DB::table('roles')->pluck('id', 'name');
         $permissionIds = DB::table('permissions')->pluck('id', 'name');
         DB::table('role_user')->updateOrInsert(['role_id' => $roleIds['admin'], 'user_id' => $admin->id]);
+        DB::table('role_user')->updateOrInsert(['role_id' => $roleIds['admin'], 'user_id' => $infoAdmin->id]);
         DB::table('role_user')->updateOrInsert(['role_id' => $roleIds['member'], 'user_id' => $member->id]);
 
         foreach ($permissionIds as $permissionId) {
@@ -242,6 +255,7 @@ class DatabaseSeeder extends Seeder
 
         foreach ([
             'phone_number' => '+62816795153',
+            'phone_display' => '+62816 795 153',
             'whatsapp_number' => '+62816795153',
             'company_email' => 'info@agape153.com',
             'company_secondary_email' => 'info.agape153@gmail.com',
@@ -429,7 +443,7 @@ HTML);
 
         if (str_contains($name, 'white pepper') || str_contains($name, 'lada putih')) {
             return $this->detailRows([
-                'Product Name' => 'White Pepper',
+                'Item Name' => 'White Pepper',
                 'Origin' => 'Indonesia',
                 'Quality' => 'Export Grade',
                 'Form' => 'Whole Dried Peppercorns',
@@ -442,7 +456,7 @@ HTML);
 
         if (str_contains($name, 'black pepper') || str_contains($name, 'lada hitam')) {
             return $this->detailRows([
-                'Product Name' => 'Black Pepper',
+                'Item Name' => 'Black Pepper',
                 'Origin' => 'Indonesia',
                 'Quality' => 'Export Grade',
                 'Form' => 'Whole Dried Peppercorns',
@@ -453,9 +467,20 @@ HTML);
             ]);
         }
 
+        if (str_contains($name, 'clove') || str_contains($name, 'cengkeh')) {
+            return $this->detailRows([
+                'Item Name' => 'Cloves / Cengkeh',
+                'Origin' => 'Indonesia',
+                'Quality' => 'Export Grade',
+                'Form' => 'Whole Dried Cloves',
+                'Moisture' => 'Max. 12%',
+                'Packaging' => '25 kg or 50 kg PP Bags (Custom packaging available)',
+            ]);
+        }
+
         if (str_contains($name, 'nutmeg') || str_contains($name, 'pala')) {
             return $this->detailRows([
-                'Product Name' => 'Whole Nutmeg',
+                'Item Name' => 'Whole Nutmeg',
                 'Origin' => 'Indonesia',
                 'Quality' => 'Export Grade',
                 'Form' => 'Whole Dried Nutmeg',
@@ -467,7 +492,7 @@ HTML);
 
         if (str_contains($name, 'ginger') || str_contains($name, 'jahe')) {
             return $this->detailRows([
-                'Product Name' => 'Dried Ginger',
+                'Item Name' => 'Dried Ginger',
                 'Origin' => 'Indonesia',
                 'Quality' => 'Export Grade',
                 'Form' => 'Whole, Sliced, or Powder',
@@ -479,7 +504,7 @@ HTML);
 
         if (str_contains($name, 'curcuma') || str_contains($name, 'temulawak')) {
             return $this->detailRows([
-                'Product Name' => 'Curcuma (Java Turmeric)',
+                'Item Name' => 'Curcuma (Java Turmeric)',
                 'Origin' => 'Indonesia',
                 'Quality' => 'Export Grade',
                 'Form' => 'Dried Whole, Sliced, or Powder',
@@ -491,7 +516,7 @@ HTML);
 
         if (str_contains($name, 'turmeric') || str_contains($name, 'kunyit')) {
             return $this->detailRows([
-                'Product Name' => 'Turmeric',
+                'Item Name' => 'Turmeric',
                 'Origin' => 'Indonesia',
                 'Quality' => 'Export Grade',
                 'Form' => 'Whole Dried Fingers, Sliced, or Powder',
@@ -503,7 +528,7 @@ HTML);
 
         if (str_contains($name, 'coffee') || str_contains($name, 'robusta') || str_contains($name, 'arabica')) {
             return $this->detailRows([
-                'Product Name' => 'Indonesian Coffee Beans',
+                'Item Name' => 'Indonesian Coffee Beans',
                 'Origin' => 'Indonesia',
                 'Variety' => 'Arabica and Robusta',
                 'Quality' => 'Export Grade',
@@ -515,7 +540,7 @@ HTML);
         }
 
         return $this->detailRows([
-            'Product Name' => $product,
+            'Item Name' => $product,
             'Origin' => $origin,
             'Quality' => 'Export Grade',
             'Form' => 'By request',

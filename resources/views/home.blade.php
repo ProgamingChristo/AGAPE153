@@ -309,26 +309,35 @@
                 <p class="section-kicker mt-7"><x-icon name="phone" class="h-4 w-4" />{{ $t['home.contact_desk'] ?? 'Contact Desk' }}</p>
                 <h2 class="mt-3 text-4xl font-black text-slate-950">{{ $t['home.contact_heading'] ?? 'Talk to Agape153.' }}</h2>
                 <div class="mt-6 grid gap-3">
-                    <a class="trade-panel flex items-center gap-3 p-4" href="mailto:{{ $siteContact['email'] }}">
-                        <x-icon name="mail" class="h-5 w-5 text-teal-700" />
+                    <a class="trade-panel flex items-center gap-3 border-teal-200 bg-teal-50 p-4" href="https://wa.me/{{ preg_replace('/\D+/', '', $siteContact['whatsapp']) }}" target="_blank" rel="noopener">
+                        <span class="grid h-11 w-11 shrink-0 place-items-center rounded-full bg-teal-700 text-white shadow-sm">
+                            <x-icon name="phone" class="h-5 w-5" />
+                        </span>
+                        <span class="grid gap-1">
+                            <span class="text-xs font-black uppercase tracking-[0.12em] text-teal-800">Phone / WhatsApp</span>
+                            <span class="break-words font-black text-slate-950">{{ $siteContact['phone_display'] ?? $siteContact['phone'] }}</span>
+                        </span>
+                    </a>
+                    <a class="trade-panel flex items-center gap-3 border-amber-200 bg-amber-50 p-4" href="mailto:{{ $siteContact['email'] }}">
+                        <span class="grid h-11 w-11 shrink-0 place-items-center rounded-full bg-amber-300 text-slate-950 shadow-sm">
+                            <x-icon name="mail" class="h-5 w-5" />
+                        </span>
                         <span class="grid gap-1">
                             <span class="text-xs font-black uppercase tracking-[0.12em] text-slate-500">Primary Email</span>
                             <span class="break-words font-black text-slate-950">{{ $siteContact['email'] }}</span>
                         </span>
                     </a>
                     @if (! empty($siteContact['secondary_email']) && $siteContact['secondary_email'] !== $siteContact['email'])
-                        <a class="trade-panel flex items-center gap-3 p-4" href="mailto:{{ $siteContact['secondary_email'] }}">
-                            <x-icon name="mail" class="h-5 w-5 text-amber-600" />
+                        <a class="trade-panel flex items-center gap-3 border-sky-200 bg-sky-50 p-4" href="mailto:{{ $siteContact['secondary_email'] }}">
+                            <span class="grid h-11 w-11 shrink-0 place-items-center rounded-full bg-sky-400 text-slate-950 shadow-sm">
+                                <x-icon name="mail" class="h-5 w-5" />
+                            </span>
                             <span class="grid gap-1">
                                 <span class="text-xs font-black uppercase tracking-[0.12em] text-slate-500">Gmail Backup</span>
                                 <span class="break-words font-black text-slate-950">{{ $siteContact['secondary_email'] }}</span>
                             </span>
                         </a>
                     @endif
-                    <a class="trade-panel flex items-center gap-3 p-4" href="https://wa.me/{{ preg_replace('/\D+/', '', $siteContact['whatsapp']) }}" target="_blank" rel="noopener">
-                        <x-icon name="phone" class="h-5 w-5 text-teal-700" />
-                        <span class="font-black text-slate-950">{{ $siteContact['phone'] }}</span>
-                    </a>
                 </div>
                 <div class="mt-6 flex flex-wrap gap-2">
                     <a class="icon-button" href="{{ $siteContact['youtube_url'] }}" target="_blank" rel="noopener" title="YouTube" aria-label="YouTube"><x-icon name="youtube" class="h-5 w-5" /></a>

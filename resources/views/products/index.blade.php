@@ -59,11 +59,11 @@
     <section class="section-pad bg-[#f4f6f3]">
         <div class="agape-container">
             <div class="flex flex-col justify-between gap-4 md:flex-row md:items-center" data-reveal>
-                <div class="trade-ticker text-slate-950">
-                    <span class="border-slate-200 bg-white">Spices</span>
-                    <span class="border-slate-200 bg-white">Coffee</span>
-                    <span class="border-slate-200 bg-white">Agriculture</span>
-                    <span class="border-slate-200 bg-white">{{ $t['nav.shipping'] ?? 'Shipping' }}</span>
+                <div class="trade-ticker agape-chip-strip text-slate-950" style="max-width:100%;overflow-x:auto;overflow-y:hidden;scroll-snap-type:x proximity;-webkit-overflow-scrolling:touch;padding-bottom:.35rem;">
+                    <span style="flex:0 0 auto;scroll-snap-align:start;background:#e64b3c;color:#fff;">Spices</span>
+                    <span style="flex:0 0 auto;scroll-snap-align:start;background:#e9c95a;color:#101820;">Coffee</span>
+                    <span style="flex:0 0 auto;scroll-snap-align:start;background:#2d9db7;color:#fff;">Agriculture</span>
+                    <span style="flex:0 0 auto;scroll-snap-align:start;background:#e64b3c;color:#fff;">{{ $t['nav.shipping'] ?? 'Shipping' }}</span>
                 </div>
                 @if ($query || $selectedCategory || request()->boolean('export_ready'))
                     <a class="btn-secondary" href="{{ route('products.index') }}">Clear Filter</a>

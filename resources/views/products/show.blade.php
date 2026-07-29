@@ -27,6 +27,7 @@
             ->map(fn ($detail) => $detailKey($detail['label'] ?? ''))
             ->filter()
             ->all();
+        $hiddenDetailKeys = array_unique([...$buyerDetailKeys, 'productname']);
     @endphp
     <section class="bg-[#101820] text-white">
         <div class="logo-stripe"><span></span><span></span><span></span></div>
@@ -150,7 +151,7 @@
         @php
             $productDetails = collect($product->product_details ?? [])
                 ->filter(fn ($detail) => filled($detail['value'] ?? null))
-                ->reject(fn ($detail) => in_array($detailKey($detail['label'] ?? ''), $buyerDetailKeys, true))
+                ->reject(fn ($detail) => in_array($detailKey($detail['label'] ?? ''), $hiddenDetailKeys, true))
                 ->values();
             $publishedReviews = $product->publishedReviews;
             $averageRating = $publishedReviews->avg('rating');
