@@ -179,14 +179,20 @@
 
     .footer-social-row {
         display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 1rem;
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 0.65rem;
+    }
+
+    .footer-social-label {
+        font-size: 0.64rem;
+        letter-spacing: 0.14em;
+        line-height: 1.2;
     }
 
     .footer-social-button {
-        height: 2.35rem;
-        width: 2.35rem;
+        height: 2.08rem;
+        width: 2.08rem;
         border-color: rgba(255, 255, 255, 0.18);
         background: rgba(255, 255, 255, 0.95);
         color: #101820;
@@ -719,14 +725,9 @@ body.admin-menu-open [data-admin-overlay] {
         padding: 0.55rem 0.7rem;
     }
 
-    .footer-social-row {
-        align-items: flex-start;
-        flex-direction: column;
-    }
-
     .footer-social-button {
-        height: 2.25rem;
-        width: 2.25rem;
+        height: 2rem;
+        width: 2rem;
     }
 
     .market-row {
