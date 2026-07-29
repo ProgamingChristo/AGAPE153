@@ -16,10 +16,14 @@ class HomeController extends Controller
     {
         return view('home', [
             'featuredProducts' => Product::query()
+                ->select('products.*')
+                ->join('categories as catalog_categories', 'catalog_categories.id', '=', 'products.category_id')
                 ->with('category')
                 ->active()
                 ->featured()
-                ->latest()
+                ->orderByRaw("CASE catalog_categories.type WHEN 'spice' THEN 1 WHEN 'other' THEN 2 WHEN 'export' THEN 3 WHEN 'coffee' THEN 4 ELSE 5 END")
+                ->orderBy('catalog_categories.sort_order')
+                ->orderBy('products.name')
                 ->take(6)
                 ->get(),
             'categories' => Category::query()

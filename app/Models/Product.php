@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Support\MediaUrl;
+use App\Support\ProductCatalog;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -103,12 +104,12 @@ class Product extends Model
 
     public function scopeActive($query)
     {
-        return $query->where('is_active', true);
+        return $query->where('products.is_active', true);
     }
 
     public function scopeFeatured($query)
     {
-        return $query->where('is_featured', true);
+        return $query->where('products.is_featured', true);
     }
 
     public function scopeSearch($query, ?string $term)
@@ -118,10 +119,10 @@ class Product extends Model
         }
 
         return $query->where(function ($inner) use ($term): void {
-            $inner->where('name', 'like', "%{$term}%")
-                ->orWhere('origin', 'like', "%{$term}%")
-                ->orWhere('grade', 'like', "%{$term}%")
-                ->orWhere('short_description', 'like', "%{$term}%");
+            $inner->where('products.name', 'like', "%{$term}%")
+                ->orWhere('products.origin', 'like', "%{$term}%")
+                ->orWhere('products.grade', 'like', "%{$term}%")
+                ->orWhere('products.short_description', 'like', "%{$term}%");
         });
     }
 
@@ -134,6 +135,26 @@ class Product extends Model
         }
 
         return 'Rp'.number_format((float) $rawPrice, 0, ',', '.').'/'.$this->unit;
+    }
+
+    public function displayName(): string
+    {
+        return ProductCatalog::name($this);
+    }
+
+    public function displayShortDescription(): string
+    {
+        return ProductCatalog::shortDescription($this);
+    }
+
+    public function displayDescription(): string
+    {
+        return ProductCatalog::description($this);
+    }
+
+    public function displayImageUrl(): ?string
+    {
+        return ProductCatalog::imageUrl($this);
     }
 
     public function formattedMoq(): string
@@ -160,7 +181,14 @@ class Product extends Model
                     return null;
                 }
 
-                return ['label' => $this->displayDetailLabel($label), 'value' => $value];
+                $normalizedLabel = strtolower((string) preg_replace('/[^a-z0-9]+/i', '', $label));
+
+                return [
+                    'label' => ProductCatalog::detailLabel($label),
+                    'value' => in_array($normalizedLabel, ['productname', 'itemname'], true)
+                        ? $this->displayName()
+                        : ProductCatalog::detailValue($value),
+                ];
             })
             ->filter()
             ->values()
@@ -171,19 +199,12 @@ class Product extends Model
         }
 
         return [
-            ['label' => 'Item Name', 'value' => $this->name],
-            ['label' => 'Origin', 'value' => $this->origin ?: 'Indonesia'],
-            ['label' => 'Quality', 'value' => 'Export Grade'],
-            ['label' => 'Moisture', 'value' => 'Max. 13%'],
-            ['label' => 'Packaging', 'value' => '25 kg PP Bags or Customized'],
+            ['label' => ProductCatalog::detailLabel('Item Name'), 'value' => $this->displayName()],
+            ['label' => ProductCatalog::detailLabel('Origin'), 'value' => $this->origin ?: 'Indonesia'],
+            ['label' => ProductCatalog::detailLabel('Quality'), 'value' => ProductCatalog::detailValue('Export Grade')],
+            ['label' => ProductCatalog::detailLabel('Moisture'), 'value' => 'Max. 13%'],
+            ['label' => ProductCatalog::detailLabel('Packaging'), 'value' => ProductCatalog::detailValue('25 kg PP Bags or Customized')],
         ];
-    }
-
-    private function displayDetailLabel(string $label): string
-    {
-        return strtolower((string) preg_replace('/[^a-z0-9]+/i', '', $label)) === 'productname'
-            ? 'Item Name'
-            : $label;
     }
 
     private function formattedQuantity(int|float|null $quantity): string

@@ -142,12 +142,12 @@
             <div class="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
                 @forelse ($categories as $category)
                     <a href="{{ route('products.index', ['category' => $category->slug]) }}" class="group border border-white/10 bg-white text-slate-950" data-reveal>
-                        <img class="aspect-[4/3] w-full object-cover transition duration-300 group-hover:scale-105" src="{{ $category->image_url ?: asset('images/product-placeholder.svg') }}" onerror="this.src='{{ asset('images/product-placeholder.svg') }}'" alt="{{ $category->name }}" loading="lazy" decoding="async">
+                        <img class="aspect-[4/3] w-full object-cover transition duration-300 group-hover:scale-105" src="{{ $category->image_url ?: asset('images/product-placeholder.svg') }}" onerror="this.src='{{ asset('images/product-placeholder.svg') }}'" alt="{{ $category->displayName() }}" loading="lazy" decoding="async">
                         <div class="logo-stripe"><span></span><span></span><span></span></div>
                         <div class="p-5">
                             <span class="status-pill text-teal-700">{{ $category->type }}</span>
-                            <h3 class="mt-3 text-xl font-black">{{ $category->name }}</h3>
-                            <p class="mt-2 line-clamp-3 text-sm leading-6 text-slate-600">{{ $category->description ?: 'Explore available Agape153 products in this category.' }}</p>
+                            <h3 class="mt-3 text-xl font-black">{{ $category->displayName() }}</h3>
+                            <p class="mt-2 line-clamp-3 text-sm leading-6 text-slate-600">{{ $category->displayDescription() ?: ($t['home.category_fallback'] ?? 'Explore available Agape153 products in this category.') }}</p>
                         </div>
                     </a>
                 @empty
@@ -170,16 +170,16 @@
                 <div class="grid gap-3">
                     @forelse ($featuredProducts as $product)
                         <a class="market-row" href="{{ route('products.show', $product) }}" data-reveal>
-                            <img class="h-20 w-20 shrink-0 object-cover" src="{{ $product->image_url ?: asset('images/product-placeholder.svg') }}" onerror="this.src='{{ asset('images/product-placeholder.svg') }}'" alt="{{ $product->name }}" loading="lazy" decoding="async">
+                            <img class="h-20 w-20 shrink-0 object-cover" src="{{ $product->displayImageUrl() ?: asset('images/product-placeholder.svg') }}" onerror="this.src='{{ asset('images/product-placeholder.svg') }}'" alt="{{ $product->displayName() }}" loading="lazy" decoding="async">
                             <div class="grid gap-3 md:grid-cols-[1fr_120px_120px_120px] md:items-center">
                                 <div>
                                     <div class="flex flex-wrap gap-2">
-                                        <span class="status-pill text-teal-700">{{ $product->category?->name ?? ($t['home.uncategorized'] ?? 'Uncategorized') }}</span>
+                                        <span class="status-pill text-teal-700">{{ $product->category?->displayName() ?? ($t['home.uncategorized'] ?? 'Uncategorized') }}</span>
                                         @if ($product->export_ready)
                                             <span class="status-pill border-amber-200 bg-amber-50 text-amber-800">{{ $t['home.shipping_ready'] ?? 'Shipping Ready' }}</span>
                                         @endif
                                     </div>
-                                    <h3 class="mt-2 font-black text-slate-950">{{ $product->name }}</h3>
+                                    <h3 class="mt-2 font-black text-slate-950">{{ $product->displayName() }}</h3>
                                 </div>
                                 <div class="text-sm font-bold text-slate-600">{{ $t['home.moq'] ?? 'Min. Order' }}<br><span class="text-slate-950">{{ $product->formattedMoq() }}</span></div>
                                 <div class="text-sm font-bold text-slate-600">{{ $t['home.stock'] ?? 'Stock' }}<br><span class="text-slate-950">{{ $product->formattedStock() }}</span></div>

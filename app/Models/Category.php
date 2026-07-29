@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Support\ProductCatalog;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -46,5 +47,15 @@ class Category extends Model
     public function scopeActive($query)
     {
         return $query->where('is_active', true);
+    }
+
+    public function displayName(): string
+    {
+        return ProductCatalog::categoryName($this);
+    }
+
+    public function displayDescription(): string
+    {
+        return ProductCatalog::categoryDescription($this);
     }
 }

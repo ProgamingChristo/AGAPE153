@@ -67,9 +67,9 @@
                 <div class="mt-5 grid gap-4">
                     @foreach ($lines as $line)
                         <div class="flex flex-wrap gap-3 border-b border-slate-100 pb-4 sm:flex-nowrap">
-                            <img class="h-16 w-16 rounded-2xl object-cover" src="{{ $line['product']->image_url ?: asset('images/product-placeholder.svg') }}" onerror="this.src='{{ asset('images/product-placeholder.svg') }}'" alt="{{ $line['product']->name }}">
+                            <img class="h-16 w-16 rounded-2xl object-cover" src="{{ $line['product']->displayImageUrl() ?: asset('images/product-placeholder.svg') }}" onerror="this.src='{{ asset('images/product-placeholder.svg') }}'" alt="{{ $line['product']->displayName() }}">
                             <div class="min-w-0 flex-1">
-                                <div class="font-black text-slate-950">{{ $line['product']->name }}</div>
+                                <div class="font-black text-slate-950">{{ $line['product']->displayName() }}</div>
                                 <div class="mt-1 text-sm text-slate-500">{{ $line['quantity'] }} {{ $line['product']->unit }} x {{ $line['product']->formattedPrice() }}</div>
                             </div>
                             <div class="w-full break-words font-black text-slate-950 sm:w-auto sm:text-right">Rp{{ number_format($line['line_total'], 0, ',', '.') }}</div>

@@ -18,6 +18,7 @@ use App\Http\Controllers\Admin\StaffController as AdminStaffController;
 use App\Http\Controllers\Admin\TranslationController as AdminTranslationController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\CatalogMediaController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\LanguageController;
@@ -33,6 +34,9 @@ use Illuminate\Support\Facades\Route;
 Route::redirect('/', '/about')->name('home');
 Route::post('/language/{locale}', [LanguageController::class, 'switch'])->name('language.switch');
 Route::get('/media/{path}', [MediaController::class, 'show'])->where('path', '.*')->name('media.public');
+Route::get('/catalog-media/{filename}', [CatalogMediaController::class, 'show'])
+    ->where('filename', '[A-Za-z0-9._-]+')
+    ->name('catalog-media.show');
 Route::get('/about', AboutController::class)->name('about');
 Route::post('/contact', [ContactController::class, 'store'])->middleware('throttle:6,1')->name('contact.store');
 

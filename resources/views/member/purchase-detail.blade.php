@@ -42,9 +42,9 @@
                     </div>
                     @foreach ($order->items as $item)
                         <div class="grid gap-4 border-b border-slate-100 p-5 md:grid-cols-[84px_1fr_130px_140px] md:items-center">
-                            <img class="h-20 w-20 rounded-2xl object-cover" src="{{ $item->product_image_url ?: $item->product?->image_url ?: asset('images/product-placeholder.svg') }}" onerror="this.src='{{ asset('images/product-placeholder.svg') }}'" alt="{{ $item->product_name }}">
+                            <img class="h-20 w-20 rounded-2xl object-cover" src="{{ $item->product?->displayImageUrl() ?: $item->product_image_url ?: asset('images/product-placeholder.svg') }}" onerror="this.src='{{ asset('images/product-placeholder.svg') }}'" alt="{{ $item->product?->displayName() ?: $item->product_name }}">
                             <div>
-                                <div class="font-black text-slate-950">{{ $item->product_name }}</div>
+                                <div class="font-black text-slate-950">{{ $item->product?->displayName() ?: $item->product_name }}</div>
                                 <div class="mt-1 text-sm text-slate-500">{{ $item->product_sku ?: 'SKU unavailable' }}</div>
                             </div>
                             <div class="text-sm font-bold text-slate-700">{{ $item->quantity }} {{ $item->unit }} x Rp{{ number_format($item->unit_price, 0, ',', '.') }}</div>
@@ -93,7 +93,7 @@
                     <div class="mt-5 grid gap-4">
                         @foreach ($order->items as $item)
                             <div class="rounded-2xl border border-slate-200 bg-[#f8faf9] p-4">
-                                <div class="font-black text-slate-950">{{ $item->product_name }}</div>
+                                <div class="font-black text-slate-950">{{ $item->product?->displayName() ?: $item->product_name }}</div>
                                 @if ($item->review)
                                     <div class="mt-3 flex items-center gap-2 text-amber-500">
                                         @for ($i = 1; $i <= 5; $i++)

@@ -11,6 +11,7 @@ use App\Models\User;
 use App\Models\WebsiteSetting;
 use App\Models\WhatsAppVerificationCode;
 use App\Support\MediaUrl;
+use App\Support\ProductCatalog;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Hash;
@@ -75,19 +76,130 @@ class ExampleTest extends TestCase
         $this->get(route('products.show', $product))
             ->assertStatus(200)
             ->assertSee('Lada Hitam')
-            ->assertSee('Product Details')
-            ->assertSee('Item Name')
+            ->assertSee('Detail Produk')
+            ->assertSee('Nama Item')
             ->assertDontSee('Product Name')
-            ->assertSee('Export Grade')
-            ->assertSee('Whole Dried Peppercorns')
+            ->assertSee('Kualitas Ekspor')
+            ->assertSee('Biji lada kering utuh')
             ->assertSee('Min. 99%')
-            ->assertSee('Max. 13%')
-            ->assertSee('25 kg or 50 kg PP Bags')
-            ->assertSee('Please contact or drop us email')
+            ->assertSee('Maks. 13%')
+            ->assertSee('Karung PP 25 kg atau 50 kg')
+            ->assertSee('Silakan hubungi atau kirim email kepada kami')
             ->assertDontSee('Rp98.000/Kg')
             ->assertSee('100 kgs')
             ->assertSee('20,000 kgs')
-            ->assertSee('Product Video');
+            ->assertSee('Video Produk');
+    }
+
+    public function test_english_catalog_localizes_seeded_products_and_orders_spices_before_coffee(): void
+    {
+        $spice = Category::query()->create([
+            'name' => 'Rempah-rempah',
+            'slug' => 'rempah-rempah',
+            'type' => 'spice',
+            'is_active' => true,
+        ]);
+
+        $coffee = Category::query()->create([
+            'name' => 'Robusta Coffee',
+            'slug' => 'robusta-coffee',
+            'type' => 'coffee',
+            'is_active' => true,
+        ]);
+
+        Product::query()->create([
+            'category_id' => $coffee->id,
+            'name' => 'Robusta Grade A Jambi',
+            'slug' => 'robusta-grade-a-jambi-en',
+            'sku' => 'RB-JBI-A',
+            'short_description' => 'Robusta grade A dari Jambi dengan body kuat.',
+            'unit' => 'Kg',
+            'price' => 80000,
+            'currency' => 'IDR',
+            'stock_quantity' => 20000,
+            'is_active' => true,
+        ]);
+
+        $pepper = Product::query()->create([
+            'category_id' => $spice->id,
+            'name' => 'Lada Hitam Indonesia',
+            'slug' => 'lada-hitam-indonesia-en',
+            'sku' => 'SP-LD-H',
+            'short_description' => 'Lada hitam aromatik untuk kebutuhan ekspor.',
+            'unit' => 'Kg',
+            'price' => 100000,
+            'currency' => 'IDR',
+            'stock_quantity' => 20000,
+            'is_active' => true,
+        ]);
+
+        $catalog = $this->withSession(['locale' => 'en'])->get(route('products.index'));
+
+        $catalog
+            ->assertOk()
+            ->assertSeeInOrder(['Indonesian Black Pepper', 'Robusta Grade A Jambi'])
+            ->assertSee('Aromatic Indonesian black pepper')
+            ->assertDontSee('Lada hitam aromatik');
+
+        $this->withSession(['locale' => 'en'])
+            ->get(route('products.show', $pepper))
+            ->assertOk()
+            ->assertSee('Product Details')
+            ->assertSee('Indonesian Black Pepper')
+            ->assertSee('Aromatic Indonesian black pepper')
+            ->assertSee('There are no reviews for this product yet.')
+            ->assertDontSee('Lada Hitam Indonesia')
+            ->assertDontSee('Lada hitam aromatik')
+            ->assertDontSee('Belum ada review');
+    }
+
+    public function test_catalog_media_route_serves_bundled_product_image(): void
+    {
+        $this->get(route('catalog-media.show', ['filename' => 'black-pepper.jpg']))
+            ->assertOk()
+            ->assertHeader('Content-Type', 'image/jpeg');
+    }
+
+    public function test_every_seeded_product_has_a_bundled_catalog_image(): void
+    {
+        $seededProducts = [
+            'SP-NUTMEG-MACE' => 'Nutmeg / Pala (Whole & Mace)',
+            'SP-CLOVE' => 'Cloves / Cengkeh',
+            'SP-WHITE-PEPPER' => 'White Pepper',
+            'SP-BLACK-PEPPER' => 'Black Pepper',
+            'SP-DRIED-CHILI' => 'Dried Chili / Cabe Kering',
+            'SP-CHILI-POWDER' => 'Chili Powder / Cabe Bubuk',
+            'SP-GARLIC' => 'Garlic / Bawang Putih',
+            'HR-TURMERIC' => 'Turmeric / Kunyit',
+            'HR-GALANGAL' => 'Galangal / Lengkuas',
+            'HR-TEMULAWAK' => 'Curcuma Xanthorrhiza / Temulawak',
+            'AG-PAPAYA-LEAVES' => 'Papaya Leaves / Daun Papaya',
+            'AG-BANANA-STEM' => 'Banana Stem / Batang Pisang',
+            'CF-ROBUSTA-GREEN' => 'Robusta Green Beans',
+            'CF-ARABICA-ROASTED' => 'Arabica Roasted',
+            'RB-JBI-A' => 'Robusta Grade A Jambi',
+            'AR-GYO-P' => 'Arabica Gayo Premium',
+            'AR-TRJ-S' => 'Arabica Toraja Specialty',
+            'AR-KNT-B' => 'Arabica Kintamani Bali',
+            'RB-LPG-C' => 'Robusta Lampung Commercial',
+            'SP-LD-H' => 'Lada Hitam Indonesia',
+            'SP-LD-P' => 'Lada Putih Indonesia',
+            'SP-CGK' => 'Cengkeh Kering',
+            'SP-KM-C' => 'Kayu Manis Cassia',
+            'SP-JHE-K' => 'Jahe Kering',
+            'SP-KNY-K' => 'Kunyit Kering',
+            'SP-PLA' => 'Pala Indonesia',
+        ];
+
+        foreach ($seededProducts as $sku => $name) {
+            $filename = ProductCatalog::imageFilename(new Product([
+                'sku' => $sku,
+                'name' => $name,
+            ]));
+
+            $this->assertNotNull($filename, "No catalog image is mapped for {$sku}.");
+            $this->assertFileExists(public_path('images/catalog/'.$filename));
+        }
     }
 
     public function test_cart_can_receive_product(): void

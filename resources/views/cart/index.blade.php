@@ -55,9 +55,9 @@
                     <div class="overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm" data-reveal>
                         @foreach ($lines as $line)
                             <div class="grid gap-4 border-b border-slate-100 p-5 md:grid-cols-[96px_1fr_150px_140px] md:items-center">
-                                <img class="h-24 w-24 rounded-2xl object-cover" src="{{ $line['product']->image_url ?: asset('images/product-placeholder.svg') }}" onerror="this.src='{{ asset('images/product-placeholder.svg') }}'" alt="{{ $line['product']->name }}">
+                                <img class="h-24 w-24 rounded-2xl object-cover" src="{{ $line['product']->displayImageUrl() ?: asset('images/product-placeholder.svg') }}" onerror="this.src='{{ asset('images/product-placeholder.svg') }}'" alt="{{ $line['product']->displayName() }}">
                                 <div>
-                                    <a class="text-lg font-black text-slate-950 hover:text-teal-700" href="{{ route('products.show', $line['product']) }}">{{ $line['product']->name }}</a>
+                                    <a class="text-lg font-black text-slate-950 hover:text-teal-700" href="{{ route('products.show', $line['product']) }}">{{ $line['product']->displayName() }}</a>
                                     <div class="mt-2 flex flex-wrap gap-2">
                                         <span class="status-pill">{{ $line['product']->formattedPrice() }}</span>
                                         <span class="status-pill">{{ $line['product']->stock_quantity }} {{ $line['product']->unit }} stock</span>

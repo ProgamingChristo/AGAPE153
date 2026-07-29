@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
-@section('title', 'Product Catalog - Agape153')
-@section('description', 'Katalog rempah-rempah, kopi, dan komoditas pertanian Indonesia Agape153.')
+@section('title', ($siteText['product.catalog_meta_title'] ?? 'Product Catalog - Agape153'))
+@section('description', ($siteText['product.catalog_meta_description'] ?? 'Explore Indonesian commodities from Agape153.'))
 
 @section('content')
     @php
@@ -13,22 +13,22 @@
         <div class="logo-stripe"><span></span><span></span><span></span></div>
         <div class="agape-container grid gap-6 py-10 lg:grid-cols-[1fr_360px] lg:items-end">
             <div data-reveal>
-                <p class="section-kicker text-amber-200"><x-icon name="package" class="h-4 w-4" />Product Catalog</p>
-                <h1 class="mt-3 max-w-4xl text-5xl font-black leading-tight sm:text-7xl">Trade list for Indonesian commodities.</h1>
-                <p class="mt-4 max-w-2xl leading-8 text-slate-200">Clear product information for faster sourcing decisions: category, origin, minimum order, stock, shipping readiness, and quote guidance.</p>
+                <p class="section-kicker text-amber-200"><x-icon name="package" class="h-4 w-4" />{{ $t['product.catalog_kicker'] ?? 'Product Catalog' }}</p>
+                <h1 class="mt-3 max-w-4xl text-5xl font-black leading-tight sm:text-7xl">{{ $t['product.catalog_heading'] ?? 'Indonesian commodities for international buyers.' }}</h1>
+                <p class="mt-4 max-w-2xl leading-8 text-slate-200">{{ $t['product.catalog_intro'] ?? 'Compare product information for faster sourcing decisions.' }}</p>
             </div>
             <aside class="border border-white/10 bg-white/10 p-5" data-reveal>
                 <div class="flex items-center justify-between">
-                    <span class="text-sm font-bold text-slate-300">Listed Products</span>
+                    <span class="text-sm font-bold text-slate-300">{{ $t['product.listed_products'] ?? 'Listed Products' }}</span>
                     <strong class="text-4xl font-black text-amber-200">{{ $products->total() }}</strong>
                 </div>
                 <div class="mt-3 flex items-center justify-between">
-                    <span class="text-sm font-bold text-slate-300">Categories</span>
+                    <span class="text-sm font-bold text-slate-300">{{ $t['product.categories'] ?? 'Categories' }}</span>
                     <strong class="text-4xl font-black text-sky-200">{{ $categories->count() }}</strong>
                 </div>
                 <a href="{{ route('cart.index') }}" class="btn-secondary mt-5 w-full">
                     <x-icon name="cart" class="h-4 w-4" />
-                    View Cart
+                    {{ $t['product.view_cart'] ?? 'View Cart' }}
                 </a>
             </aside>
         </div>
@@ -37,11 +37,11 @@
     <section class="border-b border-slate-200 bg-white py-4">
         <div class="agape-container">
             <form class="grid gap-3 md:grid-cols-[1fr_240px_150px_130px]" method="GET" data-reveal>
-                <input class="field-input" type="search" name="q" value="{{ $query }}" placeholder="Search product, origin, grade">
+                <input class="field-input" type="search" name="q" value="{{ $query }}" placeholder="{{ $t['product.search_placeholder'] ?? 'Search product, origin, or grade' }}">
                 <select class="field-input" name="category">
-                    <option value="">All categories</option>
+                    <option value="">{{ $t['product.all_categories'] ?? 'All categories' }}</option>
                     @foreach ($categories as $category)
-                        <option value="{{ $category->slug }}" @selected($selectedCategory === $category->slug)>{{ $category->name }}</option>
+                        <option value="{{ $category->slug }}" @selected($selectedCategory === $category->slug)>{{ $category->displayName() }}</option>
                     @endforeach
                 </select>
                 <label class="flex items-center gap-2 border border-slate-200 bg-[#f8faf9] px-4 py-3 text-sm font-black text-slate-700">
@@ -50,7 +50,7 @@
                 </label>
                 <button class="btn-primary" type="submit">
                     <x-icon name="search" class="h-4 w-4" />
-                    Filter
+                    {{ $t['product.filter'] ?? 'Filter' }}
                 </button>
             </form>
         </div>
@@ -60,13 +60,13 @@
         <div class="agape-container">
             <div class="flex flex-col justify-between gap-4 md:flex-row md:items-center" data-reveal>
                 <div class="trade-ticker agape-chip-strip text-slate-950" style="max-width:100%;overflow-x:auto;overflow-y:hidden;scroll-snap-type:x proximity;-webkit-overflow-scrolling:touch;padding-bottom:.35rem;">
-                    <span style="flex:0 0 auto;scroll-snap-align:start;background:#e64b3c;color:#fff;">Spices</span>
-                    <span style="flex:0 0 auto;scroll-snap-align:start;background:#e9c95a;color:#101820;">Coffee</span>
-                    <span style="flex:0 0 auto;scroll-snap-align:start;background:#2d9db7;color:#fff;">Agriculture</span>
+                    <span style="flex:0 0 auto;scroll-snap-align:start;background:#e64b3c;color:#fff;">{{ $t['product.spices'] ?? 'Spices' }}</span>
+                    <span style="flex:0 0 auto;scroll-snap-align:start;background:#e9c95a;color:#101820;">{{ $t['product.coffee'] ?? 'Coffee' }}</span>
+                    <span style="flex:0 0 auto;scroll-snap-align:start;background:#2d9db7;color:#fff;">{{ $t['product.agriculture'] ?? 'Agriculture' }}</span>
                     <span style="flex:0 0 auto;scroll-snap-align:start;background:#e64b3c;color:#fff;">{{ $t['nav.shipping'] ?? 'Shipping' }}</span>
                 </div>
                 @if ($query || $selectedCategory || request()->boolean('export_ready'))
-                    <a class="btn-secondary" href="{{ route('products.index') }}">Clear Filter</a>
+                    <a class="btn-secondary" href="{{ route('products.index') }}">{{ $t['product.clear_filter'] ?? 'Clear Filter' }}</a>
                 @endif
             </div>
 
@@ -74,10 +74,10 @@
                 @forelse ($products as $product)
                     <a class="group overflow-hidden rounded-[1.35rem] border border-slate-200 bg-white shadow-sm transition duration-300 hover:-translate-y-1 hover:border-teal-200 hover:shadow-[0_24px_60px_rgba(15,23,42,0.12)]" href="{{ route('products.show', $product) }}">
                         <div class="relative overflow-hidden bg-slate-100">
-                            <img class="aspect-square w-full object-cover transition duration-500 group-hover:scale-105 sm:aspect-[4/3]" src="{{ $product->image_url ?: asset('images/product-placeholder.svg') }}" onerror="this.src='{{ asset('images/product-placeholder.svg') }}'" alt="{{ $product->name }}" loading="lazy" decoding="async">
+                            <img class="aspect-square w-full object-cover transition duration-500 group-hover:scale-105 sm:aspect-[4/3]" src="{{ $product->displayImageUrl() ?: asset('images/product-placeholder.svg') }}" onerror="this.src='{{ asset('images/product-placeholder.svg') }}'" alt="{{ $product->displayName() }}" loading="lazy" decoding="async">
                             <div class="absolute left-3 top-3 flex flex-wrap gap-2">
-                                <span class="rounded-full bg-white/90 px-3 py-1 text-xs font-black text-teal-800 shadow-sm backdrop-blur">{{ $product->category?->name ?? 'Uncategorized' }}</span>
-                                <span class="rounded-full bg-white/90 px-3 py-1 text-xs font-black text-slate-700 shadow-sm backdrop-blur">{{ $product->stock_quantity > 0 ? 'In Stock' : 'Preorder' }}</span>
+                                <span class="rounded-full bg-white/90 px-3 py-1 text-xs font-black text-teal-800 shadow-sm backdrop-blur">{{ $product->category?->displayName() ?? ($t['home.uncategorized'] ?? 'Uncategorized') }}</span>
+                                <span class="rounded-full bg-white/90 px-3 py-1 text-xs font-black text-slate-700 shadow-sm backdrop-blur">{{ $product->stock_quantity > 0 ? ($t['product.in_stock'] ?? 'In Stock') : ($t['product.preorder'] ?? 'Preorder') }}</span>
                             </div>
                             @if ($product->export_ready || $product->video_url)
                                 <div class="absolute bottom-3 left-3 right-3 flex flex-wrap gap-2">
@@ -87,7 +87,7 @@
                                     @if ($product->video_url)
                                         <span class="inline-flex items-center gap-1 rounded-full bg-sky-100/95 px-3 py-1 text-xs font-black text-sky-900 shadow-sm backdrop-blur">
                                             <x-icon name="video" class="h-3.5 w-3.5" />
-                                            Video
+                                            {{ $t['product.video'] ?? 'Video' }}
                                         </span>
                                     @endif
                                 </div>
@@ -95,8 +95,8 @@
                         </div>
                         <div class="grid min-h-72 gap-4 p-5">
                             <div>
-                                <h2 class="line-clamp-2 break-words text-xl font-black leading-snug text-slate-950">{{ $product->name }}</h2>
-                                <p class="mt-2 line-clamp-2 text-sm leading-6 text-slate-600">{{ $product->short_description }}</p>
+                                <h2 class="line-clamp-2 break-words text-xl font-black leading-snug text-slate-950">{{ $product->displayName() }}</h2>
+                                <p class="mt-2 line-clamp-2 text-sm leading-6 text-slate-600">{{ $product->displayShortDescription() }}</p>
                             </div>
 
                             <div class="grid grid-cols-2 gap-2 text-sm">
@@ -105,14 +105,14 @@
                                     <div class="mt-1 font-black text-slate-950">{{ $product->formattedMoq() }}</div>
                                 </div>
                                 <div class="rounded-2xl border border-slate-200 bg-[#f8faf9] p-3">
-                                    <div class="text-xs font-black uppercase tracking-[0.12em] text-slate-500">Stock</div>
+                                    <div class="text-xs font-black uppercase tracking-[0.12em] text-slate-500">{{ $t['home.stock'] ?? 'Stock' }}</div>
                                     <div class="mt-1 font-black text-slate-950">{{ $product->formattedStock() }}</div>
                                 </div>
                             </div>
 
                             <div class="mt-auto flex items-end justify-between gap-3 border-t border-slate-100 pt-4">
                                 <div>
-                                    <div class="text-xs font-black uppercase tracking-[0.14em] text-slate-500">Quote</div>
+                                    <div class="text-xs font-black uppercase tracking-[0.14em] text-slate-500">{{ $t['product.quote'] ?? 'Quote' }}</div>
                                     <div class="mt-1 text-base font-black leading-snug text-teal-800">{{ $quoteLabel }}</div>
                                     <p class="mt-1 text-xs font-bold text-slate-500">{{ $quoteHint }}</p>
                                 </div>
@@ -124,11 +124,11 @@
                     </a>
                 @empty
                     <div class="rounded-[1.35rem] border border-slate-200 bg-white p-8 text-slate-600 sm:col-span-2 xl:col-span-3">
-                        <div class="text-xl font-black text-slate-950">No matching products yet.</div>
-                        <p class="mt-2 text-sm leading-6">Try another keyword or contact Agape153 for custom sourcing requests.</p>
+                        <div class="text-xl font-black text-slate-950">{{ $t['product.no_matches_title'] ?? 'No matching products found.' }}</div>
+                        <p class="mt-2 text-sm leading-6">{{ $t['product.no_matches_body'] ?? 'Try another keyword or contact Agape153.' }}</p>
                         <a class="btn-primary mt-5" href="{{ route('home') }}#contact">
                             <x-icon name="message" class="h-4 w-4" />
-                            Send Inquiry
+                            {{ $t['product.send_inquiry'] ?? 'Send Inquiry' }}
                         </a>
                     </div>
                 @endforelse
