@@ -181,18 +181,29 @@
         display: flex;
         align-items: flex-start;
         flex-direction: column;
-        gap: 0.65rem;
+        gap: 0.9rem;
     }
 
     .footer-social-label {
-        font-size: 0.64rem;
-        letter-spacing: 0.14em;
-        line-height: 1.2;
+        font-size: 0.6rem;
+        font-weight: 700;
+        letter-spacing: 0.11em;
+        line-height: 1;
+        white-space: nowrap;
+        transform: translateY(-0.1rem);
+    }
+
+    .footer-social-icons {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 0.55rem;
     }
 
     .footer-social-button {
-        height: 2.08rem;
-        width: 2.08rem;
+        height: 1.75rem;
+        width: 1.75rem;
+        flex: 0 0 1.75rem;
         border-color: rgba(255, 255, 255, 0.18);
         background: rgba(255, 255, 255, 0.95);
         color: #101820;
@@ -726,8 +737,8 @@ body.admin-menu-open [data-admin-overlay] {
     }
 
     .footer-social-button {
-        height: 2rem;
-        width: 2rem;
+        height: 1.75rem;
+        width: 1.75rem;
     }
 
     .market-row {

@@ -6,6 +6,7 @@ use App\Models\Category;
 use App\Models\ContentTranslation;
 use App\Models\Product;
 use App\Models\WebsiteSetting;
+use App\Services\WebsiteTrafficService;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 
@@ -78,6 +79,9 @@ class AppServiceProvider extends ServiceProvider
                 'catalog_lines' => Category::query()->active()->count(),
                 'featured_skus' => Product::query()->active()->featured()->count(),
             ]);
+            if ($view->getName() === 'layouts.app') {
+                $view->with('siteTrafficStats', app(WebsiteTrafficService::class)->publicStats());
+            }
             $locale = app()->getLocale();
             $fallbackText = trans('site');
             $fallbackText = is_array($fallbackText) ? $fallbackText : [];

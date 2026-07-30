@@ -7,17 +7,21 @@ use App\Models\ContactMessage;
 use App\Models\Order;
 use App\Models\Product;
 use App\Models\ProductReview;
+use App\Models\ProductView;
 use App\Models\User;
 use App\Models\WebsiteSetting;
+use App\Models\WebsiteVisit;
 use App\Models\WhatsAppVerificationCode;
 use App\Support\MediaUrl;
 use App\Support\ProductCatalog;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Password as PasswordBroker;
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\Storage;
 use Tests\TestCase;
 
@@ -35,7 +39,98 @@ class ExampleTest extends TestCase
     {
         $this->get(route('about'))
             ->assertStatus(200)
-            ->assertSee('Indonesian Agriculture');
+            ->assertSee('Indonesian Agriculture')
+            ->assertSee('Aktivitas Website');
+    }
+
+    public function test_public_website_traffic_is_anonymous_deduplicated_and_visible(): void
+    {
+        Cache::flush();
+
+        $headers = [
+            'User-Agent' => 'Mozilla/5.0 (Linux; Android 14; Mobile) AppleWebKit/537.36 Chrome/126.0 Safari/537.36',
+            'Referer' => 'https://www.google.com/search?q=agape153',
+        ];
+
+        $this->withSession(['traffic_test' => true])
+            ->withHeaders($headers)
+            ->get(route('about'))
+            ->assertOk();
+
+        $this->assertDatabaseCount('website_visits', 1);
+        $visit = WebsiteVisit::query()->firstOrFail();
+
+        $this->assertSame('mobile', $visit->device);
+        $this->assertSame('Chrome', $visit->browser);
+        $this->assertSame('www.google.com', $visit->source_host);
+        $this->assertSame(64, strlen($visit->visitor_hash));
+        $this->assertArrayNotHasKey('ip_address', $visit->getAttributes());
+
+        $this->withSession(['traffic_test' => true])
+            ->withHeaders($headers)
+            ->get(route('about'))
+            ->assertOk()
+            ->assertSee('Aktivitas Website')
+            ->assertSee('Tampilan Halaman');
+
+        $this->assertDatabaseCount('website_visits', 1);
+
+        $this->withSession(['locale' => 'en', 'traffic_test' => true])
+            ->withHeaders($headers)
+            ->get(route('products.index'))
+            ->assertOk()
+            ->assertSee('Website Activity')
+            ->assertSee('Unique Visitors');
+
+        $this->assertDatabaseCount('website_visits', 2);
+
+        $this->withHeader('User-Agent', 'Googlebot/2.1')
+            ->get(route('login'))
+            ->assertOk();
+
+        $this->assertDatabaseCount('website_visits', 2);
+
+        $this->withHeaders([
+            'DNT' => '1',
+            'User-Agent' => 'Mozilla/5.0 Firefox/128.0',
+        ])->get(route('login'))->assertOk();
+
+        $this->assertDatabaseCount('website_visits', 2);
+    }
+
+    public function test_existing_product_views_are_backfilled_into_website_traffic(): void
+    {
+        $category = Category::query()->create([
+            'name' => 'Legacy Spice',
+            'slug' => 'legacy-spice',
+            'type' => 'spice',
+        ]);
+        $product = Product::query()->create([
+            'category_id' => $category->id,
+            'name' => 'Legacy Pepper',
+            'slug' => 'legacy-pepper',
+            'unit' => 'Kg',
+        ]);
+
+        ProductView::query()->create([
+            'product_id' => $product->id,
+            'ip_address' => '203.0.113.10',
+            'device' => 'mobile',
+            'browser' => 'Mozilla/5.0 Chrome/126.0',
+        ]);
+
+        Schema::dropIfExists('website_visits');
+        $migration = require database_path('migrations/2026_07_30_000001_create_website_visits_table.php');
+        $migration->up();
+
+        $this->assertDatabaseHas('website_visits', [
+            'path' => '/products/legacy-pepper',
+            'route_name' => 'products.show',
+            'device' => 'mobile',
+            'browser' => 'Chrome',
+        ]);
+        $this->assertSame(64, strlen(WebsiteVisit::query()->value('visitor_hash')));
+        $this->assertFalse(Schema::hasColumn('website_visits', 'ip_address'));
     }
 
     public function test_catalog_and_product_detail_return_successfully(): void

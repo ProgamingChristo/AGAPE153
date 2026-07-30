@@ -225,16 +225,85 @@
             </aside>
             @endauth
         </div>
+
+        @php
+            $trafficStats = $siteTrafficStats ?? [
+                'total_views' => 0,
+                'unique_visitors' => 0,
+                'today_views' => 0,
+                'online_now' => 0,
+            ];
+            $trafficMetrics = [
+                [
+                    'label' => $t['traffic.total_views'] ?? 'Page Views',
+                    'value' => $trafficStats['total_views'],
+                    'icon' => 'chart',
+                    'color' => '#e64b3c',
+                ],
+                [
+                    'label' => $t['traffic.unique_visitors'] ?? 'Unique Visitors',
+                    'value' => $trafficStats['unique_visitors'],
+                    'icon' => 'user',
+                    'color' => '#e9c95a',
+                ],
+                [
+                    'label' => $t['traffic.today_views'] ?? 'Views Today',
+                    'value' => $trafficStats['today_views'],
+                    'icon' => 'history',
+                    'color' => '#2d9db7',
+                ],
+                [
+                    'label' => $t['traffic.online_now'] ?? 'Online Now',
+                    'value' => $trafficStats['online_now'],
+                    'icon' => 'globe',
+                    'color' => '#5eead4',
+                ],
+            ];
+        @endphp
+        <section class="border-y border-white/10 bg-white/5">
+            <div class="agape-container grid gap-6 py-8 lg:grid-cols-2 lg:items-center">
+                <div>
+                    <div class="inline-flex items-center gap-2 text-xs font-black uppercase text-amber-200">
+                        <span class="h-2 w-2 rounded-full bg-teal-300"></span>
+                        {{ $t['traffic.kicker'] ?? 'Website Activity' }}
+                    </div>
+                    <h2 class="mt-3 text-2xl font-black leading-tight text-white">
+                        {{ $t['traffic.title'] ?? 'Growing connections, one visit at a time.' }}
+                    </h2>
+                    <p class="mt-2 max-w-xl text-sm leading-6 text-slate-300">
+                        {{ $t['traffic.description'] ?? 'A live, aggregated view of activity across the Agape153 website.' }}
+                    </p>
+                    <p class="mt-3 text-xs leading-5 text-slate-400">
+                        {{ $t['traffic.privacy'] ?? 'Only aggregated traffic is displayed. Personal visitor information is never shown.' }}
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-2 gap-3 lg:grid-cols-4">
+                    @foreach ($trafficMetrics as $metric)
+                        <div class="min-w-0 border border-white/10 bg-[#101820]/60 p-4" style="border-top: 3px solid {{ $metric['color'] }};">
+                            <div class="flex items-center justify-between gap-2 text-slate-300">
+                                <span class="truncate text-xs font-bold">{{ $metric['label'] }}</span>
+                                <x-icon name="{{ $metric['icon'] }}" class="h-4 w-4 shrink-0" style="color: {{ $metric['color'] }};" />
+                            </div>
+                            <strong class="mt-3 block text-2xl font-black text-white">
+                                {{ number_format((int) $metric['value']) }}
+                            </strong>
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+        </section>
+
         <div class="agape-container border-t border-white/10 py-5">
             <div class="footer-social-row">
-                <div class="footer-social-label font-black uppercase text-amber-200">{{ $t['footer.follow_social'] ?? 'Follow our Social Media' }}</div>
-                <div class="flex flex-wrap items-center gap-2">
-                    <a class="icon-button footer-social-button" href="{{ $siteContact['youtube_url'] }}" target="_blank" rel="noopener" title="YouTube" aria-label="YouTube"><x-icon name="youtube" class="h-3.5 w-3.5" /></a>
-                    <a class="icon-button footer-social-button" href="{{ $siteContact['instagram_url'] }}" target="_blank" rel="noopener" title="Instagram" aria-label="Instagram"><x-icon name="instagram" class="h-3.5 w-3.5" /></a>
-                    <a class="icon-button footer-social-button" href="{{ $siteContact['facebook_url'] }}" target="_blank" rel="noopener" title="Facebook" aria-label="Facebook"><x-icon name="facebook" class="h-3.5 w-3.5" /></a>
-                    <a class="icon-button footer-social-button" href="{{ $siteContact['linkedin_url'] }}" target="_blank" rel="noopener" title="LinkedIn" aria-label="LinkedIn"><x-icon name="linkedin" class="h-3.5 w-3.5" /></a>
-                    <a class="icon-button footer-social-button" href="{{ $siteContact['tiktok_url'] }}" target="_blank" rel="noopener" title="TikTok" aria-label="TikTok"><x-icon name="tiktok" class="h-3.5 w-3.5" /></a>
-                    <a class="icon-button footer-social-button" href="{{ $siteContact['threads_url'] }}" target="_blank" rel="noopener" title="Threads" aria-label="Threads"><x-icon name="threads" class="h-3.5 w-3.5" /></a>
+                <div class="footer-social-label uppercase text-amber-200">{{ $t['footer.follow_social'] ?? 'Follow our Social Media' }}</div>
+                <div class="footer-social-icons">
+                    <a class="icon-button footer-social-button" href="{{ $siteContact['youtube_url'] }}" target="_blank" rel="noopener" title="YouTube" aria-label="YouTube"><x-icon name="youtube" class="h-4 w-4" /></a>
+                    <a class="icon-button footer-social-button" href="{{ $siteContact['instagram_url'] }}" target="_blank" rel="noopener" title="Instagram" aria-label="Instagram"><x-icon name="instagram" class="h-4 w-4" /></a>
+                    <a class="icon-button footer-social-button" href="{{ $siteContact['facebook_url'] }}" target="_blank" rel="noopener" title="Facebook" aria-label="Facebook"><x-icon name="facebook" class="h-4 w-4" /></a>
+                    <a class="icon-button footer-social-button" href="{{ $siteContact['linkedin_url'] }}" target="_blank" rel="noopener" title="LinkedIn" aria-label="LinkedIn"><x-icon name="linkedin" class="h-4 w-4" /></a>
+                    <a class="icon-button footer-social-button" href="{{ $siteContact['tiktok_url'] }}" target="_blank" rel="noopener" title="TikTok" aria-label="TikTok"><x-icon name="tiktok" class="h-4 w-4" /></a>
+                    <a class="icon-button footer-social-button" href="{{ $siteContact['threads_url'] }}" target="_blank" rel="noopener" title="Threads" aria-label="Threads"><x-icon name="threads" class="h-4 w-4" /></a>
                 </div>
             </div>
             <div class="mt-4 text-xs font-semibold text-slate-400">

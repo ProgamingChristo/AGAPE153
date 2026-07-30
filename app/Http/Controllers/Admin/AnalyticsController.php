@@ -7,10 +7,11 @@ use App\Models\CartEvent;
 use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\ProductView;
+use App\Services\WebsiteTrafficService;
 
 class AnalyticsController extends Controller
 {
-    public function index()
+    public function index(WebsiteTrafficService $traffic)
     {
         $productViews = ProductView::query()->count();
         $cartSessions = CartEvent::query()->where('event', 'added')->distinct('session_id')->count('session_id');
@@ -19,6 +20,9 @@ class AnalyticsController extends Controller
         $abandonedCartEstimate = max($cartSessions - $orderCount, 0);
 
         return view('admin.analytics.index', [
+            'websiteTraffic' => $traffic->publicStats(),
+            'trafficTrend' => $traffic->dailyTrend(),
+            'topPages' => $traffic->topPages(),
             'funnel' => [
                 ['label' => 'Product Views', 'value' => $productViews],
                 ['label' => 'Cart Sessions', 'value' => $cartSessions],
@@ -32,17 +36,8 @@ class AnalyticsController extends Controller
                 ->orderByDesc('quantity')
                 ->take(10)
                 ->get(),
-            'deviceTraffic' => ProductView::query()
-                ->selectRaw('COALESCE(device, "unknown") as device, COUNT(*) as total')
-                ->groupBy('device')
-                ->orderByDesc('total')
-                ->get(),
-            'sourceTraffic' => CartEvent::query()
-                ->selectRaw('COALESCE(source, "direct") as source, COUNT(*) as total')
-                ->groupBy('source')
-                ->orderByDesc('total')
-                ->take(10)
-                ->get(),
+            'deviceTraffic' => $traffic->deviceTraffic(),
+            'sourceTraffic' => $traffic->sourceTraffic(),
         ]);
     }
 }
