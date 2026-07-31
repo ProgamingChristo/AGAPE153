@@ -181,16 +181,16 @@
         display: flex;
         align-items: flex-start;
         flex-direction: column;
-        gap: 0.9rem;
+        gap: 1.1rem;
     }
 
     .footer-social-label {
-        font-size: 0.6rem;
-        font-weight: 700;
-        letter-spacing: 0.11em;
+        font-size: 0.55rem;
+        font-weight: 600;
+        letter-spacing: 0.09em;
         line-height: 1;
         white-space: nowrap;
-        transform: translateY(-0.1rem);
+        transform: translateY(-0.2rem);
     }
 
     .footer-social-icons {
@@ -207,6 +207,11 @@
         border-color: rgba(255, 255, 255, 0.18);
         background: rgba(255, 255, 255, 0.95);
         color: #101820;
+    }
+
+    .footer-social-button svg {
+        height: 1.125rem;
+        width: 1.125rem;
     }
 
     .footer-social-button:nth-child(3n + 1) {
